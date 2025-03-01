@@ -1,0 +1,673 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+  v2.0 | 20110126
+  License: none (public domain)
+*/
+
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+ margin: 0;
+ padding: 0;
+ border: 0;
+ font-size: 100%;
+ font: inherit;
+ vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+ display: block;
+ 
+}
+body {
+ line-height: 1;
+}
+ol, ul {
+ list-style: none;
+}
+blockquote, q {
+ quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+ content: '';
+ content: none;
+}
+table {
+ border-collapse: collapse;
+ border-spacing: 0;
+}
+
+
+
+/* my code starts here */
+
+
+/* Andrew Tutorial */
+
+
+/* PARENT ELEMENTS MUST USE DISPLAY: FLEX!!!! */
+
+
+/* USE FOR DEBUGGING */
+/*OVER HERE*/
+body {
+  background: rgba(0, 0, 0);       
+}
+
+hr {
+  border: none; 
+  height: 1.5px; 
+  background-color: white; 
+  width: 100%;
+  border-radius: 50px;
+}
+
+
+
+img {
+ display: block;
+ width: 100%;
+ height: auto;
+ border-radius: 10pt;
+}
+
+video {
+  border-radius: 10pt;
+}
+
+.invert{
+  filter: invert(1);
+}
+
+.home-img {
+  display: block;
+  width: 49.5%; /* Adjust as needed */
+  position: relative;
+  overflow: hidden; /* Ensures media scaling stays within bounds */
+  border-radius: 10pt;
+}
+
+.home-img img, 
+.home-img video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: inherit; /* Inherits the parent's border-radius */
+}
+
+.media-wrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden; /* Clip zoomed content */
+  border-radius: 10pt;
+}
+
+.media-wrapper video,
+.media-wrapper img {
+  display: block;
+  width: 100%;
+  height: auto; /* Fill the wrapper */
+  object-fit: cover; /* Ensure proper scaling and cropping */
+  transition: transform 0.3s ease-in-out; /* Smooth zoom animation */
+  border-radius: inherit;
+}
+
+.media-wrapper:hover video,
+.media-wrapper:hover img {
+  transform: scale(1.05); /* Apply zoom effect on hover */
+
+}
+
+
+/* .home-img {
+  display: block;
+  width: 49.75%;
+  height: auto;
+  position: relative;
+  overflow: hidden; 
+}
+
+.home-img video,
+.home-img img {
+  width: 99%;
+  height: auto; 
+  transition: border 0.3s ease-in-out; 
+  object-fit: cover;
+  z-index: 1;
+}
+
+.home-img:hover video,
+.home-img:hover img {
+  /*transform: scale(1.05); 
+  border: 2px solid #14D277; 
+
+} */
+
+.home-img-expo a{
+  cursor: url(Images/Expo/ExpoIcon.png), auto;
+}
+
+.home-img-wander a{
+  cursor: url(Images/SpatialComp/Wander-Icon.png), auto;
+}
+
+.home-img-garden a{
+  cursor: url(Images/LilGarden/Garden_Icon.png), auto;
+}
+
+.home-img-color a{
+  cursor: url(Images/ColorOut/Color_Icon.png), auto;
+}
+
+.home-img-karma a{
+  cursor: url(Images/Karma/Karma_Icon.png), auto;
+}
+
+.home-img-thx a{
+  cursor: url(Images/TartanHacks/Thx_ICON.png), auto;
+}
+
+.home-img-cat a{
+  cursor: url(Images/Catnapped/CatIcon.png), auto;
+}
+
+.spread-img {
+ display: block;
+ width: 100%;
+ height: auto;
+
+}
+
+
+.img-container {
+ display: flex;
+ flex-wrap: nowrap;
+ justify-content: space-between;
+ border-radius: 10pt;
+}
+
+
+.img-container img {
+ width: 50%; /* Adjust this as needed */
+ height: auto;
+ border-radius: inherit;
+}
+
+
+.img-crop-container {
+ display: flex;
+ flex-wrap: nowrap;
+ justify-content: space-between;
+ border-radius: inherit;
+}
+
+
+.img-crop-container img {
+ width: 50%; /* Adjust this as needed */
+ height: 300px;
+ object-fit: cover; /* Maintain the aspect ratio while covering the container */
+ object-position: 50% 25%;
+ overflow: hidden;
+ border-radius: inherit;
+}
+
+
+.flex { /*selector*/
+ /* rules, Property: Value */
+ display: flex;   
+ flex-wrap: wrap; 
+ justify-content: space-between; /*but space between each element*/
+ align-items: flex-start;
+ margin: 0 7.5%; /*0 on top and bottom 7.5 on left and right*/
+
+
+}
+.flexIndex { /*selector*/
+ /* rules, Property: Value */
+ display: flex;   
+ flex-wrap: wrap; 
+ justify-content: space-between; /*but space between each element*/
+ align-items: flex-start;
+ margin: 0% 0.5%; /*0 on top and bottom 2 on left and right*/
+
+
+}
+
+
+.col1{   /*col1 WITHIN section -- . means CLASS OF */
+ width: 16%; /*16.7*/
+}
+
+
+.col2{ 
+ width: 33%; /*33.4*/
+}
+
+
+.col3{ 
+ width: 49%; /*49.8*/
+}
+
+
+.flex-container {
+  display: flex;
+  align-items: flex-start;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.75s ease-in-out, opacity 0.5s ease-in-out; /* Faster opacity transition for when leaving */
+  opacity: 0;
+}
+
+.home-img:hover .flex-container {
+  max-height: 1080px; /* Adjust to the maximum height of the content */
+  opacity: 1;
+  transition: max-height 0.75s ease-in-out, opacity 0.3s ease-in-out; 
+}
+
+.home-img:hover .white-dropdown {
+  transform: rotate(90deg); /* Rotate the subheading on image hover */
+  color:#14D277;
+  transition: transform 0.3s ease-in-out; /* Smooth transition */
+}
+
+.white-dropdown {
+  color:#FFFFFF;
+  display: inline-block; /* To apply the transform */
+  transition: transform 0.3s ease-in-out; /* Prepares for smooth hover transition */
+}
+
+.col4{ 
+ width: 66%; /*66.3*/
+}
+
+
+.col5{ 
+ width: 82%; /*82.8*/
+}
+
+
+.col6{ 
+ width: 100%; /*cuz it can be*/
+}
+
+
+.big-buffer{
+  margin-top: 2rem;
+}
+
+
+.double-big-buffer{
+ margin-top: 4rem;
+}
+
+.project-buffer{
+  margin-top: 6rem;
+ }
+
+.massive-buffer{
+ margin-top: 15rem;
+}
+
+
+.small-buffer{
+ margin-top: 0.4rem;
+}
+
+.index-text-buffer{
+  margin-top: 0.6rem;
+ }
+
+.index-buffer{
+  margin-top: 0.25rem;
+  display: flex; /* Keep horizontal layout */
+  justify-content: space-between; /* Distribute links across navbar */
+  align-items: center; /* Vertically center the items */
+ }
+
+
+main {
+   padding-top: 3rem;
+   padding-left: 2.5rem;
+   padding-right: 2.5rem;
+   padding-bottom: 1rem;
+}
+
+
+
+
+ div.hugebr {
+   height: 25vh;
+ }
+
+
+ div.smallbr {
+   height: 1rem;
+ }
+
+
+/* type */
+
+h1 {
+  font-family: "DM Sans", sans-serif;
+  font-weight: 250;
+  font-style: regular;
+  font-size: 20pt;
+  color: #ffffff;
+  line-height: 1.2; /* Equivalent to 120% of the font size */
+}
+
+ /* subtitle heading */
+h2 {
+ font-family: "DM Sans", sans-serif;
+ font-weight: 400;
+ font-style: medium;
+ font-size: 25pt;
+ color: #ffffff;
+ line-height: 100%;
+}
+
+
+.green-text {
+  color: #14D277;
+}
+
+.orange-text {
+  color: #FFC164;
+}
+
+.purple-text {
+  color: #9f0fff;
+}
+
+.gray-subheading {
+  color:#7F7F7F;
+}
+
+
+
+bold {
+ font-weight: bold;
+}
+
+
+/* body paragraph */
+h3 { 
+ font-family: "DM Sans", sans-serif;
+ font-weight: 300;
+ font-style: regular;
+ font-size: 15pt;
+ color: #ffffff;
+ line-height: 120%;
+}
+
+
+/* Andrew test */
+.bodycopy {
+ max-width: 35em;
+ /* line-height: 1.2em; */
+}
+/* Big title */
+h4 {
+ font-family: "DM Sans", sans-serif;
+ font-weight: 600;
+ font-style: semibold;
+ font-size: 35pt;
+ color: #ffffff;
+ line-height: 120%;
+}
+
+.gray-body {
+  color: #7F7F7F;
+}
+
+
+/* nav bar */
+h5 { 
+ font-family: "DM Sans", sans-serif;
+ font-weight: 400;
+ font-style: regular;
+ font-size: 15pt;
+ color: #ffffff;
+ line-height: 120%;
+}
+
+h6 { 
+  font-family: "DM Sans", sans-serif;
+  font-weight: 250;
+  font-style: regular;
+  font-size: 12.5pt;
+  color: #ffffff;
+  line-height: 120%;
+}
+
+h6.simple-button {
+  font-size: 10pt;
+  display: inline-block; /* Ensures it respects content size */
+  padding: 0.25rem 0.5rem; /* Add space inside the border */
+  /*border: 2px solid #14D277;  /*White border around the text */
+  border-radius: 25px; /* Rounded corners */
+  background-color: #3f3f3f; /* Transparent background */
+  text-decoration: none; /* Remove any underlines if used in a link */
+}
+
+
+
+
+/* Link Base Style */
+a:link {
+  color: #7f7f7f; /* Same gray for visited links */
+  text-decoration: none;
+}
+
+a:visited {
+  color: #7f7f7f; /* Same gray for visited links */
+  text-decoration: none;
+}
+
+a:hover {
+  color: #14D277; /* Green hover effect */
+  text-decoration: none; /* Ensure no underline appears */
+  transition: color 0.3s ease-out; /* Smooth transition */
+}
+
+
+
+
+
+
+em {
+ font-family: "DM Sans", sans-serif;
+ font-weight: 600;
+ font-style: semibold;
+ font-size: 30px;
+ color: #000000;
+ line-height: 120%;
+}
+/* Navigación */
+/* General Navbar Styling */
+.topnav {
+  position: fixed; /* Fix navbar to the top */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full-width navbar */
+  margin: 0.5% 0.5%; /*0 on top and bottom 2 on left and right*/
+  z-index: 1000; /* Ensure navbar stays on top */
+  background-color: transparent ; /* Keep black background */
+  box-sizing: border-box; /* Include padding in width calculation */
+  display: flex; /* Keep horizontal layout */
+  justify-content: space-between; /* Distribute links across navbar */
+  align-items: center; /* Vertically center the items */
+}
+
+/* Navbar Links */
+.topnav a {
+  display: inline-block; /* Keep links in a single horizontal line */
+  text-decoration: none; /* Remove underline */
+  color: #ffffff; /* Default text color */
+  background-color: rgba(0, 0, 0, 0.5); 
+  margin-right: 1.5rem; /* Space between links */
+  padding: 0.5rem 1rem; /* Padding for button-like appearance */
+  border-radius: 25px; /* Rounded corners */
+  border: 2px solid transparent; /* Default no visible border */
+  transition: color 0.3s ease, border-color 0.3s ease; /* Smooth hover transitions */
+}
+
+/* Hover and Active States */
+.topnav-work a:hover,
+.topnav-work a.active {
+  color: #ffffff; /* Keep text white */
+  border-color: #14D277; /* Green border for Work section */
+}
+
+.topnav-about a:hover,
+.topnav-about a.active {
+  color: #ffffff; /* Keep text white */
+  border-color: #FFC164; /* Yellow-orange border for About section */
+}
+
+.topnav-play a:hover,
+.topnav-play a.active {
+  color: #ffffff; /* Keep text white */
+  border-color: #9f0fff; /* Purple border for Play section */
+}
+
+/* Responsive Adjustments for Mobile */
+@media only screen and (max-width: 800px) {
+  .topnav {
+    justify-content: flex-start; /* Align items to the left */
+    padding-left: 1.5rem; /* Add left padding for better spacing */
+  }
+
+  .topnav a {
+    margin-right: 1rem; /* Reduce spacing between links */
+    padding: 0.5rem 0.8rem; /* Adjust padding for smaller screens */
+    font-size: 0.9rem; /* Slightly smaller font for mobile */
+  }
+}
+
+
+
+
+ /* Images? */
+ .bodyimg {
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: column;
+   width: 49.5%;
+   height: inherit 20%;
+}
+
+
+.cropped-img {
+ width: 33%;
+ height: 300px;
+ overflow: hidden;
+ }
+
+
+ .cropped-img img {
+   width: 100%; /* Make the image fill the container */
+   height: 100%; /* Ensure the image height is 100% of the container */
+   object-fit: cover; /* Maintain the aspect ratio while covering the container */
+   object-position: 25% 10%;
+}
+
+
+ /* why the fuck not */
+.loading {
+   margin: 20px;
+   font-family: "DM Sans", sans-serif;
+   font-weight: 600;
+   font-style: semibold;
+   font-size: 30px;
+   color: #ffffff;
+   line-height: 120%;
+}
+
+
+
+
+.loading:after {
+ display: inline-block;
+ animation: dotty steps(1,end) 1s infinite;
+ content: '';
+}
+
+
+@keyframes dotty {
+ 0%   { content: ''; }
+ 25%  { content: '.'; }
+ 50%  { content: '..'; }
+ 75%  { content: '...'; }
+ 100% { content: ''; }
+}
+
+
+.youtube-video {
+ aspect-ratio: 16 / 9;
+ width: 100%;
+ border-radius: 10pt;
+}
+
+
+@media only screen and (max-width: 800px) {
+
+.flex{
+ display: block;
+}
+.flexIndex{
+  margin: 0 0%;
+  display: block;
+ }
+/* Serialize Selector: use commas to separate BUT NOT AFTER LAST ONE!*/
+
+
+.col1 , .col2, .col3, .col4, .col5, .col6 {
+ width: 100%;
+ margin-bottom: 1.5rem;
+}
+
+
+.home-img {
+ width: 100%;
+}
+
+.index-buffer {
+  width: 100%;
+  margin-top: 0.25rem;
+  display: flex;
+  justify-content: left; /* Center-align horizontally */
+  align-items: left; /* Center-align vertically */
+  text-align: left; /* Ensures inline content is centered */
+}
+}
+
+.simple-buttons-container {
+  display: inline-flex; /* Treats the buttons as inline elements inside a flexbox */
+  gap: 0.5rem; /* Adds space between buttons */
+}
+
+.simple-button {
+  font-size: 10pt;
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 25px;
+  background-color: #3f3f3f;
+  text-decoration: none;
+}
+
+
+/*hello*/
