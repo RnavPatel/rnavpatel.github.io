@@ -93,11 +93,24 @@ video {
 
 .home-img {
   display: block;
-  width: 49.5%; /* Adjust as needed */
   position: relative;
-  overflow: hidden; /* Ensures media scaling stays within bounds */
-  border-radius: 10pt;
+  overflow: hidden;
 }
+
+.home-img a {
+  display: block;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
+
+/* New dynamic column rules (6-col system = 100%) */
+.home-img.col-span-3 { width: 49.5%; } /* 3 of 6 */
+.home-img.col-span-4 { width: 66%; }
+.home-img.col-span-2 { width: 33%; }
+.home-img.col-span-6 { width: 100%; }
+
+
 
 .home-img img, 
 .home-img video {
@@ -128,34 +141,11 @@ video {
 .media-wrapper:hover video,
 .media-wrapper:hover img {
   transform: scale(1.05); /* Apply zoom effect on hover */
-
 }
 
 
-/* .home-img {
-  display: block;
-  width: 49.75%;
-  height: auto;
-  position: relative;
-  overflow: hidden; 
-}
-
-.home-img video,
-.home-img img {
-  width: 99%;
-  height: auto; 
-  transition: border 0.3s ease-in-out; 
-  object-fit: cover;
-  z-index: 1;
-}
-
-.home-img:hover video,
-.home-img:hover img {
-  /*transform: scale(1.05); 
-  border: 2px solid #14D277; 
-
-} */
-
+/* 
+CURSORS
 .home-img-expo a{
   cursor: url(Images/Expo/ExpoIcon.png), auto;
 }
@@ -182,7 +172,7 @@ video {
 
 .home-img-cat a{
   cursor: url(Images/Catnapped/CatIcon.png), auto;
-}
+} */
 
 .spread-img {
  display: block;
@@ -233,17 +223,20 @@ video {
  align-items: flex-start;
  margin: 0 7.5%; /*0 on top and bottom 7.5 on left and right*/
 
-
 }
-.flexIndex { /*selector*/
- /* rules, Property: Value */
+
+.no-margin {
+  margin: 0 !important;
+}
+
+
+
+.flexIndex { 
  display: flex;   
  flex-wrap: wrap; 
- justify-content: space-between; /*but space between each element*/
+ justify-content: space-between; 
  align-items: flex-start;
- margin: 0% 0.5%; /*0 on top and bottom 2 on left and right*/
-
-
+ margin: 0% 0.5%; 
 }
 
 
@@ -261,34 +254,6 @@ video {
  width: 49%; /*49.8*/
 }
 
-
-.flex-container {
-  display: flex;
-  align-items: flex-start;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.75s ease-in-out, opacity 0.5s ease-in-out; /* Faster opacity transition for when leaving */
-  opacity: 0;
-}
-
-.home-img:hover .flex-container {
-  max-height: 1080px; /* Adjust to the maximum height of the content */
-  opacity: 1;
-  transition: max-height 0.75s ease-in-out, opacity 0.3s ease-in-out; 
-}
-
-.home-img:hover .white-dropdown {
-  transform: rotate(90deg); /* Rotate the subheading on image hover */
-  color:#14D277;
-  transition: transform 0.3s ease-in-out; /* Smooth transition */
-}
-
-.white-dropdown {
-  color:#FFFFFF;
-  display: inline-block; /* To apply the transform */
-  transition: transform 0.3s ease-in-out; /* Prepares for smooth hover transition */
-}
-
 .col4{ 
  width: 66%; /*66.3*/
 }
@@ -301,6 +266,28 @@ video {
 
 .col6{ 
  width: 100%; /*cuz it can be*/
+}
+
+.col1, .col2, .col3, .col4, .col5, .col6 {
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.responsive-half {
+  width: calc(50% - 1rem);
+  flex-shrink: 0;
+}
+
+
+
+
+.flex-container {
+  display: flex;
+  align-items: flex-start;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.75s ease-in-out, opacity 0.5s ease-in-out; /* Faster opacity transition for when leaving */
+  opacity: 0;
 }
 
 
@@ -508,7 +495,7 @@ em {
   background-color: transparent ; /* Keep black background */
   box-sizing: border-box; /* Include padding in width calculation */
   display: flex; /* Keep horizontal layout */
-  justify-content: space-between; /* Distribute links across navbar */
+  justify-content: center; /* Distribute links across navbar */
   align-items: center; /* Vertically center the items */
 }
 
@@ -546,15 +533,14 @@ em {
 
 /* Responsive Adjustments for Mobile */
 @media only screen and (max-width: 800px) {
-  .topnav {
-    justify-content: flex-start; /* Align items to the left */
-    padding-left: 1.5rem; /* Add left padding for better spacing */
-  }
-
   .topnav a {
     margin-right: 1rem; /* Reduce spacing between links */
     padding: 0.5rem 0.8rem; /* Adjust padding for smaller screens */
     font-size: 0.9rem; /* Slightly smaller font for mobile */
+  }
+
+  .responsive-half {
+    width: 100%;
   }
 }
 
@@ -635,7 +621,7 @@ em {
 /* Serialize Selector: use commas to separate BUT NOT AFTER LAST ONE!*/
 
 
-.col1 , .col2, .col3, .col4, .col5, .col6 {
+.col1 , .col2, .col3, .col4, .col5, .col6, .home-img.col-span-3, .home-img.col-span-4, .home-img.col-span-2 {
  width: 100%;
  margin-bottom: 1.5rem;
 }
