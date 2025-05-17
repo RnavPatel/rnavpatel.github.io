@@ -320,7 +320,7 @@ CURSORS
 .index-buffer{
   margin-top: 0.25rem;
   display: flex; /* Keep horizontal layout */
-  justify-content: space-between; /* Distribute links across navbar */
+  justify-content: center; /* Distribute links across navbar */
   align-items: center; /* Vertically center the items */
  }
 
