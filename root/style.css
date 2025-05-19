@@ -80,11 +80,11 @@ img {
  display: block;
  width: 100%;
  height: auto;
- border-radius: 10pt;
+ border-radius: 5pt;
 }
 
 video {
-  border-radius: 10pt;
+  border-radius: 5pt;
 }
 
 .invert{
@@ -101,6 +101,7 @@ video {
   display: block;
   border-radius: inherit;
   overflow: hidden;
+
 }
 
 
@@ -124,9 +125,15 @@ video {
   position: relative;
   width: 100%;
   height: auto;
-  overflow: hidden; /* Clip zoomed content */
-  border-radius: 10pt;
+  overflow: hidden;
+  border-radius: 5pt;
+  /*transition: border 0.2s ease; /* ⬅️ Smooth transition */
 }
+
+/* .media-wrapper:hover {
+  border: 1.5px solid white;
+  box-sizing: border-box;
+} */
 
 .media-wrapper video,
 .media-wrapper img {
@@ -142,6 +149,44 @@ video {
 .media-wrapper:hover img {
   transform: scale(1.05); /* Apply zoom effect on hover */
 }
+
+.home-img.square {
+  width: calc(25% - 1rem);  /* Or however wide you want them */
+  aspect-ratio: 1 / 1;
+  border-radius: 5pt;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.home-img.square a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.home-img.square .media-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.home-img.square .media-wrapper img,
+.home-img.square .media-wrapper video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: inherit;
+}
+
+
+
 
 
 /* 
@@ -605,19 +650,29 @@ em {
 .youtube-video {
  aspect-ratio: 16 / 9;
  width: 100%;
- border-radius: 10pt;
+ border-radius: 5pt;
 }
 
 
 @media only screen and (max-width: 800px) {
 
+  /* Reduce vertical spacing on mobile */
+.small-buffer,
+.index-text-buffer,
+.index-buffer {
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+
 .flex{
  display: block;
 }
-.flexIndex{
-  margin: 0 0%;
-  display: block;
- }
+.flexIndex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
 /* Serialize Selector: use commas to separate BUT NOT AFTER LAST ONE!*/
 
 
@@ -627,9 +682,41 @@ em {
 }
 
 
-.home-img {
+.home-img  {
  width: 100%;
 }
+
+.home-img.square {
+  width: calc(50% - 0.75rem);
+  aspect-ratio: 1 / 1;
+  margin-bottom: 1.5rem;
+  border-radius: 5pt;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.home-img.square:nth-child(odd) {
+  margin-right: 1.5rem;
+}
+
+.home-img.square .media-wrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  position: relative;
+}
+
+.home-img.square .media-wrapper img,
+.home-img.square .media-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: inherit;
+}
+
+
 
 .index-buffer {
   width: 100%;
@@ -642,9 +729,11 @@ em {
 }
 
 .simple-buttons-container {
-  display: inline-flex; /* Treats the buttons as inline elements inside a flexbox */
-  gap: 0.5rem; /* Adds space between buttons */
+  display: flex;
+  flex-wrap: wrap; /* Add this if they might wrap on smaller screens */
+  gap: 0.5rem;      /* ⬅️ Increase this value as needed (e.g. 1rem) */
 }
+
 
 .simple-button {
   font-size: 10pt;
@@ -653,7 +742,6 @@ em {
   border-radius: 25px;
   background-color: #3f3f3f;
   text-decoration: none;
-  vertical-align: middle;
 }
 
 
