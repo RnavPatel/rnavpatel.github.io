@@ -63,13 +63,13 @@ table {
 /* USE FOR DEBUGGING */
 /*OVER HERE*/
 body {
-  background: rgba(0, 0, 0);       
+  background: rgba(255, 255, 255);       
 }
 
 hr {
   border: none; 
   height: 1.5px; 
-  background-color: white; 
+  background-color: rgb(173, 173, 173); 
   width: 100%;
   border-radius: 50px;
 }
@@ -397,35 +397,18 @@ h1 {
   font-weight: 250;
   font-style: regular;
   font-size: 20pt;
-  color: #ffffff;
+  color: #000000;
   line-height: 1.2; /* Equivalent to 120% of the font size */
 }
 
  /* subtitle heading */
 h2 {
  font-family: "DM Sans", sans-serif;
- font-weight: 400;
+ font-weight: 600;
  font-style: medium;
  font-size: 25pt;
- color: #ffffff;
+ color: #666666;
  line-height: 100%;
-}
-
-
-.green-text {
-  color: #14D277;
-}
-
-.orange-text {
-  color: #FFC164;
-}
-
-.purple-text {
-  color: #9f0fff;
-}
-
-.gray-subheading {
-  color:#7F7F7F;
 }
 
 
@@ -441,10 +424,13 @@ h3 {
  font-weight: 300;
  font-style: regular;
  font-size: 15pt;
- color: #ffffff;
+ color: #666666;
  line-height: 120%;
 }
 
+.gray-subheading {
+  color:#bcbcbc
+}
 
 /* Andrew test */
 .bodycopy {
@@ -457,33 +443,32 @@ h4 {
  font-weight: 600;
  font-style: semibold;
  font-size: 35pt;
- color: #ffffff;
- line-height: 120%;
+ color: #666666;
+ line-height: 100%;
 }
 
-.gray-body {
-  color: #7F7F7F;
+.black-subheading {
+  color:#000000;
 }
-
-
 /* nav bar */
 h5 { 
  font-family: "DM Sans", sans-serif;
  font-weight: 400;
  font-style: regular;
  font-size: 15pt;
- color: #ffffff;
+ color: #000000;
  line-height: 120%;
 }
 
 h6 { 
   font-family: "DM Sans", sans-serif;
-  font-weight: 250;
+  font-weight: 300;
   font-style: regular;
   font-size: 12.5pt;
-  color: #ffffff;
+  color: #666666;
   line-height: 120%;
 }
+
 
 h6.simple-button {
   font-size: 10pt;
@@ -491,7 +476,6 @@ h6.simple-button {
   padding: 0.25rem 0.5rem; /* Add space inside the border */
   /*border: 2px solid #14D277;  /*White border around the text */
   border-radius: 25px; /* Rounded corners */
-  background-color: #3f3f3f; /* Transparent background */
   text-decoration: none; /* Remove any underlines if used in a link */
 }
 
@@ -545,36 +529,85 @@ em {
 }
 
 /* Navbar Links */
-.topnav a {
-  display: inline-block; /* Keep links in a single horizontal line */
-  text-decoration: none; /* Remove underline */
-  color: #ffffff; /* Default text color */
-  background-color: rgba(0, 0, 0, 0.5); 
-  margin-right: 1.5rem; /* Space between links */
-  padding: 0.5rem 1rem; /* Padding for button-like appearance */
-  border-radius: 25px; /* Rounded corners */
-  border: 2px solid transparent; /* Default no visible border */
-  transition: color 0.3s ease, border-color 0.3s ease; /* Smooth hover transitions */
+.toggle-nav {
+  display: flex;
+  background-color: #f2f2f2;
+  border-radius: 999px;
+  padding: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  width: fit-content; /* Optional: shrink-wrap the whole nav */
 }
+
+/* Force equal width per button */
+.toggle-nav a {
+  flex: 1;
+  text-align: center;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+/* Active one */
+.toggle-nav a.active, .topnav a.active h6 {
+  color: white;
+}
+
 
 /* Hover and Active States */
 .topnav-work a:hover,
 .topnav-work a.active {
-  color: #ffffff; /* Keep text white */
-  border-color: #14D277; /* Green border for Work section */
+  color: #ffffff;
+  border-color: #14D277; /* green */
 }
 
 .topnav-about a:hover,
 .topnav-about a.active {
-  color: #ffffff; /* Keep text white */
-  border-color: #FFC164; /* Yellow-orange border for About section */
+  color: #ffffff;
+  border-color: #FFC164; /* orange */
 }
 
 .topnav-play a:hover,
 .topnav-play a.active {
-  color: #ffffff; /* Keep text white */
-  border-color: #9f0fff; /* Purple border for Play section */
+  color: #ffffff;
+  border-color: #9f0fff; /* purple */
 }
+
+/* Outer pill container */
+.toggle-nav {
+  display: flex;
+  background-color: #d6d6d692; /* Light gray pill background */
+  border-radius: 999px;
+  padding: 0.25rem;
+  gap: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Nav links inside pill */
+.toggle-nav a {
+  display: inline-block;
+  padding: 0.4rem 1.1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+/* Active tab */
+.toggle-nav a.active {
+  background-color: #111;
+  color: white;
+}
+
+/* Optional: hover effect */
+.toggle-nav a:hover {
+  background-color: #ddd;
+  color: #111;
+}
+
 
 /* Responsive Adjustments for Mobile */
 @media only screen and (max-width: 800px) {
@@ -624,7 +657,7 @@ em {
    font-weight: 600;
    font-style: semibold;
    font-size: 30px;
-   color: #ffffff;
+   color: #000000;
    line-height: 120%;
 }
 
@@ -688,16 +721,13 @@ em {
 
 .home-img.square {
   width: calc(50% - 0.75rem);
-  aspect-ratio: 1 / 1;
-  margin-bottom: 1.5rem;
-  border-radius: 5pt;
-  position: relative;
-  flex-shrink: 0;
+  margin-bottom: 1rem;
+  margin-right: 0.75rem;
+}
+.home-img.square:nth-child(2n) {
+  margin-right: 0; /* Prevent overflow on the right column */
 }
 
-.home-img.square:nth-child(odd) {
-  margin-right: 1.5rem;
-}
 
 .home-img.square .media-wrapper {
   width: 100%;
@@ -740,7 +770,7 @@ em {
   display: inline-block;
   padding: 0.25rem 0.5rem;
   border-radius: 25px;
-  background-color: #3f3f3f;
+  border: 2px solid rgb(102, 102, 102); /* Default no visible border */
   text-decoration: none;
 }
 
