@@ -397,7 +397,7 @@ h1 {
   font-weight: 250;
   font-style: regular;
   font-size: 20pt;
-  color: #000000;
+  color: #666666;
   line-height: 1.2; /* Equivalent to 120% of the font size */
 }
 
@@ -467,6 +467,9 @@ h6 {
   font-size: 12.5pt;
   color: #666666;
   line-height: 120%;
+}
+.gray-subheading {
+  color:#bcbcbc
 }
 
 
