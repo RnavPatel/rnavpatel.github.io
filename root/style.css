@@ -219,6 +219,25 @@ CURSORS
   cursor: url(Images/Catnapped/CatIcon.png), auto;
 } */
 
+.aspect-16-9 {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  border-radius: 5pt;
+}
+
+.aspect-16-9 img,
+.aspect-16-9 video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: inherit;
+}
+
+
 .spread-img {
  display: block;
  width: 100%;
@@ -586,6 +605,8 @@ em {
   padding: 0.25rem;
   gap: 0.25rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  width: fit-content; /* Optional: shrink-wrap the whole nav */
+
 }
 
 /* Nav links inside pill */
@@ -610,21 +631,6 @@ em {
   background-color: #ddd;
   color: #111;
 }
-
-
-/* Responsive Adjustments for Mobile */
-@media only screen and (max-width: 800px) {
-  .topnav a {
-    margin-right: 1rem; /* Reduce spacing between links */
-    padding: 0.5rem 0.8rem; /* Adjust padding for smaller screens */
-    font-size: 0.9rem; /* Slightly smaller font for mobile */
-  }
-
-  .responsive-half {
-    width: 100%;
-  }
-}
-
 
 
 
@@ -692,6 +698,29 @@ em {
 
 @media only screen and (max-width: 800px) {
 
+  main {
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+ }
+
+  .topnav a {
+    margin-right: 1rem; /* Reduce spacing between links */
+    padding: 0.5rem 0.8rem; /* Adjust padding for smaller screens */
+    font-size: 0.9rem; /* Slightly smaller font for mobile */
+  }
+
+  .toggle-nav {
+    justify-content: space-between;
+    width: fit-content; /* Optional: shrink-wrap the whole nav */
+
+  }
+
+  .responsive-half {
+    width: 100%;
+  }
+
   /* Reduce vertical spacing on mobile */
 .small-buffer,
 .index-text-buffer,
@@ -701,7 +730,7 @@ em {
 }
 
 
-.flex{
+.flex {
  display: block;
 }
 .flexIndex {
