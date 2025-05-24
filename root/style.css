@@ -488,6 +488,10 @@ h6 {
   line-height: 120%;
 }
 
+.gray {
+  color:#bcbcbc
+}
+
 .gray-subheading {
   font-size: 10pt;
   color:#bcbcbc
