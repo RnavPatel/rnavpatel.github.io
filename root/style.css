@@ -137,6 +137,7 @@ video {
   align-items: center; /* Center-align vertically */
   text-align: center; /* Ensures inline content is centered */
   }
+
 }
 
 
@@ -390,8 +391,6 @@ CURSORS
 
   /* If you keep a generic .flexIndex mobile rule, neutralize it for .no-gutters */
   .flexIndex.no-gutters { justify-content: initial; }
-
-  
 }
 
 
@@ -503,6 +502,12 @@ h1 {
   color: #e4e4e4;
   line-height: 1.2; /* Equivalent to 120% of the font size */
 }
+
+/* Mobile: darker H1s */
+@media (max-width: 800px) {
+  h1 { color: #666666 !important; }
+}
+
 
  /* subtitle heading */
 h2 {
@@ -866,7 +871,6 @@ em {
   object-position: center;
   border-radius: inherit;
 }
-
 
 }
 
