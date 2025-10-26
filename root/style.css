@@ -104,6 +104,41 @@ video {
 
 }
 
+/* Overlay style (hidden by default) */
+.tile-caption {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  padding: 1rem;
+  color: white;
+  background: linear-gradient(transparent 55%, rgba(0,0,0,0.9));
+  opacity: 0;
+  transition: opacity 200ms ease;
+  pointer-events: none;   /* keep tile fully clickable */
+}
+
+/* Desktop/laptop only: show overlay on hover */
+@media (hover: hover) and (pointer: fine) {
+  .home-img:hover .tile-caption { opacity: 1; }
+}
+
+@media (hover: none), (max-width: 800px) {
+  .tile-caption {
+    position: static;           /* becomes a regular block under the image */
+    background: none;
+    color: inherit;
+    padding: 0.5rem 0 1rem 0;      /* small spacing */
+    opacity: 1;                 /* always visible */
+    pointer-events: auto;
+      justify-content: center; /* Center-align horizontally */
+  align-items: center; /* Center-align vertically */
+  text-align: center; /* Ensures inline content is centered */
+  }
+}
+
 
 /* New dynamic column rules (6-col system = 100%) */
 .home-img.col-span-3 { width: 49.5%; } /* 3 of 6 */
@@ -121,29 +156,35 @@ video {
   border-radius: inherit; /* Inherits the parent's border-radius */
 }
 
+/* unified frame box */
 .media-wrapper {
   position: relative;
   width: 100%;
-  height: auto;
+  height: auto;          /* ignored once aspect-ratio is set */
   overflow: hidden;
-  border-radius: 5pt;
-  /*transition: border 0.2s ease; /* ⬅️ Smooth transition */
+  border-radius: 0;      /* prevents white slivers at corners */
 }
 
-/* .media-wrapper:hover {
-  border: 1.5px solid white;
-  box-sizing: border-box;
-} */
+/* pick the shape per tile */
+.media-wrapper.ar-16x9 { aspect-ratio: 16 / 9; }
+.media-wrapper.ar-1x1  { aspect-ratio: 1 / 1; } /* if you want square via wrapper */
 
-.media-wrapper video,
-.media-wrapper img {
-  display: block;
+/* make media fill the frame identically */
+.media-wrapper img,
+.media-wrapper video {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: auto; /* Fill the wrapper */
-  object-fit: cover; /* Ensure proper scaling and cropping */
-  transition: transform 0.3s ease-in-out; /* Smooth zoom animation */
-  border-radius: inherit;
+  height: 100%;
+  object-fit: cover;     /* crops, never squeezes */
+  display: block;
+
+    /* bring back the animation */
+  transition: transform 260ms ease-in-out;  /* <= this is the key */
+  will-change: transform;                   /* smoother on some GPUs */
+  backface-visibility: hidden;              
 }
+
 
 .media-wrapper:hover video,
 .media-wrapper:hover img {
@@ -303,6 +344,56 @@ CURSORS
  margin: 0% 0.5%; 
 }
 
+/* 1) Kill outer padding so content can touch the viewport edges */
+/* replace your flex for the gallery section */
+.flexIndex.no-gutters {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* two-up */
+  gap: 0;                                 /* no gutters */
+  padding: 0;
+  margin: 0;
+}
+
+
+.home-img { width: 100%; } /* grid handles widths */
+
+/* 2) Make two-up tiles truly butt together */
+.home-img.col-span-3 { width: 50%; }  /* was 49.5% */
+.home-img.col-span-6 { width: 100%; } /* keep full-bleed rows */
+
+/* 3) Remove any visual seams caused by rounding */
+.home-img,
+.media-wrapper,
+.home-img img,
+.home-img video {
+  border-radius: 0 !important;
+}
+
+/* 4) Nuke any margins on tiles that could create gutters */
+.home-img { margin: 0 !important; }
+
+/* 5) Squares: remove their margins so they snap flush too */
+.home-img.square {
+  width: 25%;             /* keep 4-up desktop for now */
+  margin: 0 !important;   /* was adding right/bottom margins */
+}
+
+/* 6) Mobile: ensure flush edges as well */
+@media only screen and (max-width: 800px) {
+  .flexIndex.no-gutters {
+    display: grid !important;                /* keep grid on mobile */
+    grid-template-columns: 1fr !important;   /* one column */
+    gap: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* If you keep a generic .flexIndex mobile rule, neutralize it for .no-gutters */
+  .flexIndex.no-gutters { justify-content: initial; }
+
+  
+}
+
 
 .col1{   /*col1 WITHIN section -- . means CLASS OF */
  width: 16%; /*16.7*/
@@ -381,13 +472,6 @@ CURSORS
   margin-top: 0.6rem;
  }
 
-.index-buffer{
-  margin-top: 0.25rem;
-  display: flex; /* Keep horizontal layout */
-  justify-content: center; /* Distribute links across navbar */
-  align-items: center; /* Vertically center the items */
- }
-
 
 main {
    padding-top: 3rem;
@@ -416,7 +500,7 @@ h1 {
   font-weight: 250;
   font-style: regular;
   font-size: 20pt;
-  color: #666666;
+  color: #e4e4e4;
   line-height: 1.2; /* Equivalent to 120% of the font size */
 }
 
@@ -729,8 +813,7 @@ em {
 
   /* Reduce vertical spacing on mobile */
 .small-buffer,
-.index-text-buffer,
-.index-buffer {
+.index-text-buffer {
   margin-top: 0.5rem !important;
   margin-bottom: 0.5rem !important;
 }
@@ -785,15 +868,6 @@ em {
 }
 
 
-
-.index-buffer {
-  width: 100%;
-  margin-top: 0.25rem;
-  display: flex;
-  justify-content: left; /* Center-align horizontally */
-  align-items: left; /* Center-align vertically */
-  text-align: left; /* Ensures inline content is centered */
-}
 }
 
 .simple-buttons-container {
