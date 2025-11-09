@@ -336,13 +336,12 @@ CURSORS
 }
 
 
-
 .flexIndex { 
  display: flex;   
  flex-wrap: wrap; 
  justify-content: space-between; 
  align-items: flex-start;
- margin: 0% 0.5%; 
+ margin: 0% 5%; 
 }
 
 /* 1) Kill outer padding so content can touch the viewport edges */
@@ -479,7 +478,17 @@ main {
    padding-bottom: 1rem;
 }
 
-
+/* ...existing code... */
+/* remove stray 'section' token on line ~397 */
+/* add consistent section spacing (matches your main) */
+section {
+  padding-top: 3rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+  padding-bottom: 1rem;
+  box-sizing: border-box;
+}
+/* ...existing code... */
 
 
  div.hugebr {
@@ -520,12 +529,6 @@ h2 {
 }
 
 
-
-bold {
- font-weight: bold;
-}
-
-
 /* body paragraph */
 h3 { 
  font-family: "DM Sans", sans-serif;
@@ -536,8 +539,18 @@ h3 {
  line-height: 120%;
 }
 
+.even-spacing {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .gray-subheading {
   color:#bcbcbc
+}
+
+.justified-text {
+  text-align: justify;
 }
 
 /* Andrew test */
@@ -575,6 +588,10 @@ h6 {
   font-size: 12.5pt;
   color: #666666;
   line-height: 120%;
+}
+
+strong {
+ font-weight: bold;
 }
 
 .gray {
@@ -673,24 +690,6 @@ em {
 }
 
 
-/* Hover and Active States */
-.topnav-work a:hover,
-.topnav-work a.active {
-  color: #ffffff;
-  border-color: #14D277; /* green */
-}
-
-.topnav-about a:hover,
-.topnav-about a.active {
-  color: #ffffff;
-  border-color: #FFC164; /* orange */
-}
-
-.topnav-play a:hover,
-.topnav-play a.active {
-  color: #ffffff;
-  border-color: #9f0fff; /* purple */
-}
 
 /* Outer pill container */
 .toggle-nav {
@@ -800,14 +799,10 @@ em {
     padding-bottom: 1rem;
  }
 
-  .topnav a {
-    margin-right: 1rem; /* Reduce spacing between links */
-    padding: 0.5rem 0.8rem; /* Adjust padding for smaller screens */
-    font-size: 0.9rem; /* Slightly smaller font for mobile */
-  }
 
   .toggle-nav {
     justify-content: space-between;
+    padding: 0.25%;
     width: fit-content; /* Optional: shrink-wrap the whole nav */
 
   }
