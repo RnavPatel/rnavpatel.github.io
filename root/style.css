@@ -619,17 +619,26 @@ h6.simple-button {
 /* Link Base Style */
 a:link {
   color: #7f7f7f; /* Same gray for visited links */
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: currentColor; /* or a specific color */
+  text-decoration-thickness: 2.5px;      /* optional */
 }
 
 a:visited {
   color: #7f7f7f; /* Same gray for visited links */
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 2.5px !important;
+  text-underline-offset: 2px;
 }
 
 a:hover {
-  color: #14D277; /* Green hover effect */
-  text-decoration: none; /* Ensure no underline appears */
+  color: #14D277;
+  text-decoration: underline dotted #14D277 !important;
+  text-decoration-color: #14D277 !important;
+  text-decoration-thickness: 2.5px !important;
+  text-underline-offset: 2px;
   transition: color 0.3s ease-out; /* Smooth transition */
 }
 
@@ -724,6 +733,9 @@ em {
 .toggle-nav a:hover {
   background-color: #ddd;
   color: #111;
+  text-decoration: none !important;
+  text-decoration-color: transparent !important;
+  text-decoration-thickness: 0 !important;
 }
 
 
