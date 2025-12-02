@@ -354,6 +354,13 @@ CURSORS
   margin: 0;
 }
 
+.flex-project-page{
+  display: flex;   
+  flex-wrap: wrap; 
+  justify-content: space-between; 
+  align-items: flex-start;
+  margin: 0 20%; 
+}
 
 .home-img { width: 100%; } /* grid handles widths */
 
@@ -508,13 +515,17 @@ h1 {
   font-weight: 250;
   font-style: regular;
   font-size: 20pt;
-  color: #e4e4e4;
+  color: #666666;
   line-height: 1.2; /* Equivalent to 120% of the font size */
+}
+
+.light {
+  color: #e4e4e4;
 }
 
 /* Mobile: darker H1s */
 @media (max-width: 800px) {
-  h1 { color: #666666 !important; }
+  .light { color: #666666 !important; }
 }
 
 
@@ -895,6 +906,100 @@ em {
   border-radius: 25px;
   border: 2px solid rgb(102, 102, 102); /* Default no visible border */
   text-decoration: none;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ------------ PASSWORD GATE LAYOUT ------------ */
+
+.pw-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* smaller presence on the page */
+  margin: 2rem 7.5%;
+  padding: 2rem 0;
+  /* remove the huge min-height */
+  min-height: auto;
+}
+
+
+.pw-section .project-buffer {
+  display: none; /* we don't need the extra buffer column when centering */
+}
+
+.pw-content {
+  text-align: center;        /* center text inside the column */
+  display: flex;
+  flex-direction: column;
+  align-items: center;       /* center the form itself */
+}
+
+/* Form & controls */
+#pw-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;          /* space between row and error text */
+}
+
+/* Row = input + button inline */
+.pw-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;          /* ⬅️ “auto-layout” spacing between input & button */
+}
+
+/* You can tweak these widths to taste */
+#pw-input {
+  padding: 0.5rem 0.6rem;
+  font-size: 12pt;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+  width: 260px;         /* narrower so the button fits nicely beside */
+  max-width: none;
+  font-family: "DM Sans", sans-serif;
+}
+
+#pw-submit {
+  padding: 0.4rem 1rem;
+  font-size: 12pt;
+  border-radius: 20px;
+  border: none;
+  background-color: #111;
+  color: white;
+  cursor: pointer;
+  font-family: "DM Sans", sans-serif;
+}
+
+
+#pw-submit:hover {
+  background-color: #333;
+}
+
+/* Error text */
+#pw-error {
+  color: #d9534f;
+  margin-top: 0.5rem;
+  font-size: 12pt;  
+  font-family: "DM Sans", sans-serif;
+  font-weight: 300;      /* optional – matches your h6 */
+  text-align: center;    /* optional – looks cleaner */
+}
+
+
+/* ---- PASSWORD FADE ANIMATIONS ---- */
+
+/* Start hidden but ready to fade in */
+.fade-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.fade-transition {
+  transition: opacity 0.6s ease;
 }
 
 
