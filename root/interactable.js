@@ -1,4 +1,4 @@
-const INTERACT = "noir2025";
+const INTERACT = "noir2025"; //if you're reading this, why must you hack me :( hope you like the work
 
 const form = document.getElementById("pw-form");
 const input = document.getElementById("pw-input");
