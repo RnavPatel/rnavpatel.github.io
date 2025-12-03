@@ -523,6 +523,7 @@ h1 {
   color: #e4e4e4;
 }
 
+
 /* Mobile: darker H1s */
 @media (max-width: 800px) {
   .light { color: #666666 !important; }
@@ -610,7 +611,7 @@ strong {
 }
 
 .gray-subheading {
-  font-size: 10pt;
+  font-size: 12.5pt;
   color:#bcbcbc
 }
 
@@ -845,10 +846,11 @@ em {
 .flex {
  display: block;
 }
-.flexIndex {
+.flexIndex, .flex-project-page {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+   margin: 0% 5%; 
 }
 /* Serialize Selector: use commas to separate BUT NOT AFTER LAST ONE!*/
 
