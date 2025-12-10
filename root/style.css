@@ -865,7 +865,8 @@ em {
 
   /* Reduce vertical spacing on mobile */
 .small-buffer,
-.index-text-buffer {
+.index-text-buffer,
+.descriptor-buffer {
   margin-top: 0.5rem !important;
   margin-bottom: 0.5rem !important;
 }
