@@ -8,31 +8,18 @@ function initProcessSlideshow(slideshow) {
 
   const extensions = ["jpg", "jpeg", "png", "webp", "mp4"];
 
+  //
   // ------------------------------------------------------------
-  // 1. BUILD SLIDES FROM FOLDER (ORDERED, NO EMPTY SLOTS)
+  // 1. BUILD SLIDES FROM FOLDER
   // ------------------------------------------------------------
-
-  // placeholders[i-1] = <div class="process-item" data-index="i">
-  const placeholders = new Array(max);
-  const filled = new Array(max).fill(false);
-
-  function createItem(index) {
-    const item = document.createElement("div");
-    item.className = "process-item";
-    item.dataset.index = index;  // so we can sort/insert by index later
-    return item;
-  }
-
-  // Try to load each index once
+  //
   for (let i = 1; i <= max; i++) {
     const indexStr = String(i).padStart(2, "0");
-    const placeholder = createItem(i);
-    placeholders[i - 1] = placeholder;
+    let foundOne = false;
 
     extensions.forEach(ext => {
       const url = `${folder}Process_${indexStr}.${ext}`;
 
-      // VIDEO
       if (ext === "mp4") {
         const video = document.createElement("video");
         video.src = url;
@@ -42,66 +29,52 @@ function initProcessSlideshow(slideshow) {
         video.autoplay = true;
 
         video.oncanplay = () => {
-          if (filled[i - 1]) return;   // already have something for this index
-          filled[i - 1] = true;
-
-          placeholder.appendChild(video);
-          insertPlaceholderInOrder(placeholder);
+          if (!foundOne) {
+            const item = createItem();
+            item.appendChild(video);
+            strip.appendChild(item);
+            foundOne = true;
+          }
         };
-
-      // IMAGE
       } else {
         const img = new Image();
         img.src = url;
-
         img.onload = () => {
-          if (filled[i - 1]) return;
-          filled[i - 1] = true;
-
-          placeholder.appendChild(img);
-          insertPlaceholderInOrder(placeholder);
+          if (!foundOne) {
+            const item = createItem();
+            item.appendChild(img);
+            strip.appendChild(item);
+            foundOne = true;
+          }
         };
       }
     });
   }
 
-  // Insert the placeholder into .process-strip in ascending data-index order
-  function insertPlaceholderInOrder(placeholder) {
-    const newIndex = parseInt(placeholder.dataset.index, 10);
-    const children = strip.children;
-
-    let inserted = false;
-
-    for (let j = 0; j < children.length; j++) {
-      const childIndex = parseInt(children[j].dataset.index, 10);
-      if (childIndex > newIndex) {
-        strip.insertBefore(placeholder, children[j]);
-        inserted = true;
-        break;
-      }
-    }
-
-    if (!inserted) {
-      strip.appendChild(placeholder);
-    }
+  function createItem() {
+    const item = document.createElement("div");
+    item.className = "process-item";
+    return item;
   }
 
+  //
   // ------------------------------------------------------------
   // 2. SLIDESHOW VARIABLES
   // ------------------------------------------------------------
-
+  //
   let currentIndex = 0;
   let isHovered = false;
   let autoTimer = null;
-  let isAutoScrolling = false;   // prevent scroll handler fighting autoplay
+  let isAutoScrolling = false;   // ⭐ FIX: prevent sync glitches
 
   const slideDuration = 3000;
   const transitionDuration = 600;
 
+  //
   // ------------------------------------------------------------
-  // 3. PROGRESS BAR
+  // 3. UPDATE PROGRESS BAR
   // ------------------------------------------------------------
-
+  //
   function updateProgressFromIndex(index) {
     const total = strip.children.length;
     if (!total) return;
@@ -110,10 +83,11 @@ function initProcessSlideshow(slideshow) {
     progressFill.style.width = `${progress}%`;
   }
 
+  //
   // ------------------------------------------------------------
-  // 4. SCROLL TO INDEX (CENTERED IN VIEWPORT)
+  // 4. SCROLL TO A SPECIFIC SLIDE (CENTERED)
   // ------------------------------------------------------------
-
+  //
   function scrollToIndex(index) {
     const items = strip.children;
     if (!items.length) return;
@@ -122,6 +96,7 @@ function initProcessSlideshow(slideshow) {
     const clamped = ((index % total) + total) % total;
     const targetItem = items[clamped];
 
+    // Get bounding boxes
     const itemRect = targetItem.getBoundingClientRect();
     const wrapperRect = stripWrapper.getBoundingClientRect();
 
@@ -131,6 +106,7 @@ function initProcessSlideshow(slideshow) {
     const delta = itemCenter - wrapperCenter;
     const targetLeft = stripWrapper.scrollLeft + delta;
 
+    // ⭐ Lock scroll-sync during autoplay animation
     isAutoScrolling = true;
 
     stripWrapper.scrollTo({
@@ -146,26 +122,25 @@ function initProcessSlideshow(slideshow) {
     updateProgressFromIndex(clamped);
   }
 
+  //
   // ------------------------------------------------------------
-  // 5. FIND SLIDE CLOSEST TO CENTER (manual scroll)
+  // 5. GET INDEX OF SLIDE CLOSEST TO CENTER (for manual scroll)
   // ------------------------------------------------------------
-
+  //
   function getCenteredIndex() {
     const items = strip.children;
     if (!items.length) return -1;
 
     const wrapperCenter = stripWrapper.scrollLeft + stripWrapper.clientWidth / 2;
-
     let closestIndex = -1;
-    let closestDist = Infinity;
+    let smallestDelta = Infinity;
 
     for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-      const itemCenter = item.offsetLeft + item.clientWidth / 2;
-      const dist = Math.abs(itemCenter - wrapperCenter);
+      const center = items[i].offsetLeft + items[i].clientWidth / 2;
+      const dist = Math.abs(center - wrapperCenter);
 
-      if (dist < closestDist) {
-        closestDist = dist;
+      if (dist < smallestDelta) {
+        smallestDelta = dist;
         closestIndex = i;
       }
     }
@@ -173,14 +148,15 @@ function initProcessSlideshow(slideshow) {
     return closestIndex;
   }
 
+  //
   // ------------------------------------------------------------
-  // 6. SYNC BAR WHEN USER SCROLLS
+  // 6. SYNC PROGRESS BAR WHEN USER SCROLLS MANUALLY
   // ------------------------------------------------------------
-
+  //
   let scrollTimeout = null;
 
   stripWrapper.addEventListener("scroll", () => {
-    if (isAutoScrolling) return;  // ignore scroll events caused by autoplay
+    if (isAutoScrolling) return;  // ⭐ KEY FIX: ignore when autoplay moves slider
 
     if (scrollTimeout) clearTimeout(scrollTimeout);
 
@@ -193,10 +169,11 @@ function initProcessSlideshow(slideshow) {
     }, 80);
   });
 
+  //
   // ------------------------------------------------------------
   // 7. AUTOPLAY
   // ------------------------------------------------------------
-
+  //
   function startAuto() {
     if (!strip.children.length) return;
 
@@ -207,24 +184,25 @@ function initProcessSlideshow(slideshow) {
       if (isHovered) return;
 
       const total = strip.children.length;
-      if (!total) return;
-
       const nextIndex = (currentIndex + 1) % total;
+
       scrollToIndex(nextIndex);
     }, slideDuration + transitionDuration);
   }
 
+  //
   // ------------------------------------------------------------
   // 8. PAUSE ON HOVER
   // ------------------------------------------------------------
-
+  //
   slideshow.addEventListener("mouseenter", () => (isHovered = true));
   slideshow.addEventListener("mouseleave", () => (isHovered = false));
 
+  //
   // ------------------------------------------------------------
-  // 9. WAIT FOR FIRST REAL SLIDE, THEN START AUTOPLAY
+  // 9. WAIT FOR FIRST SLIDE TO LOAD, THEN START AUTOPLAY
   // ------------------------------------------------------------
-
+  //
   const readyCheck = setInterval(() => {
     if (strip.children.length > 0) {
       clearInterval(readyCheck);
@@ -233,9 +211,11 @@ function initProcessSlideshow(slideshow) {
   }, 200);
 }
 
+//
 // ------------------------------------------------------------
 // BOOTSTRAP ALL SLIDESHOWS
 // ------------------------------------------------------------
+//
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".process-slideshow").forEach(initProcessSlideshow);
 });
