@@ -10,14 +10,21 @@ function initProcessSlideshow(slideshow) {
 
   //
   // ------------------------------------------------------------
-  // 1. BUILD SLIDES FROM FOLDER
+  // 1. BUILD SLIDES (ORDER LOCKED)
   // ------------------------------------------------------------
   //
   for (let i = 1; i <= max; i++) {
     const indexStr = String(i).padStart(2, "0");
-    let foundOne = false;
+
+    // 🔒 Create slide container FIRST (locks order)
+    const item = createItem();
+    strip.appendChild(item);
+
+    let filled = false;
 
     extensions.forEach(ext => {
+      if (filled) return;
+
       const url = `${folder}Process_${indexStr}.${ext}`;
 
       if (ext === "mp4") {
@@ -28,23 +35,20 @@ function initProcessSlideshow(slideshow) {
         video.playsInline = true;
         video.autoplay = true;
 
-        video.oncanplay = () => {
-          if (!foundOne) {
-            const item = createItem();
+        // Use loadedmetadata for consistency
+        video.onloadedmetadata = () => {
+          if (!filled) {
             item.appendChild(video);
-            strip.appendChild(item);
-            foundOne = true;
+            filled = true;
           }
         };
       } else {
         const img = new Image();
         img.src = url;
         img.onload = () => {
-          if (!foundOne) {
-            const item = createItem();
+          if (!filled) {
             item.appendChild(img);
-            strip.appendChild(item);
-            foundOne = true;
+            filled = true;
           }
         };
       }
@@ -65,7 +69,7 @@ function initProcessSlideshow(slideshow) {
   let currentIndex = 0;
   let isHovered = false;
   let autoTimer = null;
-  let isAutoScrolling = false;   // ⭐ FIX: prevent sync glitches
+  let isAutoScrolling = false;
 
   const slideDuration = 3000;
   const transitionDuration = 600;
@@ -96,7 +100,6 @@ function initProcessSlideshow(slideshow) {
     const clamped = ((index % total) + total) % total;
     const targetItem = items[clamped];
 
-    // Get bounding boxes
     const itemRect = targetItem.getBoundingClientRect();
     const wrapperRect = stripWrapper.getBoundingClientRect();
 
@@ -106,7 +109,6 @@ function initProcessSlideshow(slideshow) {
     const delta = itemCenter - wrapperCenter;
     const targetLeft = stripWrapper.scrollLeft + delta;
 
-    // ⭐ Lock scroll-sync during autoplay animation
     isAutoScrolling = true;
 
     stripWrapper.scrollTo({
@@ -124,21 +126,24 @@ function initProcessSlideshow(slideshow) {
 
   //
   // ------------------------------------------------------------
-  // 5. GET INDEX OF SLIDE CLOSEST TO CENTER (for manual scroll)
+  // 5. GET INDEX CLOSEST TO CENTER (MANUAL SCROLL)
   // ------------------------------------------------------------
   //
   function getCenteredIndex() {
     const items = strip.children;
     if (!items.length) return -1;
 
-    const wrapperCenter = stripWrapper.scrollLeft + stripWrapper.clientWidth / 2;
+    const wrapperCenter =
+      stripWrapper.scrollLeft + stripWrapper.clientWidth / 2;
+
     let closestIndex = -1;
     let smallestDelta = Infinity;
 
     for (let i = 0; i < items.length; i++) {
-      const center = items[i].offsetLeft + items[i].clientWidth / 2;
-      const dist = Math.abs(center - wrapperCenter);
+      const center =
+        items[i].offsetLeft + items[i].clientWidth / 2;
 
+      const dist = Math.abs(center - wrapperCenter);
       if (dist < smallestDelta) {
         smallestDelta = dist;
         closestIndex = i;
@@ -150,13 +155,13 @@ function initProcessSlideshow(slideshow) {
 
   //
   // ------------------------------------------------------------
-  // 6. SYNC PROGRESS BAR WHEN USER SCROLLS MANUALLY
+  // 6. SYNC PROGRESS BAR ON MANUAL SCROLL
   // ------------------------------------------------------------
   //
   let scrollTimeout = null;
 
   stripWrapper.addEventListener("scroll", () => {
-    if (isAutoScrolling) return;  // ⭐ KEY FIX: ignore when autoplay moves slider
+    if (isAutoScrolling) return;
 
     if (scrollTimeout) clearTimeout(scrollTimeout);
 
@@ -184,9 +189,7 @@ function initProcessSlideshow(slideshow) {
       if (isHovered) return;
 
       const total = strip.children.length;
-      const nextIndex = (currentIndex + 1) % total;
-
-      scrollToIndex(nextIndex);
+      scrollToIndex((currentIndex + 1) % total);
     }, slideDuration + transitionDuration);
   }
 
@@ -200,7 +203,7 @@ function initProcessSlideshow(slideshow) {
 
   //
   // ------------------------------------------------------------
-  // 9. WAIT FOR FIRST SLIDE TO LOAD, THEN START AUTOPLAY
+  // 9. START ONCE FIRST SLIDE EXISTS
   // ------------------------------------------------------------
   //
   const readyCheck = setInterval(() => {
@@ -217,5 +220,7 @@ function initProcessSlideshow(slideshow) {
 // ------------------------------------------------------------
 //
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".process-slideshow").forEach(initProcessSlideshow);
+  document
+    .querySelectorAll(".process-slideshow")
+    .forEach(initProcessSlideshow);
 });

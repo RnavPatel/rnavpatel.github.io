@@ -1106,6 +1106,49 @@ em {
   transition: width 0.2s ease;  /* short, just for a little ease */
 }
 
+/* ===============================
+   MEDIA LOAD SKELETON (GLOBAL)
+   =============================== */
+
+.media-load {
+  position: relative;
+  border-radius: 5pt;     /* ← match your existing img/video radius */
+  overflow: hidden;       /* ← CRITICAL: clips skeleton + media */
+}
+
+
+.media-load::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #e6e6e6;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.media-load.is-loading::before {
+  opacity: 1;
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+.media-load.is-loading img,
+.media-load.is-loading video {
+  filter: blur(4px);
+  opacity: 0;
+}
+
+.media-load img,
+.media-load video {
+  transition: opacity 250ms ease;
+}
+@keyframes skeleton-pulse {
+  0%   { opacity: 0.9; }
+  50%  { opacity: 0.6; }
+  100% { opacity: 0.9; }
+}
+
+
+
 
 /* MOBILE FRIENDLY SLIDESHOW FIX */
 @media (max-width: 800px) {
@@ -1137,6 +1180,8 @@ em {
   .process-item {
     scroll-snap-align: center;
   }
+
+  
 }
 
 
