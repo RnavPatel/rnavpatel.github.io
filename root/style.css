@@ -405,7 +405,7 @@ CURSORS
 
 
 .col2{ 
- width: 33%; /*33.4*/
+ width: 32%; /*33.4*/
 }
 
 
@@ -624,16 +624,11 @@ strong {
 }
 
 .caption {
-  display: inline-block;   /* <-- shrink to content width */
+  display: block;
+  width: fit-content;
+  margin: 0 auto;
   text-align: center;
-  font-size: 10pt;
-  padding: 0.25rem 0.5rem;
-  /* background-color: #e4e4e4; */
-  color: #000000;
-  border-radius: 25px;
-  text-decoration: none;
 }
-
 .gray {
   color:#bcbcbc
 }
