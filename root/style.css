@@ -524,14 +524,37 @@ section {
    height: 1rem;
  }
 
+ .mobile-spacer {
+  display: none;
+}
+
+
 
 /* type */
+html { font-size: 100%; }
+@media (max-width: 800px) {
+  html { font-size: 75%; }
+
+  .home-img > a {
+    text-decoration: none !important;
+  }
+
+  .tile-caption a{
+    align-items: left;
+  }
+
+  .mobile-spacer {
+    display: block;
+    height: 2rem; /* tweak as needed */
+  }
+}
+
 
 h1 {
   font-family: "DM Sans", sans-serif;
   font-weight: 250;
   font-style: regular;
-  font-size: 20pt;
+  font-size: 1.6rem; /*font-size: 20pt;*/
   color: #666666;
   line-height: 1.2; /* Equivalent to 120% of the font size */
 }
@@ -552,7 +575,7 @@ h2 {
  font-family: "DM Sans", sans-serif;
  font-weight: 600;
  font-style: medium;
- font-size: 25pt;
+ font-size: 2.083rem; /*font-size: 25pt;*/
  color: #666666;
  line-height: 100%;
 }
@@ -563,7 +586,7 @@ h3 {
  font-family: "DM Sans", sans-serif;
  font-weight: 300;
  font-style: regular;
- font-size: 15pt;
+ font-size: 1.25rem; /*font-size: 15pt;*/
  color: #666666;
  line-height: 120%;
 }
@@ -592,7 +615,7 @@ h4 {
  font-family: "DM Sans", sans-serif;
  font-weight: 600;
  font-style: semibold;
- font-size: 35pt;
+ font-size: 2.9rem; /*font-size: 35pt;*/
  color: #666666;
  line-height: 100%;
 }
@@ -605,7 +628,7 @@ h5 {
  font-family: "DM Sans", sans-serif;
  font-weight: 400;
  font-style: regular;
- font-size: 15pt;
+ font-size: 1.25rem; /*font-size: 15pt;*/
  color: #000000;
  line-height: 120%;
 }
@@ -614,7 +637,7 @@ h6 {
   font-family: "DM Sans", sans-serif;
   font-weight: 300;
   font-style: regular;
-  font-size: 12.5pt;
+  font-size: 1.04rem; /*font-size: 12.5pt;*/
   color: #666666;
   line-height: 120%;
 }
