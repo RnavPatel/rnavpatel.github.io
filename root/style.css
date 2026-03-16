@@ -129,7 +129,7 @@ video {
     position: static;           /* becomes a regular block under the image */
     background: none;
     color: inherit;
-    padding: 0.5rem 0 1rem 0;      /* small spacing */
+    padding: 0.5rem 0.5rem 1rem 0.5rem;      /* small spacing */
     opacity: 1;                 /* always visible */
     pointer-events: auto;
       justify-content: center; /* Center-align horizontally */
@@ -320,6 +320,7 @@ CURSORS
 }
 
 
+
 .flex { /*selector*/
  /* rules, Property: Value */
  display: flex;   
@@ -328,6 +329,10 @@ CURSORS
  align-items: flex-start;
  margin: 0 7.5%; /*0 on top and bottom 7.5 on left and right*/
 
+}
+
+.footer {
+  margin: 0 0.5%;
 }
 
 .no-margin {
@@ -392,6 +397,13 @@ CURSORS
     gap: 0;
     padding: 0;
     margin: 0;
+  }
+
+  .flex-footer {
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+
   }
 
   /* If you keep a generic .flexIndex mobile rule, neutralize it for .no-gutters */
@@ -652,14 +664,7 @@ strong {
   margin: 0 auto;
   text-align: center;
 }
-.gray {
-  color:#bcbcbc
-}
 
-.gray-subheading {
-  font-size: 12.5pt;
-  color:#bcbcbc
-}
 
 
 h6.simple-button {
