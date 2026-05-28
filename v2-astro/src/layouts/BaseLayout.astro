@@ -1,12 +1,31 @@
 ---
 /**
- * BaseLayout.astro
+ * BaseLayout.astro  —  src/layouts/BaseLayout.astro
+ * ============================================================
  * The HTML shell that every page uses.
  * Imports all global CSS, loads fonts, sets meta tags.
  *
+ * MARGIN SYSTEM — how page margins work:
+ *   <main> is a CSS Grid with named column lines:
+ *
+ *   [full-start] [margin] [content-start] [1fr] [content-end] [margin] [full-end]
+ *
+ *   Every section/element inside <main> sits in "content" by default.
+ *   Add class="full-bleed" to any section to make it span edge-to-edge.
+ *
+ *   The margin width is --page-padding-x in tokens.css.
+ *   Change it there to update ALL page margins simultaneously.
+ *
+ * CHEAT SHEET — CMD+F these labels:
+ *   "Page margin grid"  → the main grid definition (margin system)
+ *   "Content column"    → default placement for all sections
+ *   "Full bleed"        → class that breaks a section out of the margins
+ * ============================================================
+ *
  * Usage:
  *   <BaseLayout title="Work" activePage="work">
- *     ... page content ...
+ *     <section>Normal content — has margins</section>
+ *     <section class="full-bleed">This touches the edges</section>
  *   </BaseLayout>
  */
 
@@ -41,10 +60,9 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     <meta name="description" content={description} />
     <title>{fullTitle}</title>
 
-    <!-- Favicon placeholder — replace with actual favicon later -->
     <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
 
-    <!-- DM Sans: preconnect for performance, then load full range -->
+    <!-- DM Sans — preconnect for faster load, only load weights we use -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -58,19 +76,66 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
 
     <main>
       <slot />
-      <!-- Page content from each .astro page goes here -->
     </main>
 
   </body>
 </html>
 
 <style is:global>
-  /*
-    Page-level layout: main sits below the fixed nav.
-    Using padding-top so content is never hidden under it.
+  /* =============================================
+     Page margin grid
+     Defined once here — controls margins on every page.
+     =============================================
+
+     The margin system works by making <main> a CSS Grid
+     with named column lines. The two outer columns ARE
+     the page margins. Content sits between them.
+
+     To change page margins: edit --page-padding-x in tokens.css.
+     Do NOT add horizontal padding to individual sections —
+     the grid handles it for you.
   */
   main {
     padding-top: var(--page-padding-top);
     min-height: 100svh;
+
+    display: grid;
+    grid-template-columns:
+      [full-start]    var(--page-padding-x)
+      [content-start] 1fr
+      [content-end]   var(--page-padding-x)
+      [full-end];
+
+    /* Rows size to their content automatically */
+    grid-template-rows: auto;
+
+    /* Prevents full-bleed items from causing horizontal scroll */
+    overflow-x: clip;
+  }
+
+  /* =============================================
+     Content column
+     Default for every direct child of <main>.
+     Sits inside the page margins.
+  */
+  main > * {
+    grid-column: content;
+    min-width: 0; /* prevents grid blowout on wide content */
+  }
+
+  /* =============================================
+     Full bleed
+     Add class="full-bleed" to any section to make
+     it stretch edge-to-edge, ignoring page margins.
+     Use this for hero videos, full-width images,
+     and the homepage gallery grid.
+
+     Example:
+       <section class="full-bleed">
+         <video ...>
+       </section>
+  */
+  main > .full-bleed {
+    grid-column: full;
   }
 </style>

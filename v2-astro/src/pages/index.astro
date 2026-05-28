@@ -4,21 +4,26 @@
  * ============================================================
  * Homepage: hero intro text + asymmetric project gallery grid.
  *
+ * MARGIN NOTE:
+ *   Horizontal margins are NOT set here. They come from the
+ *   layout grid defined in BaseLayout.astro → "Page margin grid".
+ *   To change page margins: edit --page-padding-x in tokens.css.
+ *
  * CHEAT SHEET — CMD+F these labels:
- *   "HERO"             → the intro text at the top of the page
- *   "Hero headline"    → the big title text and its highlighted word
- *   "Hero meta"        → the small right-side links (Feral Cat Den, CMU, Contact)
- *   "GALLERY GRID"     → the project tile grid
- *   "Grid columns"     → how wide each column is (the 2.5fr 4fr 3.5fr numbers)
- *   "Grid rows"        → how tall each row is (the 340px 400px numbers)
- *   "Grid areas"       → which card goes where (the "card1 card2 card3" map)
- *   "Mobile grid"      → how grid changes on small screens
- *   "Tablet grid"      → how grid changes on medium screens
+ *   "HERO"          → the intro text at the top of the page
+ *   "Hero headline" → the big title text and its highlighted word
+ *   "Hero meta"     → the small right-side links (Feral Cat Den, CMU, Contact)
+ *   "GALLERY GRID"  → the project tile grid
+ *   "Grid columns"  → how wide each column is (the fr numbers)
+ *   "Grid rows"     → how tall each row is (the px numbers)
+ *   "Grid areas"    → which card goes where (the visual map)
+ *   "Tablet grid"   → grid at medium screen widths
+ *   "Mobile grid"   → grid at small screen widths
  * ============================================================
  *
- * To add a project: edit src/data/projects.ts
+ * To add a project:          edit src/data/projects.ts
  * To change card appearance: edit src/components/ProjectCard.astro
- * To change colors/sizes: edit src/styles/tokens.css
+ * To change colors/sizes:    edit src/styles/tokens.css
  */
 
 import BaseLayout from "../layouts/BaseLayout.astro";
@@ -30,36 +35,37 @@ import { projects } from "../data/projects";
 
   <!-- =============================================
        HERO
-       The intro section above the gallery.
-       To change the headline text: edit <h1> below.
-       To change the right-side links: edit the <p> in hero-meta.
+       Sits in the content column (has page margins).
+       To change text: edit the elements below.
        ============================================= -->
   <section class="hero">
-    <div class="hero-inner">
 
-      <!-- Hero headline -->
-      <h1 class="hero-headline">
-        An <em>experience designer</em><br />crafting the future of<br />interactive entertainment.
-        <!--    ↑ the <em> tag makes that phrase black. Everything else is gray. -->
-      </h1>
+    <!-- Hero headline -->
+    <h1 class="hero-headline">
+      An <em>experience designer</em><br />crafting the future of<br />interactive entertainment.
+      <!--    ↑ <em> makes this phrase black. Everything else is gray. -->
+    </h1>
 
-      <!-- Hero meta (right side) -->
-      <div class="hero-meta">
-        <p class="text-sm text-secondary">
-          Previously @ <a href="https://feralcatden.com/#work" target="_blank" rel="noopener" class="link">Feral Cat Den</a>↗<br />
-          Graduated from <a href="https://design.cmu.edu" target="_blank" rel="noopener" class="link">CMU Design</a>↗<br />
-          <a href="/about" class="link">Contact</a>↗
-        </p>
-      </div>
-
+    <!-- Hero meta (right side) -->
+    <div class="hero-meta">
+      <p>
+        Previously @ <a href="https://feralcatden.com/#work" target="_blank" rel="noopener" class="link">Feral Cat Den</a>↗<br />
+        Graduated from <a href="https://design.cmu.edu" target="_blank" rel="noopener" class="link">CMU Design</a>↗<br />
+        <a href="/about" class="link">Contact</a>↗
+      </p>
     </div>
+
   </section>
 
   <!-- =============================================
        GALLERY GRID
-       Renders one <ProjectCard> per project in projects.ts.
-       The grid layout is controlled by the CSS below.
-       To reorder cards: change the gridArea value in projects.ts.
+       Also in the content column — aligned to same
+       margins as the hero text above it.
+
+       To make it full-bleed (edge-to-edge) instead,
+       add class="full-bleed" to this <section>.
+
+       To reorder cards: change gridArea in projects.ts
        ============================================= -->
   <section class="gallery">
     {projects.map((project) => (
@@ -83,18 +89,16 @@ import { projects } from "../data/projects";
 <style>
   /* =============================================
      HERO layout
+     No horizontal padding here — the layout grid
+     in BaseLayout provides the page margins.
      ============================================= */
   .hero {
-    padding: var(--space-8) var(--page-padding-x) var(--space-6);
-  }
-
-  .hero-inner {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-6);
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: var(--space-8);
-    max-width: 1400px;
-    margin: 0 auto;
   }
 
   /* Hero headline — the large left text */
@@ -102,13 +106,13 @@ import { projects } from "../data/projects";
     font-size: var(--text-xl);
     font-weight: var(--weight-semibold);
     line-height: var(--leading-tight);
-    color: var(--color-text-secondary);   /* gray by default */
+    color: var(--color-text-secondary);
     max-width: 18ch;
   }
 
   .hero-headline em {
     font-style: normal;
-    color: var(--color-text-primary);     /* black for the emphasized phrase */
+    color: var(--color-text-primary);   /* black for the emphasized phrase */
   }
 
   /* Hero meta — the small right-side links */
@@ -118,27 +122,26 @@ import { projects } from "../data/projects";
   }
 
   .hero-meta p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
     line-height: var(--leading-loose);
   }
 
   /* =============================================
      GALLERY GRID
-     This is a CSS Grid with named areas — like
-     naming frames in Figma's Auto Layout.
+     CSS Grid with named areas — like naming frames in Figma.
+     No horizontal padding — same margin column as hero above.
 
-     Grid columns: the width ratio of each column.
-       2.5fr = narrow  |  4fr = wide  |  3.5fr = medium
+     Grid columns: width ratio of each column.
        Change these numbers to adjust column widths.
-       Total doesn't need to add to anything specific.
+       "2.5fr 4fr 3.5fr" = narrow / wide / medium
 
-     Grid rows: fixed pixel heights per row.
-       Increase these to make all cards taller.
+     Grid rows: fixed height per row.
+       Increase to make all cards taller.
 
-     Grid areas: the visual map of which card is where.
-       "card1 card2 card3"  = row 1: left / center / right
-       "card4 card5 card5"  = row 2: left / right (card5 spans 2 cols)
-
-     To move a card: change its gridArea in projects.ts
+     Grid areas: the visual map — matches gridArea in projects.ts
+       "card1 card2 card3"  = row 1
+       "card4 card5 card5"  = row 2 (card5 spans 2 cols)
      ============================================= */
   .gallery {
     display: grid;
@@ -154,9 +157,7 @@ import { projects } from "../data/projects";
       "card1 card2 card3"
       "card4 card5 card5";
 
-    gap: var(--gap-grid);   /* ← gap between tiles, set in tokens.css */
-    padding: 0;
-    margin: 0;
+    gap: var(--gap-grid);
   }
 
   /* =============================================
@@ -172,10 +173,10 @@ import { projects } from "../data/projects";
   /* =============================================
      Mobile grid  (≤ 900px)
      Single column, cards stack vertically.
-     Each card gets a natural 16:9 aspect ratio.
+     Each card gets a 16:9 aspect ratio.
      ============================================= */
   @media (max-width: 900px) {
-    .hero-inner {
+    .hero {
       flex-direction: column;
       gap: var(--space-5);
     }
@@ -195,7 +196,6 @@ import { projects } from "../data/projects";
         "card5";
     }
 
-    /* Each card = natural 16:9 height on mobile */
     .gallery > :global(.card) {
       aspect-ratio: 16 / 9;
     }
@@ -205,7 +205,8 @@ import { projects } from "../data/projects";
      Footer
      ============================================= */
   .footer {
-    padding: var(--space-5) var(--page-padding-x);
+    padding-top: var(--space-5);
+    padding-bottom: var(--space-5);
     display: flex;
     justify-content: flex-end;
   }
