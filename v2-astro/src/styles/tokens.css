@@ -1,9 +1,18 @@
 /* ============================================================
-   DESIGN TOKENS
+   DESIGN TOKENS  —  src/styles/tokens.css
    The single source of truth for all visual decisions.
    Every color, space, size, and radius used on the site
    lives here as a CSS custom property.
    Change a value here → it updates everywhere instantly.
+
+   CHEAT SHEET — CMD+F these labels to jump directly:
+     "Color"      → brand colors, text colors, surfaces
+     "Spacing"    → space-1 through space-16 (4px to 112px)
+     "Typography" → font family, text sizes, weights
+     "Radii"      → corner rounding for cards, pills, etc.
+     "Shadows"    → elevation levels sm / md / lg
+     "Grid"       → gap between tiles, page side margins
+     "Motion"     → easing curves and animation durations
    ============================================================ */
 
 :root {
@@ -26,7 +35,8 @@
 
   /* --- Spacing scale ---
      Multiples of 0.25rem (4px base).
-     Use these everywhere instead of raw values.   */
+     Use these everywhere instead of raw pixel values.
+     --space-4 = 16px, --space-8 = 48px, --space-10 = 64px  */
   --space-1:  0.25rem;   /*  4px */
   --space-2:  0.5rem;    /*  8px */
   --space-3:  0.75rem;   /* 12px */
@@ -39,6 +49,8 @@
   --space-16: 7rem;      /* 112px */
 
   /* --- Typography --- */
+  /* To change a font size site-wide: edit the clamp() value here.
+     clamp(mobile-min, fluid-middle, desktop-max)             */
   --font-sans: "DM Sans", sans-serif;
 
   /* Type scale — fluid sizes using clamp() so they
@@ -60,6 +72,7 @@
   --weight-semibold: 600;
 
   /* --- Radii --- */
+  /* --radius-lg is used on project cards. Change it here to round/sharpen all cards. */
   --radius-sm:   6px;
   --radius-md:   12px;
   --radius-lg:   16px;   /* project cards */
@@ -71,11 +84,21 @@
   --shadow-lg:  0 12px 32px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
 
   /* --- Grid & Layout --- */
+  /* --gap-grid: space between tiles on homepage
+     --page-padding-x: left/right margin on all pages (auto-scales with viewport)
+     --page-padding-top: clears the fixed nav — increase if nav height changes  */
   --gap-grid:          10px;   /* gap between project tiles */
   --page-padding-x:    clamp(1rem, 5vw, 3rem);   /* side margins on all pages */
   --page-padding-top:  5rem;   /* clears the fixed nav */
 
   /* --- Motion --- */
+  /* --ease-out-expo: snappy, decelerating — best for things sliding into place
+     --ease-out-quart: slightly softer version of above
+     --ease-in-out: smooth both ways — good for looping animations
+     --duration-fast: hover color changes (150ms)
+     --duration-normal: hover transforms like scale/slide (260ms)
+     --duration-slow: entrance animations, page transitions (500ms)
+     --duration-page: full page-to-page transitions (600ms)          */
   --ease-out-expo:   cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-quart:  cubic-bezier(0.25, 1, 0.5, 1);
   --ease-in-out:     cubic-bezier(0.4, 0, 0.2, 1);

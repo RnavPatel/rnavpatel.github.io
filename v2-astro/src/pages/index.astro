@@ -1,17 +1,24 @@
 ---
 /**
  * index.astro  →  aarnavpatel.com/
- * Homepage: hero text + asymmetric project gallery grid.
+ * ============================================================
+ * Homepage: hero intro text + asymmetric project gallery grid.
  *
- * The grid layout matches the Figma mockup:
+ * CHEAT SHEET — CMD+F these labels:
+ *   "HERO"             → the intro text at the top of the page
+ *   "Hero headline"    → the big title text and its highlighted word
+ *   "Hero meta"        → the small right-side links (Feral Cat Den, CMU, Contact)
+ *   "GALLERY GRID"     → the project tile grid
+ *   "Grid columns"     → how wide each column is (the 2.5fr 4fr 3.5fr numbers)
+ *   "Grid rows"        → how tall each row is (the 340px 400px numbers)
+ *   "Grid areas"       → which card goes where (the "card1 card2 card3" map)
+ *   "Mobile grid"      → how grid changes on small screens
+ *   "Tablet grid"      → how grid changes on medium screens
+ * ============================================================
  *
- *  ┌──────────┬─────────────────────┬─────────────┐
- *  │  card1   │       card2         │   card3     │
- *  │ (narrow) │     (wide)          │  (square)   │
- *  ├──────────┴──────────┬──────────┴─────────────┤
- *  │       card4         │         card5           │
- *  │    (medium sq)      │       (wide)            │
- *  └─────────────────────┴─────────────────────────┘
+ * To add a project: edit src/data/projects.ts
+ * To change card appearance: edit src/components/ProjectCard.astro
+ * To change colors/sizes: edit src/styles/tokens.css
  */
 
 import BaseLayout from "../layouts/BaseLayout.astro";
@@ -21,13 +28,22 @@ import { projects } from "../data/projects";
 
 <BaseLayout title="Work" activePage="work">
 
-  <!-- ============ HERO ============ -->
+  <!-- =============================================
+       HERO
+       The intro section above the gallery.
+       To change the headline text: edit <h1> below.
+       To change the right-side links: edit the <p> in hero-meta.
+       ============================================= -->
   <section class="hero">
     <div class="hero-inner">
+
+      <!-- Hero headline -->
       <h1 class="hero-headline">
         An <em>experience designer</em><br />crafting the future of<br />interactive entertainment.
+        <!--    ↑ the <em> tag makes that phrase black. Everything else is gray. -->
       </h1>
 
+      <!-- Hero meta (right side) -->
       <div class="hero-meta">
         <p class="text-sm text-secondary">
           Previously @ <a href="https://feralcatden.com/#work" target="_blank" rel="noopener" class="link">Feral Cat Den</a>↗<br />
@@ -35,10 +51,16 @@ import { projects } from "../data/projects";
           <a href="/about" class="link">Contact</a>↗
         </p>
       </div>
+
     </div>
   </section>
 
-  <!-- ============ GALLERY GRID ============ -->
+  <!-- =============================================
+       GALLERY GRID
+       Renders one <ProjectCard> per project in projects.ts.
+       The grid layout is controlled by the CSS below.
+       To reorder cards: change the gridArea value in projects.ts.
+       ============================================= -->
   <section class="gallery">
     {projects.map((project) => (
       <ProjectCard
@@ -52,7 +74,6 @@ import { projects } from "../data/projects";
     ))}
   </section>
 
-  <!-- ============ FOOTER ============ -->
   <footer class="footer">
     <p class="text-xs text-muted">Built in Astro</p>
   </footer>
@@ -60,7 +81,9 @@ import { projects } from "../data/projects";
 </BaseLayout>
 
 <style>
-  /* ---- Hero ---- */
+  /* =============================================
+     HERO layout
+     ============================================= */
   .hero {
     padding: var(--space-8) var(--page-padding-x) var(--space-6);
   }
@@ -74,19 +97,21 @@ import { projects } from "../data/projects";
     margin: 0 auto;
   }
 
+  /* Hero headline — the large left text */
   .hero-headline {
     font-size: var(--text-xl);
     font-weight: var(--weight-semibold);
     line-height: var(--leading-tight);
-    color: var(--color-text-secondary);
+    color: var(--color-text-secondary);   /* gray by default */
     max-width: 18ch;
   }
 
   .hero-headline em {
     font-style: normal;
-    color: var(--color-text-primary);
+    color: var(--color-text-primary);     /* black for the emphasized phrase */
   }
 
+  /* Hero meta — the small right-side links */
   .hero-meta {
     padding-top: var(--space-2);
     flex-shrink: 0;
@@ -96,38 +121,59 @@ import { projects } from "../data/projects";
     line-height: var(--leading-loose);
   }
 
-  /* ---- Gallery Grid ---- */
+  /* =============================================
+     GALLERY GRID
+     This is a CSS Grid with named areas — like
+     naming frames in Figma's Auto Layout.
+
+     Grid columns: the width ratio of each column.
+       2.5fr = narrow  |  4fr = wide  |  3.5fr = medium
+       Change these numbers to adjust column widths.
+       Total doesn't need to add to anything specific.
+
+     Grid rows: fixed pixel heights per row.
+       Increase these to make all cards taller.
+
+     Grid areas: the visual map of which card is where.
+       "card1 card2 card3"  = row 1: left / center / right
+       "card4 card5 card5"  = row 2: left / right (card5 spans 2 cols)
+
+     To move a card: change its gridArea in projects.ts
+     ============================================= */
   .gallery {
-    /*
-      CSS Grid with named template areas — like naming frames in Figma.
-      The layout below matches the mockup:
-        Row 1: narrow / wide / medium
-        Row 2: medium / wide
-    */
     display: grid;
+
+    /* Grid columns */
     grid-template-columns: 2.5fr 4fr 3.5fr;
+
+    /* Grid rows */
     grid-template-rows: 340px 400px;
+
+    /* Grid areas — the visual map */
     grid-template-areas:
       "card1 card2 card3"
       "card4 card5 card5";
-    gap: var(--gap-grid);
 
-    /*
-      No side margins: tiles go edge-to-edge.
-      Full-bleed editorial look from the mockup.
-    */
+    gap: var(--gap-grid);   /* ← gap between tiles, set in tokens.css */
     padding: 0;
     margin: 0;
   }
 
-  /* ---- Footer ---- */
-  .footer {
-    padding: var(--space-5) var(--page-padding-x);
-    display: flex;
-    justify-content: flex-end;
+  /* =============================================
+     Tablet grid  (901px – 1200px)
+     Same layout, shorter rows.
+     ============================================= */
+  @media (min-width: 901px) and (max-width: 1200px) {
+    .gallery {
+      grid-template-rows: 260px 300px;
+    }
   }
 
-  /* ---- Responsive ---- */
+  /* =============================================
+     Mobile grid  (≤ 900px)
+     Single column, cards stack vertically.
+     Each card gets a natural 16:9 aspect ratio.
+     ============================================= */
   @media (max-width: 900px) {
     .hero-inner {
       flex-direction: column;
@@ -138,9 +184,6 @@ import { projects } from "../data/projects";
       max-width: 100%;
     }
 
-    /*
-      Mobile: single column, each card stacks vertically.
-    */
     .gallery {
       grid-template-columns: 1fr;
       grid-template-rows: auto;
@@ -152,15 +195,18 @@ import { projects } from "../data/projects";
         "card5";
     }
 
-    /* Natural 16:9 on mobile */
+    /* Each card = natural 16:9 height on mobile */
     .gallery > :global(.card) {
       aspect-ratio: 16 / 9;
     }
   }
 
-  @media (min-width: 901px) and (max-width: 1200px) {
-    .gallery {
-      grid-template-rows: 260px 300px;
-    }
+  /* =============================================
+     Footer
+     ============================================= */
+  .footer {
+    padding: var(--space-5) var(--page-padding-x);
+    display: flex;
+    justify-content: flex-end;
   }
 </style>
