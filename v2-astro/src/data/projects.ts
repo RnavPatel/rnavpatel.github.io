@@ -49,25 +49,14 @@ export const projects: Project[] = [
     size: "square",
   },
   {
-    id: "marvel",
-    title: "Marvel Fracture",
-    tags: ["2D Art", "UI/UX", "Development"],
-    href: "/work/marvel",
-    image: "/images/Marvel/HeroAttempt1.mp4",
-    mediaType: "video",
-    size: "wide",
-  },
-  {
     id: "nirvana-noir",
     title: "Nirvana Noir",
     tags: ["3D Environment Art", "Prop Design", "Production"],
     href: "/work/nirvana-noir",
     image: "/images/FeralCatDen/NirvanaNoirThumbnail.png",
     mediaType: "image",
-    size: "square",
+    size: "wide",
   },
-
-  // Row 2: square + wide  (3 units, centers in the row)
   {
     id: "placeholder-2",
     title: "Coming Soon",
@@ -75,6 +64,17 @@ export const projects: Project[] = [
     href: "#",
     image: "",
     mediaType: "image",
+    size: "square",
+  },
+
+  // Row 2: square + wide  (3 units, centers in the row)
+  {
+    id: "marvel",
+    title: "Marvel Fracture",
+    tags: ["Visual Identity, UIUX, Development"],
+    href: "/work/marvel",
+    image: "/images/Marvel/HeroAttempt1.mp4",
+    mediaType: "video",
     size: "square",
   },
   {

@@ -1,8 +1,20 @@
 ---
 /**
- * Nav.astro
- * The floating pill navigation. Accepts an `activePage` prop
- * so the correct tab gets the active/filled style.
+ * Nav.astro  —  src/components/Nav.astro
+ * ============================================================
+ * Top navigation: tagline pill on the left, work/about on the right.
+ * Aligns to the same page margins as all other content.
+ *
+ * CHEAT SHEET — CMD+F these labels:
+ *   "Nav layout"   → how the bar is positioned and spaced
+ *   "Tagline pill" → the left "Aarnav is a Design Engineer" pill
+ *   "Nav links"    → the right work/about pills
+ *   "Active"       → the filled dark pill for current page
+ *   "Hover"        → mouse-over state
+ * ============================================================
+ *
+ * To change the tagline text: edit the <span> in .nav-tagline below
+ * To change pill colors: edit --color-nav-bg and --color-nav-active-bg in tokens.css
  */
 
 interface Props {
@@ -13,59 +25,114 @@ const { activePage } = Astro.props;
 ---
 
 <nav>
-  <div class="nav-pill">
+
+  <!-- Tagline pill — left side -->
+  <a href="/about" class="nav-tagline">
+    <span>Aarnav is a Design Engineer</span>
+  </a>
+
+  <!-- Work / About pills — right side -->
+  <div class="nav-links">
     <a href="/" class:list={["nav-link", { "nav-link--active": activePage === "work" }]}>
       <span>Work</span>
     </a>
     <a href="/about" class:list={["nav-link", { "nav-link--active": activePage === "about" }]}>
-      <span>Aarnav</span>
+      <span>About</span>
     </a>
   </div>
+
 </nav>
 
 <style>
+  /* =============================================
+     Nav layout
+     Fixed bar across the top. Pushes tagline to the
+     left and the work/about group to the right.
+     Padding matches --page-padding-x so pills align
+     to the same edges as the gallery content below.
+  ============================================= */
   nav {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 100;
+    box-sizing: border-box;
+
     display: flex;
-    justify-content: center;
-    padding: var(--space-3) 0;
-    pointer-events: none; /* only the pill itself is clickable */
+    justify-content: space-between;  /* left pill ←————→ right pills */
+    align-items: center;
+
+    padding: var(--space-3) var(--page-padding-x);
+    pointer-events: none; /* bar itself doesn't capture clicks */
   }
 
-  .nav-pill {
-    display: flex;
+  /* =============================================
+     Tagline pill  (left side)
+     Shared pill shape with the nav-link style.
+  ============================================= */
+  .nav-tagline {
+    display: inline-flex;
     align-items: center;
-    gap: var(--space-1);
-    background-color: var(--color-nav-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: var(--radius-pill);
-    padding: var(--space-1);
-    pointer-events: all;
-  }
-
-  .nav-link {
-    display: flex;
-    align-items: center;
-    padding: var(--space-2) var(--space-5);
+    padding: var(--space-2) var(--space-4);
     border-radius: var(--radius-pill);
     font-size: var(--text-sm);
     font-weight: var(--weight-medium);
     color: var(--color-text-secondary);
+    background-color: var(--color-nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    pointer-events: all;
     transition:
       background-color var(--duration-fast) ease,
       color var(--duration-fast) ease;
   }
 
-  .nav-link:hover:not(.nav-link--active) {
-    background-color: rgba(0, 0, 0, 0.06);
+  .nav-tagline:hover {
+    background-color: rgba(0, 0, 0, 0.1);
     color: var(--color-text-primary);
+    text-decoration: none;
   }
 
+  /* =============================================
+     Nav links  (right side)
+     Two pills grouped in a flex row.
+  ============================================= */
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    pointer-events: all;
+  }
+
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-secondary);
+    background-color: var(--color-nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition:
+      background-color var(--duration-fast) ease,
+      color var(--duration-fast) ease;
+  }
+
+  /* =============================================
+     Hover
+  ============================================= */
+  .nav-link:hover:not(.nav-link--active) {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+
+  /* =============================================
+     Active  (filled dark pill = current page)
+  ============================================= */
   .nav-link--active {
     background-color: var(--color-nav-active-bg);
     color: var(--color-text-inverse);
