@@ -31,13 +31,12 @@ import { projects } from "../data/projects";
 <BaseLayout title="Work" activePage="work">
 
   <!-- =============================================
-       GALLERY GRID
-       Sits in the content column (has page margins).
-       Cards define their OWN size via aspect-ratio —
-       the grid places them, not stretches them.
-
-       To go full-bleed (edge-to-edge):
-         add class="full-bleed" to this <section>
+       GALLERY
+       Cards flow left-to-right and wrap to new rows.
+       Each row is center-aligned — partial rows
+       automatically sit in the middle.
+       To reorder cards: reorder objects in projects.ts.
+       To add a card: add an object in projects.ts.
        ============================================= -->
   <section class="gallery">
     {projects.map((project) => (
@@ -48,7 +47,6 @@ import { projects } from "../data/projects";
         image={project.image}
         mediaType={project.mediaType}
         size={project.size}
-        gridArea={project.gridArea}
       />
     ))}
   </section>
@@ -61,101 +59,58 @@ import { projects } from "../data/projects";
 
 <style>
   /* =============================================
-     GALLERY GRID
+     GALLERY
      =============================================
 
-     Grid columns: 4 equal columns.
-       Wide cards span 2 columns (set in ProjectCard via grid-area).
-       Square cards span 1 column.
+     Flexbox row layout — works exactly like Figma
+     auto-layout with "center" horizontal alignment.
 
-     Grid areas: the visual layout map.
-       Each string is one row. Each word is one cell.
-       "." = intentionally empty cell.
+     Cards have fixed widths defined by --col-unit.
+     They flow left-to-right, wrap to new rows,
+     and any partial row is centered automatically.
 
-       Row 1:  card1 | card2 (wide) | card2 | card3
-       Row 2:  empty | card4        | card5 (wide) | card5
+     --col-unit: 1 column = 1/4 of the gallery width
+     (accounting for the 3 gaps between 4 columns)
 
-       The empty cell in row 2 staggers it right —
-       card4 aligns with where card2 starts above it.
-       This creates the asymmetric offset from the mockup.
-
-     NO fixed row heights — card aspect-ratios determine height.
-       square cards: 1:1
-       wide cards:   2:1  (same height as a square in the same row)
-
-     align-items: start ensures cards are NOT stretched to
-     fill row height — they hold their own aspect ratio.
-  =============================================*/
+     Adding a card: edit projects.ts only. No CSS needed.
+     Reordering: change the array order in projects.ts.
+     Changing size: edit size: "square" | "wide" in projects.ts.
+  ============================================= */
   .gallery {
-    padding-top: var(--space-6);
-    padding-bottom: var(--space-6);
-    display: grid;
+    /* Define the column unit — cards read this via CSS inheritance */
+    --col-unit: calc((100% - 3 * var(--gap-grid)) / 4);
 
-    /* Grid columns: 4 equal units */
-    grid-template-columns: repeat(4, 1fr);
-
-    /* Grid areas — the visual map
-       Edit this to rearrange the layout.
-       Match gridArea values in projects.ts. */
-    grid-template-areas:
-      "card1 card2 card2 card3"
-      ".     card4 card5 card5";
-
+    display: flex;
+    flex-wrap: wrap;            /* rows wrap when full */
+    justify-content: center;    /* each row is center-aligned */
+    align-items: flex-start;    /* cards align to top, not stretched */
     gap: var(--gap-grid);
 
-    /* Cards hold their own aspect ratio — don't stretch them */
-    align-items: start;
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
   }
 
   /* =============================================
-     Tablet grid  (700px – 1100px)
-     Keep 2-column layout but drop the stagger.
-     Row 1: square + wide
-     Row 2: wide + square
+     Tablet  (601px – 1000px)
+     Switch to a 3-column unit basis.
+     A square + wide combo still fills one row exactly.
      ============================================= */
-  @media (min-width: 700px) and (max-width: 1100px) {
+  @media (max-width: 1000px) and (min-width: 601px) {
     .gallery {
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-areas:
-        "card1 card2"
-        "card3 card4"
-        "card5 card5";
-      /* card5 (wide) spans full width of the 2-col grid on tablet */
-    }
-
-    /* wide cards span 1 column at this size — 2:1 becomes too wide */
-    /* Override aspect ratio so wide cards match square cards' height */
-    .gallery > :global(.card--wide) {
-      aspect-ratio: 1 / 1;
-    }
-
-    /* card5 full-width gets its proper wide ratio back */
-    .gallery > :global([style*="card5"]) {
-      aspect-ratio: 2 / 1;
+      --col-unit: calc((100% - 2 * var(--gap-grid)) / 3);
     }
   }
 
   /* =============================================
-     Mobile grid  (≤ 700px)
-     Single column. ALL cards become 16:9.
-     "square" type is overridden to 16:9 too —
-     small squares look awkward stacked full-width.
+     Mobile  (≤ 600px)
+     All cards go full-width at 16:9.
+     The size="square"|"wide" distinction collapses
+     on mobile — everything stacks as landscape cards.
      ============================================= */
-  @media (max-width: 700px) {
-    .gallery {
-      grid-template-columns: 1fr;
-      grid-template-areas:
-        "card1"
-        "card2"
-        "card3"
-        "card4"
-        "card5";
-      align-items: stretch;
-    }
-
-    /* All cards → 16:9 on mobile regardless of desktop size */
+  @media (max-width: 600px) {
     .gallery > :global(.card--square),
     .gallery > :global(.card--wide) {
+      width: 100%;
       aspect-ratio: 16 / 9;
     }
   }

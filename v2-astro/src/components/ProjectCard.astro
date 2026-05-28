@@ -32,15 +32,12 @@ interface Props {
   image: string;
   mediaType: "image" | "video";
   size: "square" | "wide";
-  gridArea: string;
 }
 
-const { title, tags, href, image, mediaType, size, gridArea } = Astro.props;
-
-const style = `grid-area: ${gridArea};`;
+const { title, tags, href, image, mediaType, size } = Astro.props;
 ---
 
-<article class={`card card--${size}`} style={style}>
+<article class={`card card--${size}`}>
   <a href={href} class="card-link">
 
     <!-- ---- Media ---- -->
@@ -68,28 +65,41 @@ const style = `grid-area: ${gridArea};`;
 <style>
   /* =============================================
      Card shape
+     Width comes from --col-unit defined on .gallery in index.astro.
+     CSS custom properties inherit, so cards can read their parent's value.
+
+     --col-unit = 1 column width in the gallery's sizing system.
+     square = 1 unit wide
+     wide   = 2 units wide (+ 1 gap between the 2 units)
+
+     Heights are set by aspect-ratio, never by fixed px.
+     Both sizes end up the same height when math is correct:
+       square: W × W
+       wide:   2W × W  (where W = --col-unit)
      ============================================= */
   .card {
     position: relative;
     border-radius: var(--radius-lg);
     overflow: hidden;
     background-color: var(--color-surface);
+    flex-shrink: 0; /* never let flexbox squish the card below its defined width */
   }
 
-  /* Square card: 1:1. Width = 1 column. */
+  /* Square card — 1 column unit wide, 1:1 */
   .card--square {
+    width: var(--col-unit);
     aspect-ratio: 1 / 1;
   }
 
-  /* Wide card: 2:1. Width = 2 columns.
-     The 2:1 ratio is matched to the 4-column grid so that
-     a wide card (2 cols) is the same HEIGHT as a square card (1 col).
-     Math: if 1 col = W, wide card = 2W, height = 2W÷2 = W. Equal. */
+  /* Wide card — 2 column units wide, 2:1
+     The extra + var(--gap-grid) accounts for the gap between
+     the two column units that this card spans over. */
   .card--wide {
+    width: calc(2 * var(--col-unit) + var(--gap-grid));
     aspect-ratio: 2 / 1;
   }
 
-  /* card-link must fill the card completely for the hover area to work */
+  /* card-link must fill the card completely for hover to work */
   .card-link {
     display: block;
     width: 100%;

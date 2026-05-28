@@ -1,48 +1,52 @@
 /* ============================================================
    PROJECT DATA  —  src/data/projects.ts
-   The single source of truth for all portfolio projects.
+   ============================================================
 
-   To add a project: copy any object below, change the values.
-   To reorder the grid: change the gridArea values.
-   To change card shape: change size to "square" or "wide".
+   ★ THIS IS THE ONLY FILE YOU EDIT TO ADD/REMOVE PROJECTS ★
+
+   HOW TO ADD A PROJECT:
+     1. Copy any object below
+     2. Change the values (id, title, tags, href, image, size)
+     3. Place it where you want it to appear (order = visual order)
+     4. Done. No CSS changes needed.
 
    CARD SIZES:
-     "square"  → 1:1 aspect ratio, spans 1 grid column
-     "wide"    → 2:1 aspect ratio, spans 2 grid columns
-                 (same height as a square card — they're designed to match)
+     "square"  →  1:1 square card
+     "wide"    →  2:1 landscape card (roughly twice as wide as square)
 
-   GRID AREAS (matches the map in index.astro):
-     Row 1:  card1  |  card2 (wide)  |  card3
-     Row 2:  empty  |  card4         |  card5 (wide)
+   ORDER IN THIS ARRAY = ORDER ON THE PAGE
+     Flexbox fills rows left-to-right, then centers each row.
+     A row of [square + wide] fills one row.
+     A row of [square + wide + square] fills one row.
+     Any leftover partial row gets centered automatically.
+
+   IMAGE PATHS:
+     Files live in /public/images/ — path starts with /images/
    ============================================================ */
 
 export interface Project {
   id: string;
   title: string;
-  subtitle?: string;
   tags: string[];
   href: string;
-  /** Path relative to /public */
+  /** Path relative to /public, e.g. "/images/Marvel/hero.mp4" */
   image: string;
   mediaType: "image" | "video";
-  /** Card shape: "square" (1:1) or "wide" (2:1, spans 2 columns) */
+  /** "square" = 1:1, "wide" = 2:1 (spans ~2 columns) */
   size: "square" | "wide";
-  /** Which named area in the grid this card occupies */
-  gridArea: "card1" | "card2" | "card3" | "card4" | "card5";
-  /** Optional: password-protected case study */
   protected?: boolean;
 }
 
 export const projects: Project[] = [
+  // Row 1: square + wide + square  (fills the row perfectly)
   {
-    id: "placeholder",
-    title: "New Project",
-    tags: ["Coming Soon"],
+    id: "placeholder-1",
+    title: "Coming Soon",
+    tags: [],
     href: "#",
     image: "",
     mediaType: "image",
     size: "square",
-    gridArea: "card1",
   },
   {
     id: "marvel",
@@ -51,8 +55,7 @@ export const projects: Project[] = [
     href: "/work/marvel",
     image: "/images/Marvel/HeroAttempt1.mp4",
     mediaType: "video",
-    size: "wide",       /* spans 2 columns */
-    gridArea: "card2",
+    size: "wide",
   },
   {
     id: "nirvana-noir",
@@ -62,26 +65,25 @@ export const projects: Project[] = [
     image: "/images/FeralCatDen/NirvanaNoirThumbnail.png",
     mediaType: "image",
     size: "square",
-    gridArea: "card3",
   },
+
+  // Row 2: square + wide  (3 units, centers in the row)
   {
-    id: "catnapped",
-    title: "Catnapped!",
-    tags: ["2D Art", "UI/UX", "Production"],
-    href: "/work/catnapped",
-    image: "/images/Catnapped/Catnapped_Thumbnail.mp4",
-    mediaType: "video",
+    id: "placeholder-2",
+    title: "Coming Soon",
+    tags: [],
+    href: "#",
+    image: "",
+    mediaType: "image",
     size: "square",
-    gridArea: "card4",
   },
   {
     id: "podpocalypse",
     title: "Podpocalypse: Bottom of the Bowl",
-    tags: ["UI/UX", "3D Art", "VFX", "Development", "Game Design"],
+    tags: ["UI/UX", "3D Art", "VFX", "Development"],
     href: "/work/podpocalypse",
     image: "/images/PodPocalypse/PodHero.png",
     mediaType: "image",
-    size: "wide",       /* spans 2 columns */
-    gridArea: "card5",
+    size: "wide",
   },
 ];
