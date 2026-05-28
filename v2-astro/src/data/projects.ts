@@ -1,9 +1,19 @@
 /* ============================================================
-   PROJECT DATA
+   PROJECT DATA  —  src/data/projects.ts
    The single source of truth for all portfolio projects.
-   To add a new project: add one object to this array.
-   The homepage grid and any future index/filter pages
-   all read from here — you never touch HTML to update content.
+
+   To add a project: copy any object below, change the values.
+   To reorder the grid: change the gridArea values.
+   To change card shape: change size to "square" or "wide".
+
+   CARD SIZES:
+     "square"  → 1:1 aspect ratio, spans 1 grid column
+     "wide"    → 2:1 aspect ratio, spans 2 grid columns
+                 (same height as a square card — they're designed to match)
+
+   GRID AREAS (matches the map in index.astro):
+     Row 1:  card1  |  card2 (wide)  |  card3
+     Row 2:  empty  |  card4         |  card5 (wide)
    ============================================================ */
 
 export interface Project {
@@ -15,21 +25,24 @@ export interface Project {
   /** Path relative to /public */
   image: string;
   mediaType: "image" | "video";
-  /** Which grid area this card occupies (defined in the grid CSS) */
-  gridArea: string;
-  /** Optional: for password-protected projects */
+  /** Card shape: "square" (1:1) or "wide" (2:1, spans 2 columns) */
+  size: "square" | "wide";
+  /** Which named area in the grid this card occupies */
+  gridArea: "card1" | "card2" | "card3" | "card4" | "card5";
+  /** Optional: password-protected case study */
   protected?: boolean;
 }
 
 export const projects: Project[] = [
   {
-    id: "podpocalypse",
-    title: "Podpocalypse: Bottom of the Bowl",
-    tags: ["UI/UX", "3D Art", "VFX", "Development", "Game Design"],
-    href: "/work/podpocalypse",
-    image: "/images/PodPocalypse/PodHero.png",
+    id: "placeholder",
+    title: "New Project",
+    tags: ["Coming Soon"],
+    href: "#",
+    image: "",
     mediaType: "image",
-    gridArea: "card5",
+    size: "square",
+    gridArea: "card1",
   },
   {
     id: "marvel",
@@ -38,6 +51,7 @@ export const projects: Project[] = [
     href: "/work/marvel",
     image: "/images/Marvel/HeroAttempt1.mp4",
     mediaType: "video",
+    size: "wide",       /* spans 2 columns */
     gridArea: "card2",
   },
   {
@@ -47,6 +61,7 @@ export const projects: Project[] = [
     href: "/work/nirvana-noir",
     image: "/images/FeralCatDen/NirvanaNoirThumbnail.png",
     mediaType: "image",
+    size: "square",
     gridArea: "card3",
   },
   {
@@ -56,15 +71,17 @@ export const projects: Project[] = [
     href: "/work/catnapped",
     image: "/images/Catnapped/Catnapped_Thumbnail.mp4",
     mediaType: "video",
+    size: "square",
     gridArea: "card4",
   },
   {
-    id: "placeholder-5",
-    title: "New Project",
-    tags: ["Coming Soon"],
-    href: "#",
-    image: "",
+    id: "podpocalypse",
+    title: "Podpocalypse: Bottom of the Bowl",
+    tags: ["UI/UX", "3D Art", "VFX", "Development", "Game Design"],
+    href: "/work/podpocalypse",
+    image: "/images/PodPocalypse/PodHero.png",
     mediaType: "image",
-    gridArea: "card1",
+    size: "wide",       /* spans 2 columns */
+    gridArea: "card5",
   },
 ];

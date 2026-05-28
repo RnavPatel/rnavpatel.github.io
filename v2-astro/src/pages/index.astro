@@ -2,27 +2,24 @@
 /**
  * index.astro  →  aarnavpatel.com/
  * ============================================================
- * Homepage: hero intro text + asymmetric project gallery grid.
+ * Homepage: project gallery grid.
  *
  * MARGIN NOTE:
- *   Horizontal margins are NOT set here. They come from the
- *   layout grid defined in BaseLayout.astro → "Page margin grid".
+ *   Horizontal margins come from BaseLayout.astro → "Page margin grid".
  *   To change page margins: edit --page-padding-x in tokens.css.
  *
  * CHEAT SHEET — CMD+F these labels:
- *   "HERO"          → the intro text at the top of the page
- *   "Hero headline" → the big title text and its highlighted word
- *   "Hero meta"     → the small right-side links (Feral Cat Den, CMU, Contact)
  *   "GALLERY GRID"  → the project tile grid
- *   "Grid columns"  → how wide each column is (the fr numbers)
- *   "Grid rows"     → how tall each row is (the px numbers)
- *   "Grid areas"    → which card goes where (the visual map)
+ *   "Grid columns"  → 4-column definition
+ *   "Grid areas"    → the visual map (which card goes where)
+ *   "Grid stagger"  → why row 2 is offset right (the empty cell)
  *   "Tablet grid"   → grid at medium screen widths
- *   "Mobile grid"   → grid at small screen widths
+ *   "Mobile grid"   → single-column layout for phones
  * ============================================================
  *
  * To add a project:          edit src/data/projects.ts
  * To change card appearance: edit src/components/ProjectCard.astro
+ * To change card size/shape: edit size: "square"|"wide" in projects.ts
  * To change colors/sizes:    edit src/styles/tokens.css
  */
 
@@ -34,38 +31,13 @@ import { projects } from "../data/projects";
 <BaseLayout title="Work" activePage="work">
 
   <!-- =============================================
-       HERO
-       Sits in the content column (has page margins).
-       To change text: edit the elements below.
-       ============================================= -->
-  <section class="hero">
-
-    <!-- Hero headline -->
-    <h1 class="hero-headline">
-      An <em>experience designer</em><br />crafting the future of<br />interactive entertainment.
-      <!--    ↑ <em> makes this phrase black. Everything else is gray. -->
-    </h1>
-
-    <!-- Hero meta (right side) -->
-    <div class="hero-meta">
-      <p>
-        Previously @ <a href="https://feralcatden.com/#work" target="_blank" rel="noopener" class="link">Feral Cat Den</a>↗<br />
-        Graduated from <a href="https://design.cmu.edu" target="_blank" rel="noopener" class="link">CMU Design</a>↗<br />
-        <a href="/about" class="link">Contact</a>↗
-      </p>
-    </div>
-
-  </section>
-
-  <!-- =============================================
        GALLERY GRID
-       Also in the content column — aligned to same
-       margins as the hero text above it.
+       Sits in the content column (has page margins).
+       Cards define their OWN size via aspect-ratio —
+       the grid places them, not stretches them.
 
-       To make it full-bleed (edge-to-edge) instead,
-       add class="full-bleed" to this <section>.
-
-       To reorder cards: change gridArea in projects.ts
+       To go full-bleed (edge-to-edge):
+         add class="full-bleed" to this <section>
        ============================================= -->
   <section class="gallery">
     {projects.map((project) => (
@@ -75,6 +47,7 @@ import { projects } from "../data/projects";
         href={project.href}
         image={project.image}
         mediaType={project.mediaType}
+        size={project.size}
         gridArea={project.gridArea}
       />
     ))}
@@ -88,115 +61,101 @@ import { projects } from "../data/projects";
 
 <style>
   /* =============================================
-     HERO layout
-     No horizontal padding here — the layout grid
-     in BaseLayout provides the page margins.
-     ============================================= */
-  .hero {
-    padding-top: var(--space-8);
-    padding-bottom: var(--space-6);
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: var(--space-8);
-  }
-
-  /* Hero headline — the large left text */
-  .hero-headline {
-    font-size: var(--text-xl);
-    font-weight: var(--weight-semibold);
-    line-height: var(--leading-tight);
-    color: var(--color-text-secondary);
-    max-width: 18ch;
-  }
-
-  .hero-headline em {
-    font-style: normal;
-    color: var(--color-text-primary);   /* black for the emphasized phrase */
-  }
-
-  /* Hero meta — the small right-side links */
-  .hero-meta {
-    padding-top: var(--space-2);
-    flex-shrink: 0;
-  }
-
-  .hero-meta p {
-    font-size: var(--text-sm);
-    color: var(--color-text-secondary);
-    line-height: var(--leading-loose);
-  }
-
-  /* =============================================
      GALLERY GRID
-     CSS Grid with named areas — like naming frames in Figma.
-     No horizontal padding — same margin column as hero above.
+     =============================================
 
-     Grid columns: width ratio of each column.
-       Change these numbers to adjust column widths.
-       "2.5fr 4fr 3.5fr" = narrow / wide / medium
+     Grid columns: 4 equal columns.
+       Wide cards span 2 columns (set in ProjectCard via grid-area).
+       Square cards span 1 column.
 
-     Grid rows: fixed height per row.
-       Increase to make all cards taller.
+     Grid areas: the visual layout map.
+       Each string is one row. Each word is one cell.
+       "." = intentionally empty cell.
 
-     Grid areas: the visual map — matches gridArea in projects.ts
-       "card1 card2 card3"  = row 1
-       "card4 card5 card5"  = row 2 (card5 spans 2 cols)
-     ============================================= */
+       Row 1:  card1 | card2 (wide) | card2 | card3
+       Row 2:  empty | card4        | card5 (wide) | card5
+
+       The empty cell in row 2 staggers it right —
+       card4 aligns with where card2 starts above it.
+       This creates the asymmetric offset from the mockup.
+
+     NO fixed row heights — card aspect-ratios determine height.
+       square cards: 1:1
+       wide cards:   2:1  (same height as a square in the same row)
+
+     align-items: start ensures cards are NOT stretched to
+     fill row height — they hold their own aspect ratio.
+  =============================================*/
   .gallery {
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
     display: grid;
 
-    /* Grid columns */
-    grid-template-columns: 2.5fr 4fr 3.5fr;
+    /* Grid columns: 4 equal units */
+    grid-template-columns: repeat(4, 1fr);
 
-    /* Grid rows */
-    grid-template-rows: 340px 400px;
-
-    /* Grid areas — the visual map */
+    /* Grid areas — the visual map
+       Edit this to rearrange the layout.
+       Match gridArea values in projects.ts. */
     grid-template-areas:
-      "card1 card2 card3"
-      "card4 card5 card5";
+      "card1 card2 card2 card3"
+      ".     card4 card5 card5";
 
     gap: var(--gap-grid);
+
+    /* Cards hold their own aspect ratio — don't stretch them */
+    align-items: start;
   }
 
   /* =============================================
-     Tablet grid  (901px – 1200px)
-     Same layout, shorter rows.
+     Tablet grid  (700px – 1100px)
+     Keep 2-column layout but drop the stagger.
+     Row 1: square + wide
+     Row 2: wide + square
      ============================================= */
-  @media (min-width: 901px) and (max-width: 1200px) {
+  @media (min-width: 700px) and (max-width: 1100px) {
     .gallery {
-      grid-template-rows: 260px 300px;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas:
+        "card1 card2"
+        "card3 card4"
+        "card5 card5";
+      /* card5 (wide) spans full width of the 2-col grid on tablet */
+    }
+
+    /* wide cards span 1 column at this size — 2:1 becomes too wide */
+    /* Override aspect ratio so wide cards match square cards' height */
+    .gallery > :global(.card--wide) {
+      aspect-ratio: 1 / 1;
+    }
+
+    /* card5 full-width gets its proper wide ratio back */
+    .gallery > :global([style*="card5"]) {
+      aspect-ratio: 2 / 1;
     }
   }
 
   /* =============================================
-     Mobile grid  (≤ 900px)
-     Single column, cards stack vertically.
-     Each card gets a 16:9 aspect ratio.
+     Mobile grid  (≤ 700px)
+     Single column. ALL cards become 16:9.
+     "square" type is overridden to 16:9 too —
+     small squares look awkward stacked full-width.
      ============================================= */
-  @media (max-width: 900px) {
-    .hero {
-      flex-direction: column;
-      gap: var(--space-5);
-    }
-
-    .hero-headline {
-      max-width: 100%;
-    }
-
+  @media (max-width: 700px) {
     .gallery {
       grid-template-columns: 1fr;
-      grid-template-rows: auto;
       grid-template-areas:
         "card1"
         "card2"
         "card3"
         "card4"
         "card5";
+      align-items: stretch;
     }
 
-    .gallery > :global(.card) {
+    /* All cards → 16:9 on mobile regardless of desktop size */
+    .gallery > :global(.card--square),
+    .gallery > :global(.card--wide) {
       aspect-ratio: 16 / 9;
     }
   }

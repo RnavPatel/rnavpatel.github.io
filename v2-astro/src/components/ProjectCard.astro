@@ -4,8 +4,15 @@
  * ============================================================
  * A single project tile in the homepage gallery grid.
  *
+ * TWO CARD SIZES:
+ *   "square"  →  aspect-ratio: 1/1  (spans 1 column)
+ *   "wide"    →  aspect-ratio: 2/1  (spans 2 columns)
+ *   The 2:1 ratio is intentional: a wide card spanning 2 columns
+ *   ends up the same HEIGHT as a square card in 1 column.
+ *   On mobile, both become 16:9 (controlled in index.astro).
+ *
  * CHEAT SHEET — CMD+F these labels:
- *   "Card shape"      → border-radius, background color
+ *   "Card shape"      → border-radius, aspect ratios per size
  *   "Media"           → image/video fill and zoom-on-hover
  *   "Caption"         → the title+tags overlay that appears on hover
  *   "Gradient"        → the dark-to-transparent gradient behind text
@@ -14,12 +21,8 @@
  *   "Mobile caption"  → how caption looks on touch screens
  * ============================================================
  *
- * To change this card's appearance:
- *   - Edit the <style> block at the bottom of this file
- *   - Colors and sizes should reference tokens, e.g. var(--radius-lg)
- *
- * To change project content (title, tags, image):
- *   - Edit src/data/projects.ts — never edit this file for content
+ * To change appearance: edit the <style> block below
+ * To change content (title, tags, image): edit src/data/projects.ts
  */
 
 interface Props {
@@ -28,17 +31,16 @@ interface Props {
   href: string;
   image: string;
   mediaType: "image" | "video";
+  size: "square" | "wide";
   gridArea: string;
 }
 
-const { title, tags, href, image, mediaType, gridArea } = Astro.props;
+const { title, tags, href, image, mediaType, size, gridArea } = Astro.props;
 
-// Inline style sets which grid cell this card occupies.
-// The actual grid area names are defined in src/pages/index.astro
 const style = `grid-area: ${gridArea};`;
 ---
 
-<article class="card" style={style}>
+<article class={`card card--${size}`} style={style}>
   <a href={href} class="card-link">
 
     <!-- ---- Media ---- -->
@@ -51,7 +53,7 @@ const style = `grid-area: ${gridArea};`;
       {image && mediaType === "image" && (
         <img src={image} alt={title} loading="lazy" />
       )}
-      <!-- No image → gray background from .card shows through -->
+      <!-- No image → gray from background shows through -->
     </div>
 
     <!-- ---- Caption (hover overlay) ---- -->
@@ -69,11 +71,25 @@ const style = `grid-area: ${gridArea};`;
      ============================================= */
   .card {
     position: relative;
-    border-radius: var(--radius-lg);   /* ← change card corners in tokens.css */
+    border-radius: var(--radius-lg);
     overflow: hidden;
-    background-color: var(--color-surface); /* ← gray placeholder; disappears when image loads */
+    background-color: var(--color-surface);
   }
 
+  /* Square card: 1:1. Width = 1 column. */
+  .card--square {
+    aspect-ratio: 1 / 1;
+  }
+
+  /* Wide card: 2:1. Width = 2 columns.
+     The 2:1 ratio is matched to the 4-column grid so that
+     a wide card (2 cols) is the same HEIGHT as a square card (1 col).
+     Math: if 1 col = W, wide card = 2W, height = 2W÷2 = W. Equal. */
+  .card--wide {
+    aspect-ratio: 2 / 1;
+  }
+
+  /* card-link must fill the card completely for the hover area to work */
   .card-link {
     display: block;
     width: 100%;
@@ -85,44 +101,42 @@ const style = `grid-area: ${gridArea};`;
      Media (image or video fill)
      ============================================= */
   .card-media {
-    width: 100%;
-    height: 100%;
     position: absolute;
     inset: 0;
+    width: 100%;
+    height: 100%;
   }
 
   .card-media img,
   .card-media video {
     width: 100%;
     height: 100%;
-    object-fit: cover;    /* fills the card, crops rather than squishing */
+    object-fit: cover;   /* crops to fit — never squishes */
     display: block;
-    /* Zoom animation is triggered by hover state below */
     transition: transform var(--duration-slow) var(--ease-out-expo);
     will-change: transform;
   }
 
   /* =============================================
-     Caption (the title + tags overlay)
+     Caption (the hover overlay: title + tags)
      ============================================= */
   .card-caption {
     position: absolute;
     inset: 0;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;   /* pins text to the bottom */
+    justify-content: flex-end;
     gap: var(--space-1);
     padding: var(--space-5);
-    /* Gradient — dark at bottom fading to transparent at top */
+    /* Gradient */
     background: linear-gradient(
       to top,
-      rgba(0, 0, 0, 0.72) 0%,     /* ← increase first number to darken gradient */
+      rgba(0, 0, 0, 0.72) 0%,
       rgba(0, 0, 0, 0.2)  40%,
       transparent         70%
     );
-    /* Hidden by default; revealed on hover */
     opacity: 0;
-    transform: translateY(var(--space-2));   /* starts 8px lower */
+    transform: translateY(var(--space-2));
     transition:
       opacity   var(--duration-normal) var(--ease-out-quart),
       transform var(--duration-normal) var(--ease-out-quart);
@@ -142,22 +156,20 @@ const style = `grid-area: ${gridArea};`;
   .card-tags {
     font-size: var(--text-xs);
     font-weight: var(--weight-regular);
-    color: rgba(255, 255, 255, 0.65);  /* ← adjust opacity to taste */
+    color: rgba(255, 255, 255, 0.65);
     letter-spacing: 0.06em;
-    text-transform: uppercase;         /* ← remove this line for mixed case */
+    text-transform: uppercase;
   }
 
   /* =============================================
-     Hover state  (desktop / mouse only)
+     Hover state (desktop / mouse only)
      ============================================= */
   @media (hover: hover) and (pointer: fine) {
-    /* Image zooms in */
     .card:hover .card-media img,
     .card:hover .card-media video {
-      transform: scale(1.04);   /* ← increase for more zoom, decrease for less */
+      transform: scale(1.04);
     }
 
-    /* Caption rises into view */
     .card:hover .card-caption {
       opacity: 1;
       transform: translateY(0);
@@ -165,12 +177,12 @@ const style = `grid-area: ${gridArea};`;
   }
 
   /* =============================================
-     Mobile caption  (touch screens / small screens)
-     Caption always visible, shown below the image
+     Mobile caption (touch screens)
+     Always visible, sits below the image
      ============================================= */
   @media (hover: none), (max-width: 768px) {
     .card-caption {
-      position: static;       /* detaches from overlay, becomes a block below the image */
+      position: static;
       background: none;
       padding: var(--space-3) var(--space-2);
       opacity: 1;
@@ -178,12 +190,7 @@ const style = `grid-area: ${gridArea};`;
       pointer-events: auto;
     }
 
-    .card-title {
-      color: var(--color-text-primary);
-    }
-
-    .card-tags {
-      color: var(--color-text-muted);
-    }
+    .card-title { color: var(--color-text-primary); }
+    .card-tags  { color: var(--color-text-muted); }
   }
 </style>
