@@ -1,0 +1,53 @@
+/* ============================================================
+   GLOBAL STYLES
+   Rules that truly affect the whole page — body, scrollbar,
+   text selection, focus styles, media defaults.
+   Keep this file small. Component styles live in their files.
+   ============================================================ */
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-pill);
+}
+
+/* Text selection */
+::selection {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+/* Focus ring — accessible, not ugly */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* Images fill their container by default */
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Video same */
+video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

@@ -1,0 +1,125 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Aarnav" activePage="about">
+
+  <section class="about">
+    <div class="about-inner">
+
+      <div class="about-photo">
+        <img src="/images/AarnavHeadshot.png" alt="Aarnav Patel" />
+      </div>
+
+      <div class="about-content">
+        <p class="about-bio text-md">
+          <strong>Hey!</strong> My name is Aarnav, and I'm a game UX designer.
+          I make games with the goal of bringing people together, and believe
+          that the gaming experience should be enjoyable to all. I hold a
+          Bachelor of Design from
+          <a href="https://www.design.cmu.edu/" target="_blank" rel="noopener" class="link">Carnegie Mellon University</a>↗,
+          and am currently working on making my own minigames to share with my friends.
+          If you have an idea, feel free to reach out!
+        </p>
+
+        <div class="about-experience">
+          <div class="experience-row">
+            <span class="text-sm"><strong>Design Intern</strong> @ <a href="https://feralcatden.com/" target="_blank" rel="noopener" class="link">Feral Cat Den</a>↗</span>
+            <span class="text-sm text-muted">Jun – Aug 2025</span>
+          </div>
+          <hr />
+          <div class="experience-row">
+            <span class="text-sm"><strong>UX Design Intern</strong> @ <a href="https://nowpresent.co/" target="_blank" rel="noopener" class="link">Present Studios</a>↗</span>
+            <span class="text-sm text-muted">May – Aug 2024</span>
+          </div>
+          <hr />
+          <div class="experience-row">
+            <span class="text-sm"><strong>Teaching Assistant</strong> @ <a href="https://www.design.cmu.edu/" target="_blank" rel="noopener" class="link">CMU School of Design</a>↗</span>
+            <span class="text-sm text-muted">Aug 2023 – May 2025</span>
+          </div>
+        </div>
+
+        <div class="about-links">
+          <a href="mailto:aarnavpatel2003@gmail.com" class="link text-sm">Email↗</a>
+          <a href="https://www.linkedin.com/in/aarnav-patel-ba397b244/" target="_blank" rel="noopener" class="link text-sm">LinkedIn↗</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .about {
+    padding: var(--space-8) var(--page-padding-x);
+  }
+
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-10);
+    max-width: 1000px;
+    margin: 0 auto;
+    align-items: start;
+  }
+
+  .about-photo {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+  }
+
+  .about-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .about-bio {
+    color: var(--color-text-secondary);
+    line-height: var(--leading-loose);
+  }
+
+  .about-experience {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .experience-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-4);
+  }
+
+  hr {
+    border: none;
+    height: 1px;
+    background-color: var(--color-border);
+  }
+
+  .about-links {
+    display: flex;
+    gap: var(--space-5);
+  }
+
+  @media (max-width: 768px) {
+    .about-inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+
+    .about-photo {
+      aspect-ratio: 1 / 1;
+      max-width: 280px;
+    }
+  }
+</style>

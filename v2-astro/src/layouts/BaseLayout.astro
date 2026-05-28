@@ -1,0 +1,76 @@
+---
+/**
+ * BaseLayout.astro
+ * The HTML shell that every page uses.
+ * Imports all global CSS, loads fonts, sets meta tags.
+ *
+ * Usage:
+ *   <BaseLayout title="Work" activePage="work">
+ *     ... page content ...
+ *   </BaseLayout>
+ */
+
+import Nav from "../components/Nav.astro";
+
+// Global styles — imported once here, applied everywhere
+import "../styles/tokens.css";
+import "../styles/reset.css";
+import "../styles/global.css";
+import "../styles/typography.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  activePage: "work" | "about";
+}
+
+const {
+  title = "Aarnav Patel",
+  description = "Experience designer crafting the future of interactive entertainment.",
+  activePage,
+} = Astro.props;
+
+const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{fullTitle}</title>
+
+    <!-- Favicon placeholder — replace with actual favicon later -->
+    <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
+
+    <!-- DM Sans: preconnect for performance, then load full range -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <Nav activePage={activePage} />
+
+    <main>
+      <slot />
+      <!-- Page content from each .astro page goes here -->
+    </main>
+
+  </body>
+</html>
+
+<style is:global>
+  /*
+    Page-level layout: main sits below the fixed nav.
+    Using padding-top so content is never hidden under it.
+  */
+  main {
+    padding-top: var(--page-padding-top);
+    min-height: 100svh;
+  }
+</style>

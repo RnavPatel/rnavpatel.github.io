@@ -1,0 +1,87 @@
+/* ============================================================
+   DESIGN TOKENS
+   The single source of truth for all visual decisions.
+   Every color, space, size, and radius used on the site
+   lives here as a CSS custom property.
+   Change a value here → it updates everywhere instantly.
+   ============================================================ */
+
+:root {
+
+  /* --- Color --- */
+  --color-bg:             #ffffff;
+  --color-surface:        #f0f0f0;   /* placeholder gray for cards */
+  --color-surface-raised: #e8e8e8;   /* slightly darker surface (hover states etc) */
+  --color-border:         #e4e4e4;
+
+  --color-text-primary:   #1a1a1a;
+  --color-text-secondary: #666666;
+  --color-text-muted:     #bcbcbc;
+  --color-text-inverse:   #ffffff;
+
+  --color-accent:         #14D277;   /* your green — used on link hovers etc */
+
+  --color-nav-bg:         rgba(214, 214, 214, 0.57);
+  --color-nav-active-bg:  #111111;
+
+  /* --- Spacing scale ---
+     Multiples of 0.25rem (4px base).
+     Use these everywhere instead of raw values.   */
+  --space-1:  0.25rem;   /*  4px */
+  --space-2:  0.5rem;    /*  8px */
+  --space-3:  0.75rem;   /* 12px */
+  --space-4:  1rem;      /* 16px */
+  --space-5:  1.5rem;    /* 24px */
+  --space-6:  2rem;      /* 32px */
+  --space-8:  3rem;      /* 48px */
+  --space-10: 4rem;      /* 64px */
+  --space-12: 5rem;      /* 80px */
+  --space-16: 7rem;      /* 112px */
+
+  /* --- Typography --- */
+  --font-sans: "DM Sans", sans-serif;
+
+  /* Type scale — fluid sizes using clamp() so they
+     scale smoothly between mobile and desktop.
+     Format: clamp(min, preferred, max)             */
+  --text-xs:   clamp(0.75rem,  1vw,    0.85rem);   /* caption, tags */
+  --text-sm:   clamp(0.85rem,  1.2vw,  1rem);      /* h6 equivalent */
+  --text-md:   clamp(1rem,     1.5vw,  1.2rem);    /* body / h3 equivalent */
+  --text-lg:   clamp(1.4rem,   2.5vw,  2rem);      /* h2 equivalent */
+  --text-xl:   clamp(1.8rem,   3.5vw,  2.9rem);    /* h4 (big title) equivalent */
+
+  --leading-tight:  1.1;
+  --leading-normal: 1.4;
+  --leading-loose:  1.6;
+
+  --weight-light:   300;
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-semibold: 600;
+
+  /* --- Radii --- */
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   16px;   /* project cards */
+  --radius-pill: 999px;  /* nav, buttons */
+
+  /* --- Shadows --- */
+  --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md:  0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg:  0 12px 32px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.06);
+
+  /* --- Grid & Layout --- */
+  --gap-grid:          10px;   /* gap between project tiles */
+  --page-padding-x:    clamp(1rem, 5vw, 3rem);   /* side margins on all pages */
+  --page-padding-top:  5rem;   /* clears the fixed nav */
+
+  /* --- Motion --- */
+  --ease-out-expo:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart:  cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out:     cubic-bezier(0.4, 0, 0.2, 1);
+
+  --duration-fast:    150ms;
+  --duration-normal:  260ms;
+  --duration-slow:    500ms;
+  --duration-page:    600ms;
+}

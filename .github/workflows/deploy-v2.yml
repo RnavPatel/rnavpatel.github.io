@@ -1,0 +1,71 @@
+# deploy-v2.yml
+# Builds the Astro project and deploys to GitHub Pages
+# whenever you push to the v2 branch.
+#
+# To activate: push this branch to GitHub, then in your repo
+# Settings → Pages → Source → set to "GitHub Actions"
+
+name: Deploy v2 (Astro)
+
+on:
+  push:
+    branches:
+      - v2   # only runs on the v2 branch
+
+  # Allow manual trigger from the GitHub Actions UI
+  workflow_dispatch:
+
+# Allow this workflow to write to Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one deploy at a time
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build Astro site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: v2-astro/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./v2-astro
+
+      - name: Build with Astro
+        run: npm run build
+        working-directory: ./v2-astro
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload the dist folder that Astro outputs to
+          path: ./dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

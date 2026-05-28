@@ -1,0 +1,153 @@
+---
+/**
+ * ProjectCard.astro
+ * A single project tile in the homepage gallery grid.
+ *
+ * Phase 1: Renders a gray placeholder box.
+ * Phase 2: Swap in real media, add hover interactions.
+ *
+ * Props match the Project interface in data/projects.ts
+ */
+
+interface Props {
+  title: string;
+  tags: string[];
+  href: string;
+  image: string;
+  mediaType: "image" | "video";
+  gridArea: string;
+}
+
+const { title, tags, href, image, mediaType, gridArea } = Astro.props;
+
+// We use an inline style to set the grid-area so each card
+// can be placed individually without extra utility classes.
+const style = `grid-area: ${gridArea};`;
+---
+
+<article class="card" style={style}>
+  <a href={href} class="card-link">
+
+    <!-- MEDIA AREA: gray box in Phase 1 -->
+    <div class="card-media">
+      {image && mediaType === "video" && (
+        <video autoplay muted loop playsinline>
+          <source src={image} type="video/mp4" />
+        </video>
+      )}
+      {image && mediaType === "image" && (
+        <img src={image} alt={title} loading="lazy" />
+      )}
+      <!-- if no image, the gray background shows through -->
+    </div>
+
+    <!-- CAPTION: slides up on hover -->
+    <div class="card-caption">
+      <p class="card-title text-sm">{title}</p>
+      <p class="card-tags text-xs text-muted">{tags.join(" · ")}</p>
+    </div>
+
+  </a>
+</article>
+
+<style>
+  .card {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background-color: var(--color-surface); /* gray placeholder */
+  }
+
+  .card-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+
+  /* ---- Media ---- */
+  .card-media {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+  }
+
+  .card-media img,
+  .card-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--duration-slow) var(--ease-out-expo);
+    will-change: transform;
+  }
+
+  /* ---- Caption ---- */
+  .card-caption {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: var(--space-1);
+    padding: var(--space-5);
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.72) 0%,
+      rgba(0, 0, 0, 0.2) 40%,
+      transparent 70%
+    );
+    opacity: 0;
+    transform: translateY(var(--space-2));
+    transition:
+      opacity var(--duration-normal) var(--ease-out-quart),
+      transform var(--duration-normal) var(--ease-out-quart);
+    pointer-events: none;
+  }
+
+  .card-title {
+    color: var(--color-text-inverse);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-tight);
+  }
+
+  .card-tags {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+  }
+
+  /* ---- Hover state ---- */
+  @media (hover: hover) and (pointer: fine) {
+    .card:hover .card-media img,
+    .card:hover .card-media video {
+      transform: scale(1.04);
+    }
+
+    .card:hover .card-caption {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ---- Mobile: always show caption below card ---- */
+  @media (hover: none), (max-width: 768px) {
+    .card-caption {
+      position: static;
+      background: none;
+      padding: var(--space-3) var(--space-2);
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+
+    .card-title {
+      color: var(--color-text-primary);
+    }
+
+    .card-tags {
+      color: var(--color-text-muted);
+    }
+  }
+</style>

@@ -1,0 +1,73 @@
+---
+/**
+ * Nav.astro
+ * The floating pill navigation. Accepts an `activePage` prop
+ * so the correct tab gets the active/filled style.
+ */
+
+interface Props {
+  activePage: "work" | "about";
+}
+
+const { activePage } = Astro.props;
+---
+
+<nav>
+  <div class="nav-pill">
+    <a href="/" class:list={["nav-link", { "nav-link--active": activePage === "work" }]}>
+      <span>Work</span>
+    </a>
+    <a href="/about" class:list={["nav-link", { "nav-link--active": activePage === "about" }]}>
+      <span>Aarnav</span>
+    </a>
+  </div>
+</nav>
+
+<style>
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    padding: var(--space-3) 0;
+    pointer-events: none; /* only the pill itself is clickable */
+  }
+
+  .nav-pill {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    background-color: var(--color-nav-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: var(--radius-pill);
+    padding: var(--space-1);
+    pointer-events: all;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    padding: var(--space-2) var(--space-5);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-secondary);
+    transition:
+      background-color var(--duration-fast) ease,
+      color var(--duration-fast) ease;
+  }
+
+  .nav-link:hover:not(.nav-link--active) {
+    background-color: rgba(0, 0, 0, 0.06);
+    color: var(--color-text-primary);
+  }
+
+  .nav-link--active {
+    background-color: var(--color-nav-active-bg);
+    color: var(--color-text-inverse);
+  }
+</style>

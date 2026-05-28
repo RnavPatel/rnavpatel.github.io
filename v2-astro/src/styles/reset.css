@@ -1,0 +1,48 @@
+/* ============================================================
+   MODERN CSS RESET
+   A minimal, modern reset. Replaces the old Meyer reset.
+   Source: Josh Comeau's reset (https://www.joshwcomeau.com/css/custom-css-reset/)
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  /* Smooth font rendering */
+  -webkit-font-smoothing: antialiased;
+  /* Prevent font size inflation on mobile */
+  text-size-adjust: none;
+}
+
+body {
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+ol, ul {
+  list-style: none;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

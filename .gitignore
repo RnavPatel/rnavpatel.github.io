@@ -1,3 +1,12 @@
-root/.DS_Store
-root/Images/.DS_Store
-root/Images/PodPocalypse/.DS_Store
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Astro build output (built by GitHub Actions, not committed)
+dist/
+
+# Astro dev cache
+v2-astro/.astro/
+
+# Dependencies
+v2-astro/node_modules/

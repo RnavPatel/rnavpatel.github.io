@@ -1,0 +1,166 @@
+---
+/**
+ * index.astro  →  aarnavpatel.com/
+ * Homepage: hero text + asymmetric project gallery grid.
+ *
+ * The grid layout matches the Figma mockup:
+ *
+ *  ┌──────────┬─────────────────────┬─────────────┐
+ *  │  card1   │       card2         │   card3     │
+ *  │ (narrow) │     (wide)          │  (square)   │
+ *  ├──────────┴──────────┬──────────┴─────────────┤
+ *  │       card4         │         card5           │
+ *  │    (medium sq)      │       (wide)            │
+ *  └─────────────────────┴─────────────────────────┘
+ */
+
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { projects } from "../data/projects";
+---
+
+<BaseLayout title="Work" activePage="work">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="hero-inner">
+      <h1 class="hero-headline">
+        An <em>experience designer</em><br />crafting the future of<br />interactive entertainment.
+      </h1>
+
+      <div class="hero-meta">
+        <p class="text-sm text-secondary">
+          Previously @ <a href="https://feralcatden.com/#work" target="_blank" rel="noopener" class="link">Feral Cat Den</a>↗<br />
+          Graduated from <a href="https://design.cmu.edu" target="_blank" rel="noopener" class="link">CMU Design</a>↗<br />
+          <a href="/about" class="link">Contact</a>↗
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY GRID ============ -->
+  <section class="gallery">
+    {projects.map((project) => (
+      <ProjectCard
+        title={project.title}
+        tags={project.tags}
+        href={project.href}
+        image={project.image}
+        mediaType={project.mediaType}
+        gridArea={project.gridArea}
+      />
+    ))}
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <p class="text-xs text-muted">Built in Astro</p>
+  </footer>
+
+</BaseLayout>
+
+<style>
+  /* ---- Hero ---- */
+  .hero {
+    padding: var(--space-8) var(--page-padding-x) var(--space-6);
+  }
+
+  .hero-inner {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-8);
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .hero-headline {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-tight);
+    color: var(--color-text-secondary);
+    max-width: 18ch;
+  }
+
+  .hero-headline em {
+    font-style: normal;
+    color: var(--color-text-primary);
+  }
+
+  .hero-meta {
+    padding-top: var(--space-2);
+    flex-shrink: 0;
+  }
+
+  .hero-meta p {
+    line-height: var(--leading-loose);
+  }
+
+  /* ---- Gallery Grid ---- */
+  .gallery {
+    /*
+      CSS Grid with named template areas — like naming frames in Figma.
+      The layout below matches the mockup:
+        Row 1: narrow / wide / medium
+        Row 2: medium / wide
+    */
+    display: grid;
+    grid-template-columns: 2.5fr 4fr 3.5fr;
+    grid-template-rows: 340px 400px;
+    grid-template-areas:
+      "card1 card2 card3"
+      "card4 card5 card5";
+    gap: var(--gap-grid);
+
+    /*
+      No side margins: tiles go edge-to-edge.
+      Full-bleed editorial look from the mockup.
+    */
+    padding: 0;
+    margin: 0;
+  }
+
+  /* ---- Footer ---- */
+  .footer {
+    padding: var(--space-5) var(--page-padding-x);
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 900px) {
+    .hero-inner {
+      flex-direction: column;
+      gap: var(--space-5);
+    }
+
+    .hero-headline {
+      max-width: 100%;
+    }
+
+    /*
+      Mobile: single column, each card stacks vertically.
+    */
+    .gallery {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      grid-template-areas:
+        "card1"
+        "card2"
+        "card3"
+        "card4"
+        "card5";
+    }
+
+    /* Natural 16:9 on mobile */
+    .gallery > :global(.card) {
+      aspect-ratio: 16 / 9;
+    }
+  }
+
+  @media (min-width: 901px) and (max-width: 1200px) {
+    .gallery {
+      grid-template-rows: 260px 300px;
+    }
+  }
+</style>

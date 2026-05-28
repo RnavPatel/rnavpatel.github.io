@@ -1,0 +1,86 @@
+/* ============================================================
+   TYPOGRAPHY
+   Semantic heading sizes and global link styles.
+
+   IMPORTANT: Headings here are styled by their SEMANTIC role
+   (h1 = most important on the page), NOT as design tokens.
+   To make a <p> look like a heading, use a utility class
+   like .text-xl — don't change the heading element.
+   ============================================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  color: var(--color-text-primary);
+}
+
+h1 { font-size: var(--text-xl); }
+h2 { font-size: var(--text-lg); }
+h3 { font-size: var(--text-md); font-weight: var(--weight-light); }
+h4 { font-size: var(--text-sm); font-weight: var(--weight-regular); }
+
+p {
+  font-size: var(--text-md);
+  font-weight: var(--weight-light);
+  line-height: var(--leading-loose);
+  color: var(--color-text-secondary);
+}
+
+/* --- Utility text classes ---
+   Apply these to any element to control visual size
+   independently of its semantic role.              */
+
+.text-xl {
+  font-size: var(--text-xl);
+  line-height: var(--leading-tight);
+  font-weight: var(--weight-semibold);
+}
+
+.text-lg {
+  font-size: var(--text-lg);
+  line-height: var(--leading-tight);
+  font-weight: var(--weight-semibold);
+}
+
+.text-md {
+  font-size: var(--text-md);
+  line-height: var(--leading-normal);
+  font-weight: var(--weight-light);
+}
+
+.text-sm {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  font-weight: var(--weight-light);
+}
+
+.text-xs {
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  font-weight: var(--weight-regular);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* --- Color utilities --- */
+.text-primary   { color: var(--color-text-primary); }
+.text-secondary { color: var(--color-text-secondary); }
+.text-muted     { color: var(--color-text-muted); }
+.text-accent    { color: var(--color-accent); }
+
+/* --- Link styles (global) --- */
+a.link {
+  color: var(--color-text-secondary);
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  transition: color var(--duration-fast) ease;
+}
+
+a.link:hover {
+  color: var(--color-accent);
+  text-decoration-color: var(--color-accent);
+}
