@@ -71,7 +71,16 @@ const { title, tags, href, image, mediaType, size } = Astro.props;
      Card shape
      Width is driven by --col-unit set on .gallery in index.astro.
      Cards inherit that variable and compute their own width.
-     Aspect-ratio sets height — no fixed px heights anywhere.
+
+     Height:
+       Square uses aspect-ratio: 1/1 → height = width = col-unit. ✓
+       Wide cannot use aspect-ratio: 2/1 because its width includes
+       an extra gap term (+ var(--gap-grid)), which makes height
+       come out as col-unit + gap/2 — slightly taller than the square.
+       Instead, wide uses height: calc((100cqi - N*gap) / cols),
+       which is col-unit expressed as an absolute length via the
+       gallery container (set up with container-type in index.astro).
+       cqi = container inline size → resolves to px, safe in height.
   ============================================= */
   .card {
     position: relative;
@@ -87,10 +96,18 @@ const { title, tags, href, image, mediaType, size } = Astro.props;
     aspect-ratio: 1 / 1;
   }
 
-  /* Wide: 2 column units wide, 2:1 ratio */
+  /* Wide: 2 column units wide, same height as square.
+     Desktop (4-column): height = (gallery-width - 3 gaps) / 4 = col-unit */
   .card--wide {
     width: calc(2 * var(--col-unit) + var(--gap-grid));
-    aspect-ratio: 2 / 1;
+    height: calc((100cqi - 3 * var(--gap-grid)) / 4);
+  }
+
+  /* Tablet (601–1000px): 3-column grid, recalculate col-unit height */
+  @media (max-width: 1000px) and (min-width: 601px) {
+    .card--wide {
+      height: calc((100cqi - 2 * var(--gap-grid)) / 3);
+    }
   }
 
   .card-link {
@@ -164,7 +181,7 @@ const { title, tags, href, image, mediaType, size } = Astro.props;
     display: inline-block;
     padding: var(--space-1) var(--space-3);
     border-radius: var(--radius-pill);
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.85);
     color: var(--color-text-primary);
     font-size: var(--text-xs);
     font-weight: var(--weight-medium);

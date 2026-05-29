@@ -77,6 +77,14 @@ import { projects } from "../data/projects";
     /* Define the column unit — cards read this via CSS inheritance */
     --col-unit: calc((100% - 3 * var(--gap-grid)) / 4);
 
+    /* container-type: inline-size makes .gallery a CSS container.
+       Cards can then use cqi (container inline size) units in their
+       height property — cqi resolves to a real length (like px), unlike
+       %, which only works for width. This is how wide + square cards
+       get identical heights without brittle fixed pixel values. */
+    container-type: inline-size;
+    container-name: gallery;
+
     display: flex;
     flex-wrap: wrap;            /* rows wrap when full */
     justify-content: center;    /* each row is center-aligned */
@@ -108,6 +116,7 @@ import { projects } from "../data/projects";
     .gallery > :global(.card--square),
     .gallery > :global(.card--wide) {
       width: 100%;
+      height: auto;          /* reset explicit height so aspect-ratio takes over */
       aspect-ratio: 16 / 9;
     }
   }

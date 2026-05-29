@@ -9,12 +9,11 @@
  *   "Nav layout"   → how the bar is positioned and spaced
  *   "Tagline pill" → the left "Aarnav is a Design Engineer" pill
  *   "Nav links"    → the right work/about pills
- *   "Active"       → the filled dark pill for current page
  *   "Hover"        → mouse-over state
  * ============================================================
  *
  * To change the tagline text: edit the <span> in .nav-tagline below
- * To change pill colors: edit --color-nav-bg and --color-nav-active-bg in tokens.css
+ * To change pill colors: edit --color-nav-bg and --color-nav-border in tokens.css
  */
 
 interface Props {
@@ -33,10 +32,10 @@ const { activePage } = Astro.props;
 
   <!-- Work / About pills — right side -->
   <div class="nav-links">
-    <a href="/" class:list={["nav-link", { "nav-link--active": activePage === "work" }]}>
+    <a href="/" class="nav-link">
       <span>Work</span>
     </a>
-    <a href="/about" class:list={["nav-link", { "nav-link--active": activePage === "about" }]}>
+    <a href="/about" class="nav-link">
       <span>About</span>
     </a>
   </div>
@@ -76,21 +75,19 @@ const { activePage } = Astro.props;
     align-items: center;
     padding: var(--space-2) var(--space-4);
     border-radius: var(--radius-pill);
+    border: 2px solid var(--color-nav-border);
     font-size: var(--text-sm);
     font-weight: var(--weight-medium);
-    color: var(--color-text-secondary);
+    color: var(--color-text-primary);
     background-color: var(--color-nav-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     pointer-events: all;
-    transition:
-      background-color var(--duration-fast) ease,
-      color var(--duration-fast) ease;
+    transition: background-color var(--duration-fast) ease;
   }
 
   .nav-tagline:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    color: var(--color-text-primary);
+    background-color: rgba(255, 255, 255, 0.88);
     text-decoration: none;
   }
 
@@ -110,31 +107,21 @@ const { activePage } = Astro.props;
     align-items: center;
     padding: var(--space-2) var(--space-4);
     border-radius: var(--radius-pill);
+    border: 2px solid var(--color-nav-border);
     font-size: var(--text-sm);
     font-weight: var(--weight-medium);
-    color: var(--color-text-secondary);
+    color: var(--color-text-primary);
     background-color: var(--color-nav-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    transition:
-      background-color var(--duration-fast) ease,
-      color var(--duration-fast) ease;
+    transition: background-color var(--duration-fast) ease;
   }
 
   /* =============================================
      Hover
   ============================================= */
-  .nav-link:hover:not(.nav-link--active) {
-    background-color: rgba(0, 0, 0, 0.1);
-    color: var(--color-text-primary);
+  .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.88);
     text-decoration: none;
-  }
-
-  /* =============================================
-     Active  (filled dark pill = current page)
-  ============================================= */
-  .nav-link--active {
-    background-color: var(--color-nav-active-bg);
-    color: var(--color-text-inverse);
   }
 </style>

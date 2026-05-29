@@ -41,17 +41,17 @@ export const projects: Project[] = [
   // Row 1: square + wide + square  (fills the row perfectly)
   {
     id: "placeholder-1",
-    title: "Coming Soon",
-    tags: [],
+    title: "🔒Coming soon",
+    tags: ["Product Design", "UIUX"],
     href: "#",
-    image: "",
+    image: "/images/Placeholders/BSP_Placeholder.png",
     mediaType: "image",
     size: "square",
   },
   {
     id: "nirvana-noir",
     title: "Nirvana Noir",
-    tags: ["3D Environment Art", "Prop Design", "Production"],
+    tags: ["Video Game", "Technical Art", "Production"],
     href: "/work/nirvana-noir",
     image: "/images/FeralCatDen/NirvanaNoirThumbnail.png",
     mediaType: "image",
@@ -59,10 +59,10 @@ export const projects: Project[] = [
   },
   {
     id: "placeholder-2",
-    title: "Coming Soon",
-    tags: [],
+    title: "🔒Coming Soon",
+    tags: ["Brand Identity"],
     href: "#",
-    image: "",
+    image: "/images/Placeholders/OpenVector_Placeholder.png",
     mediaType: "image",
     size: "square",
   },
@@ -71,7 +71,7 @@ export const projects: Project[] = [
   {
     id: "marvel",
     title: "Marvel Fracture",
-    tags: ["Visual Identity, UIUX, Development"],
+    tags: ["Visual Identity", "UI/UX", "Technical Art"],
     href: "/work/marvel",
     image: "/images/Marvel/HeroAttempt1.mp4",
     mediaType: "video",
@@ -80,7 +80,7 @@ export const projects: Project[] = [
   {
     id: "podpocalypse",
     title: "Podpocalypse: Bottom of the Bowl",
-    tags: ["UI/UX", "3D Art", "VFX", "Development"],
+    tags: ["Video Game", "UIUX", "Technical Art", "Development"],
     href: "/work/podpocalypse",
     image: "/images/PodPocalypse/PodHero.png",
     mediaType: "image",

@@ -30,7 +30,8 @@
 
   --color-accent:         #14D277;   /* your green — used on link hovers etc */
 
-  --color-nav-bg:         rgba(214, 214, 214, 0.57);
+  --color-nav-bg:         rgba(255, 255, 255, 0.3);  /* frosted white pill */
+  --color-nav-border:     rgba(0, 0, 0, 0.1);        /* subtle outline */
   --color-nav-active-bg:  #111111;
 
   /* --- Spacing scale ---
