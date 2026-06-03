@@ -1,0 +1,481 @@
+---
+/**
+ * podpocalypse.astro — src/pages/work/podpocalypse.astro
+ *
+ * IMAGE PATHS: all media references /images/PodPocalypse/...
+ * These need to live at v2-astro/public/images/PodPocalypse/
+ *
+ * TOC MARKERS (for future TOC — keep ids in sync):
+ *   #overview         → project header
+ *   #character-select → Character Select case study
+ *   #hud              → In Game HUD case study
+ *   #pause-ending     → Pause & Ending case study
+ */
+
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+---
+
+<ProjectLayout title="Podpocalypse">
+
+  <!-- HEADER ------------------------------------------------->
+  <header id="overview" class="p-header">
+    <h1>Podpocalypse: Bottom of the Bowl</h1>
+
+    <p>
+      A local couch party game about the end of the world.
+    </p>
+
+    <hr style="margin-top: var(--space-4)"></hr>
+
+    <div class="p-meta-grid" style="margin-top: var(--space-10)">
+      <div>
+        <p class="label">Role</p>
+        <h4>
+          Creative Director <br>
+          UIUX Designer <br>
+          Solo Dev 
+        </h4>
+      </div>
+
+      <div>
+        <p class="label">Skills</p>
+        <h4>
+          Art Direction <br>
+          UIUX <br>
+          Technical Art <br>
+          Development <br>
+          Game Production<br>
+        </h4>
+      </div>
+      <div>
+        <p class="label">Duration</p>
+        <h4>
+          Jan 2025 - Dec 2025
+        </h4>
+      </div>
+      <div>
+          <p class="label">Team</p>
+
+            <a href="https://helenzhang.framer.website/" target="_blank">Helen Zhang</a> ↗<br />
+            <a href="https://www.prodbykmw.com/" target="_blank">Katherine Wang</a> ↗
+
+        </div>
+      </div>
+    </div>
+    <div class="p-section-open">      
+      <p class="label">Premise</p>
+      <p>
+        Pod-pocalypse is a couch party game set in the world of Jumbo and Pea-wee, two peas in a
+        pod who face the imminent expiration of their world as they know it. Survive waves of
+        cosmic food storms and stay on the ground as long as you can!
+      </p>
+    </div>
+  </header>
+
+  <!-- HERO -------------------------------------------------->
+  <div class="p-media">
+    <video autoplay loop muted playsinline>
+      <source src="/images/PodPocalypse/HeroVid.mp4" type="video/mp4" />
+    </video>
+  </div>
+
+  <!-- VALUES ------------------------------------------------->
+  <section>
+    <div class="p-media-3col" style="margin-top: var(--space-12)">
+      <div class="p-detail" style="margin-top: 0">
+        <p class="label">Values</p>
+        <h2>Play is better shared.</h2>
+        <p>
+          The outcome of each game is shaped by how players work together, not by any single player
+          carrying the group.
+        </p>
+      </div>
+      <div class="p-detail" style="margin-top: 0">
+        <p class="label">&nbsp;</p>
+        <h2>Progressive discovery.</h2>
+        <p>
+          The game reveals new possibilities through play, encouraging curiosity over optimization
+          with each round.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       CHARACTER SELECT
+  ============================================= -->
+  <hr class="p-divider" />
+
+  <section id="character-select">
+    <div class="p-section-open">
+      <p class="label">Case Study</p>
+      <h2>Character Select Screen</h2>
+    </div>
+
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/PodPocalypse/CharacterSelect_Hero.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <!-- Problem -->
+    <div class="p-detail">
+      <p class="label">Problem</p>
+      <h3>Lack of clear character identity</h3>
+      <p>
+        During gameplay, players had difficulty understanding what made each character distinct,
+        making the game's requirement to play different characters feel unclear rather than
+        purposeful.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/PodPocalypse/CharacterLackOfIdentity.png" alt="Characters without identity" />
+      <p class="caption">Without prior context, some players couldn't recognize their characters upon starting.</p>
+    </div>
+
+    <!-- Design Goal -->
+    <div class="p-detail">
+      <p class="label">Design Goal</p>
+      <h3>Making Character Identity Legible at Selection</h3>
+      <p>
+        Introduce a character select interaction that helps players connect with and inform their
+        character choices without introducing complex stats or implying character-based "roles".
+      </p>
+    </div>
+
+    <div class="p-media-3col">
+      <div>
+        <img src="/images/PodPocalypse/CharacterSelect_OverallStill_1.png" alt="Load state" />
+        <p class="caption"><strong>Load</strong></p>
+      </div>
+      <div>
+        <img src="/images/PodPocalypse/CharacterSelect_OverallStill_2.png" alt="Learn state" />
+        <p class="caption"><strong>Learn</strong></p>
+      </div>
+      <div>
+        <img src="/images/PodPocalypse/CharacterSelect_OverallStill_3.png" alt="Lock state" />
+        <p class="caption"><strong>Lock</strong></p>
+      </div>
+    </div>
+
+    <!-- UX Flow -->
+    <div class="p-detail">
+      <p class="label">UX Flow</p>
+      <h3>Individuality</h3>
+      <p>
+        "Nutrition info" panel for each character adds fun facts and iconography to specialize
+        characters without introducing complex roles.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/PodPocalypse/CharacterSelect_Diagram.png" alt="Info panel diagram" />
+    </div>
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/PodPocalypse/CharacterSelect_Random.mov" type="video/mp4" />
+      </video>
+      <p class="caption">Randomizing character selection for players to try new characters and discover unique traits.</p>
+    </div>
+
+    <!-- UI Design -->
+    <div class="p-detail">
+      <p class="label">UI Design / Motion</p>
+      <h3>Playfulness</h3>
+      <p>
+        Interactive elements, icons, and motion design bring the character select to life, making
+        the experience engaging and memorable.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/PodPocalypse/CharacterSelect_Iconography.png" alt="Iconography" />
+    </div>
+    <div class="p-media-2col">
+      <video autoplay loop muted playsinline>
+        <source src="/images/PodPocalypse/CharacterHover.mp4" type="video/mp4" />
+      </video>
+      <video autoplay loop muted playsinline>
+        <source src="/images/PodPocalypse/Character_Lock.mov" type="video/mp4" />
+      </video>
+    </div>
+
+    <!-- Process -->
+    <div class="p-detail">
+      <p class="label">Process</p>
+      <h3>Translating Layout to Experience</h3>
+      <p>
+        This character select evolved through rapid iteration between layout, interaction, and
+        motion. Early prototypes focused on clarity and character legibility, while later
+        explorations refined hierarchy, feedback, and world-building.
+      </p>
+    </div>
+
+    <div class="p-media-3col">
+      <img src="/images/PodPocalypse/CharacterSelectProcess_01/Process_01.png" alt="Process 1" />
+      <video autoplay loop muted playsinline>
+        <source src="/images/PodPocalypse/CharacterSelectProcess_01/Process_03.mp4" type="video/mp4" />
+      </video>
+      <video autoplay loop muted playsinline>
+        <source src="/images/PodPocalypse/CharacterSelectProcess_01/Process_04.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="p-media-3col">
+      <img src="/images/PodPocalypse/CharacterSelectProcess_02/Process_01.png" alt="Process 2" />
+      <video autoplay loop muted playsinline>
+        <source src="/images/PodPocalypse/CharacterSelectProcess_02/Process_02.mp4" type="video/mp4" />
+      </video>
+      <video autoplay loop muted playsinline>
+        <source src="/images/PodPocalypse/CharacterSelectProcess_02/Process_03.mp4" type="video/mp4" />
+      </video>
+    </div>
+  </section>
+
+  <!-- ============================================
+       IN GAME HUD
+  ============================================= -->
+  <hr class="p-divider" />
+
+  <section id="hud">
+    <div class="p-section-open">
+      <p class="label">Case Study</p>
+      <h2>In Game HUD</h2>
+    </div>
+
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/PodPocalypse/InGameUIHero.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <!-- Design Goal -->
+    <div class="p-detail">
+      <p class="label">Design Goal</p>
+      <h3>Designing Responsive & Readable Interfaces</h3>
+      <p>
+        Create in-game HUDs to deliver brief, impactful information to players without overwhelming
+        the screen or distracting from gameplay. Focused on motion and visual hierarchy for both
+        player-based and team-based information.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/PodPocalypse/PlayerLayout.png" alt="Player layout" />
+      <p class="caption">All HUDs are designed in 'areas of least action' for most clarity.</p>
+    </div>
+
+    <div class="p-media-2col">
+      <div>
+        <img src="/images/PodPocalypse/InGameDisplay_Overall_1.png" alt="Player displays" />
+        <p class="caption"><strong>Player-based displays</strong></p>
+      </div>
+      <div>
+        <img src="/images/PodPocalypse/InGameDisplay_Overall_2.png" alt="Team interface" />
+        <p class="caption"><strong>Team-based interface</strong></p>
+      </div>
+    </div>
+
+    <!-- Player UX -->
+    <div class="p-detail">
+      <p class="label">Player UX</p>
+      <h3>Responsive Player HUDs</h3>
+      <p>
+        Player HUDs provide feedback on power-up status and availability through layout and distinct
+        visual states.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/PodPocalypse/PlayerHud_Diagram.png" alt="HUD diagram" />
+    </div>
+    <div class="p-media-3col">
+      <div>
+        <video autoplay loop muted playsinline>
+          <source src="/images/PodPocalypse/PlayerHud_EnergyState_FINAL.mp4" type="video/mp4" />
+        </video>
+        <p class="caption"><strong>Use</strong> power up</p>
+      </div>
+      <div>
+        <video autoplay loop muted playsinline>
+          <source src="/images/PodPocalypse/PlayerHUD_COLLECT_FINAL.mov" type="video/mp4" />
+        </video>
+        <p class="caption"><strong>Collect</strong> new power up</p>
+      </div>
+      <div>
+        <video autoplay loop muted playsinline>
+          <source src="/images/PodPocalypse/PlayerHUD_TOGGLE_FINAL.mov" type="video/mp4" />
+        </video>
+        <p class="caption"><strong>Toggle</strong> between power ups</p>
+      </div>
+    </div>
+
+    <!-- UI Design -->
+    <div class="p-detail">
+      <p class="label">UI Design</p>
+      <h3>Team-based Feedback</h3>
+      <p>
+        For shared player life information, I emphasized impactful feedback as well as passive
+        responsiveness to the game state through glitching effects.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/PodPocalypse/LifeBar_Death.mp4" type="video/mp4" />
+      </video>
+      <p class="caption">Impactful feedback when a player <strong>loses a life</strong>.</p>
+    </div>
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/PodPocalypse/LifeBar_Glitch.mp4" type="video/mp4" />
+      </video>
+      <p class="caption">Subtle <strong>glitch</strong> responsiveness to game waves.</p>
+    </div>
+
+    <p class="p-wip">More documentation coming</p>
+  </section>
+
+  <!-- ============================================
+       PAUSE & ENDING
+  ============================================= -->
+  <hr class="p-divider" />
+
+  <section id="pause-ending">
+    <div class="p-section-open">
+      <p class="label">Case Study</p>
+      <h2>Pause and Ending Screen</h2>
+    </div>
+
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/PodPocalypse/PauseHero.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <!-- Problem -->
+    <div class="p-detail">
+      <p class="label">Problem</p>
+      <h3>Pause Removed Context When Players Needed It</h3>
+      <p>
+        Playtesting revealed that players consistently used pause as a moment to communicate and
+        make sense of on-screen chaos, yet pausing removed the visual context they relied on to do so.
+      </p>
+    </div>
+
+    <div class="p-media-2col">
+      <img src="/images/PodPocalypse/PauseOld_1.png" alt="Old pause 1" />
+      <img src="/images/PodPocalypse/PauseOld_2.png" alt="Old pause 2" />
+    </div>
+    <p class="caption">Our previous pause screen was prototyped to show all relevant information at the center.</p>
+
+    <!-- Design Goal -->
+    <div class="p-detail">
+      <p class="label">Design Goal</p>
+      <h3>Framing the Game State During Pause</h3>
+      <p>
+        Design a pause experience that keeps gameplay visible, allowing players to regroup and
+        access information without breaking their connection to the action.
+      </p>
+    </div>
+
+    <div class="p-media-3col">
+      <div>
+        <img src="/images/PodPocalypse/Pause_Overall_1.png" alt="Immediate actions" />
+        <p class="caption"><strong>Immediate Actions</strong></p>
+      </div>
+      <div>
+        <img src="/images/PodPocalypse/Pause_Overall_2.png" alt="Dense info" />
+        <p class="caption"><strong>Present Dense Info</strong></p>
+      </div>
+      <div>
+        <img src="/images/PodPocalypse/Pause_Overall_3.png" alt="Gameplay data" />
+        <p class="caption"><strong>Capture Gameplay Data</strong></p>
+      </div>
+    </div>
+
+    <!-- UX Flow -->
+    <div class="p-detail">
+      <p class="label">UX Flow</p>
+      <h3>Designed for Quick Scanning</h3>
+      <p>
+        Information-dense panels expand to take focus only when players choose to engage,
+        allowing clarity without overwhelming the ongoing play space.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/PodPocalypse/Instructions_Pause.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="p-media">
+      <img src="/images/PodPocalypse/Instructions_Still.png" alt="Instructions still" />
+    </div>
+    <div class="p-media">
+      <img src="/images/PodPocalypse/PowerUps_Still.png" alt="Power ups still" />
+    </div>
+
+    <!-- UI Design -->
+    <div class="p-detail">
+      <p class="label">UI Design</p>
+      <h3>Reflecting the World Back to the Player</h3>
+      <p>
+        The pause screen passively responds to the live game state, surfacing counts of on-screen
+        obstacles so it feels like an extension of the world rather than a static overlay.
+      </p>
+    </div>
+
+    <div class="p-media-2col">
+      <video autoplay loop muted playsinline>
+        <source src="/images/PodPocalypse/VeggieCounter.mp4" type="video/mp4" />
+      </video>
+      <video autoplay loop muted playsinline>
+        <source src="/images/PodPocalypse/VeggieCounter_2.mp4" type="video/mp4" />
+      </video>
+    </div>
+    <div class="p-media">
+      <img src="/images/PodPocalypse/PauseIcons.png" alt="Pause icons" />
+    </div>
+
+    <!-- Process -->
+    <div class="p-detail">
+      <p class="label">Process</p>
+      <h3>Starting With Player Intent</h3>
+      <p>
+        The pause screen was shaped by a simple question: what do players need first when they
+        pause? Every layout decision flowed from that lens.
+      </p>
+    </div>
+
+    <div class="p-media-3col">
+      <img src="/images/PodPocalypse/InUse1.JPG" alt="In use 1" />
+      <img src="/images/PodPocalypse/InUse2.JPG" alt="In use 2" />
+      <img src="/images/PodPocalypse/InUse4.jpeg" alt="In use 3" />
+    </div>
+    <div class="p-media-3col">
+      <img src="/images/PodPocalypse/Pause_Process_01/Process_01.png" alt="Process 1" />
+      <img src="/images/PodPocalypse/Pause_Process_01/Process_03.png" alt="Process 3" />
+      <img src="/images/PodPocalypse/Pause_Process_01/Process_04.png" alt="Process 4" />
+    </div>
+
+    <!-- Ending Screen -->
+    <div class="p-detail">
+      <p class="label">Feature</p>
+      <h3>Grounding the Ending in the Game World</h3>
+      <p>
+        Building on the pause screen's live feedback, the ending screen reflects the final state
+        of play—presenting key information clearly while the world resolves behind it.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/PodPocalypse/EndingScreen.mov" type="video/mp4" />
+      </video>
+    </div>
+
+    <p class="p-wip">More documentation coming</p>
+  </section>
+
+</ProjectLayout>

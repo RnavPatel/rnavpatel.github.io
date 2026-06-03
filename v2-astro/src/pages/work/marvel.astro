@@ -1,0 +1,296 @@
+---
+/**
+ * marvel.astro — src/pages/work/marvel.astro
+ *
+ * IMAGE PATHS: all media references /images/Marvel/...
+ * These need to live at v2-astro/public/images/Marvel/
+ *
+ * TOC MARKERS (for future TOC — keep ids in sync):
+ *   #overview    → project header
+ *   #problem     → Problem section
+ *   #opportunity → Opportunity section
+ *   #concept     → Concept section
+ *   #game-design → Game Design section
+ *   #features    → Features section
+ *   #process     → Process section
+ */
+
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+---
+
+<ProjectLayout title="Fracture: A Marvel Pop-Up Experience">
+
+  <!-- HEADER ------------------------------------------------->
+  <header id="overview" class="p-header">
+    <h1>Fracture:<br />A Marvel Pop-Up Experience</h1>
+
+    <div class="p-meta-grid">
+      <div>
+        <p class="label">Premise</p>
+        <p>
+          Like air hockey meets the MCU — players physically control projected Marvel heroes on a
+          shared table to take down Doctor Doom and his army of Doombots.
+        </p>
+      </div>
+      <div>
+        <p class="label">Role & Scope</p>
+        <p>
+          <strong>Solo project</strong> — lead developer and gameplay designer for core mechanics
+          and spatial tracking. Lead artist for all 2D assets including characters, environments,
+          and visual effects.
+        </p>
+        <p class="label" style="margin-top: var(--space-5)">Tools</p>
+        <p>Unity 6 · Adobe CC · Blender · Rhino</p>
+        <p class="label" style="margin-top: var(--space-5)">Duration</p>
+        <p>4 weeks</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -------------------------------------------------->
+  <div class="p-media" style="margin-top: var(--space-8)">
+    <video autoplay loop muted playsinline>
+      <source src="/images/Marvel/OverallShot.mp4" type="video/mp4" />
+    </video>
+  </div>
+
+  <!-- PROBLEM ---------------------------------------------->
+  <section id="problem">
+    <div class="p-section-open">
+      <p class="label">Problem</p>
+      <h2>MCU fans aren't equally prepped for games.</h2>
+      <p>
+        The onset of Marvel Rivals marks a major demographic shift in entertainment towards gamers,
+        yet Marvel's most loyal fans are suited for the cinema and are at risk of being left behind.
+      </p>
+    </div>
+
+    <div class="process-slideshow" data-folder="/images/Marvel/Market/" data-max="5">
+      <div class="process-strip-wrapper">
+        <div class="process-strip"></div>
+      </div>
+      <div class="process-progress">
+        <div class="process-progress-fill"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPPORTUNITY ------------------------------------------>
+  <section id="opportunity">
+    <div class="p-section-open">
+      <p class="label">Opportunity</p>
+      <h2>Bringing gaming to non-gamers.</h2>
+      <p>
+        Creating an experience that introduces MCU fans to the excitement of online gaming —
+        without the skill barriers — through Marvel's IP. By meeting cinematic fans where they
+        already are, this pop-up partners with theaters nationwide to deliver an immersive
+        phygital gaming experience tied to the current Marvel release.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/Marvel/Aarnav_exteriorfull_people.png" alt="Exterior of the Fracture pop-up dome" />
+      <p class="caption">Exterior of the Fracture pop-up dome experience at a movie theater.</p>
+    </div>
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/Marvel/OnTableOptimized.mp4" type="video/mp4" />
+      </video>
+      <p class="caption">Immersive gaming table that invites 3–4 players at a time.</p>
+    </div>
+  </section>
+
+  <!-- CONCEPT ---------------------------------------------->
+  <section id="concept">
+    <div class="p-section-open">
+      <p class="label">Concept</p>
+      <h2>When Heroes Cross Paths, Sparks Fly.</h2>
+      <p>
+        Designed for three players against an AI enemy, this timed bullet-hell game balances
+        teamwork and individual skill. Each session delivers an intimate yet dynamic experience,
+        uniquely shaped by characters and teammates.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <iframe
+        class="youtube-embed"
+        src="https://www.youtube.com/embed/t9i5VztCyA8"
+        title="Fracture gameplay"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </section>
+
+  <!-- GAME DESIGN ------------------------------------------>
+  <section id="game-design">
+    <div class="p-section-open">
+      <p class="label">Game Design Overview</p>
+      <h2>Designed for gamers of all skill-levels.</h2>
+      <p>
+        A curated user experience that onboards a player into the game's rules, mechanics, and
+        gameplay, incorporating fans' favorite characters and lore from the MCU.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/Marvel/GameMap.png" alt="Game map overview" />
+    </div>
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/Marvel/UIHighlights_Optimized.mp4" type="video/mp4" />
+      </video>
+    </div>
+  </section>
+
+  <!-- FEATURES --------------------------------------------->
+  <hr class="p-divider" />
+
+  <section id="features">
+
+    <div class="p-section-open">
+      <p class="label">Feature 1</p>
+      <h2>Shatter the enemy with your Chronoshard</h2>
+      <p>
+        Players' devices are enveloped in a Chronoshard, a piece from the broken multiverse, which
+        they push around to shatter invading Doombots.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/Marvel/UIZoom1.png" alt="Chronoshard UI" />
+    </div>
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/Marvel/HeroAttempt1.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <div class="p-detail">
+      <p class="label">Feature 2</p>
+      <h3>Dodge and destroy an army of Doombots.</h3>
+      <p>
+        Dr. Doom and his future self have teamed up to wreak havoc across the multiverse, releasing
+        waves of Doombots with different abilities: a homing bot, a sharp shooter, and an AOE spawner.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/Marvel/BossOverall.png" alt="Boss overview" />
+    </div>
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/Marvel/BossesOptimized.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <div class="p-detail">
+      <p class="label">Feature 3</p>
+      <h3>Assemble with your teammates.</h3>
+      <p>
+        Assemble other players to unleash combined powers unique to your heroes and take down all
+        Doombots in the vicinity.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/Marvel/CollabStill.png" alt="Collab still" />
+    </div>
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/Marvel/CollabOptimized.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <div class="p-detail">
+      <p class="label">Feature 4</p>
+      <h3>Preserve your health & beat the clock.</h3>
+      <p>
+        Each player gets immediate visual feedback on their Nexus, a custom UI system that displays
+        health, power-ups, score, and time remaining.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/Marvel/UIZoom2.png" alt="Nexus UI" />
+    </div>
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/Marvel/UIOptimized.mp4" type="video/mp4" />
+      </video>
+    </div>
+
+    <div class="p-detail">
+      <p class="label">Feature 5</p>
+      <h3>Emergent dialogue for richer narratives.</h3>
+      <p>
+        Using OpenAI, the game generates situational dialogue and conversations based on character
+        lore and in-game stats, sparking unique narratives across the MCU.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/Marvel/AI_Scenario1.png" alt="AI dialogue scenario" />
+    </div>
+  </section>
+
+  <!-- PROCESS ---------------------------------------------->
+  <hr class="p-divider" />
+
+  <section id="process">
+    <div class="p-section-open">
+      <p class="label">Process</p>
+      <h2>Ideating a non-gamer-friendly experience.</h2>
+      <p>
+        The process aimed to translate the joys of online gaming into in-person play. These tenets
+        were: finding your character, forming a team, and completing a mission.
+      </p>
+    </div>
+
+    <div class="process-slideshow" data-folder="/images/Marvel/Process/" data-max="5">
+      <div class="process-strip-wrapper">
+        <div class="process-strip"></div>
+      </div>
+      <div class="process-progress">
+        <div class="process-progress-fill"></div>
+      </div>
+    </div>
+
+    <div class="process-slideshow" data-folder="/images/Marvel/Sketches/" data-max="5" style="margin-top: var(--space-8)">
+      <div class="process-strip-wrapper">
+        <div class="process-strip"></div>
+      </div>
+      <div class="process-progress">
+        <div class="process-progress-fill"></div>
+      </div>
+    </div>
+    <p class="caption">
+      Inspired by crystal prism geometries, the game's visuals reflect Marvel Rivals' lore of
+      breaking the chromosphere, with sharp designs adding depth to the 2D setting.
+    </p>
+
+    <div class="process-slideshow" data-folder="/images/Marvel/Prototyping/" data-max="5" style="margin-top: var(--space-8)">
+      <div class="process-strip-wrapper">
+        <div class="process-strip"></div>
+      </div>
+      <div class="process-progress">
+        <div class="process-progress-fill"></div>
+      </div>
+    </div>
+    <p class="caption">
+      Prototyping in Unity and OptiTrack spatial tracking allowed for rapid iteration on
+      gameplay mechanics.
+    </p>
+  </section>
+
+</ProjectLayout>
+
+<style>
+  .youtube-embed {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-md);
+  }
+</style>

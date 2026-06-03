@@ -32,7 +32,7 @@
 
   --color-nav-bg:         rgba(255, 255, 255, 0.3);  /* frosted white pill */
   --color-nav-border:     rgba(0, 0, 0, 0.1);        /* subtle outline */
-  --color-nav-active-bg:  #111111;
+  --color-nav-hover-bg:   rgba(255, 255, 255, 0.3);  /* frosted white pill */
 
   /* --- Spacing scale ---
      Multiples of 0.25rem (4px base).
@@ -54,14 +54,12 @@
      clamp(mobile-min, fluid-middle, desktop-max)             */
   --font-sans: "DM Sans", sans-serif;
 
-  /* Type scale — fluid sizes using clamp() so they
-     scale smoothly between mobile and desktop.
-     Format: clamp(min, preferred, max)             */
-  --text-xs:   clamp(0.75rem,  1vw,    0.85rem);   /* caption, tags */
-  --text-sm:   clamp(0.85rem,  1.2vw,  1rem);      /* h6 equivalent */
-  --text-md:   clamp(1rem,     1.5vw,  1.2rem);    /* body / h3 equivalent */
-  --text-lg:   clamp(1.4rem,   2.5vw,  2rem);      /* h2 equivalent */
-  --text-xl:   clamp(1.8rem,   3.5vw,  2.9rem);    /* h4 (big title) equivalent */
+  --text-xs:  1rem;   /* 16px — labels, captions */
+  --text-sm:  1.25rem;   /* 20px */
+  --text-md:  1.5rem;    /* 24px — body text */
+  --text-lg:  2rem;      /* 32px — h3 sub-headings */
+  --text-xl:  2.5rem;    /* 40px — h2 section headings */
+  --text-2xl: 3.5rem;    /* 56px — h1 page title */
 
   --leading-tight:  1.1;
   --leading-normal: 1.4;
@@ -71,6 +69,8 @@
   --weight-regular: 400;
   --weight-medium:  500;
   --weight-semibold: 600;
+  --weight-bold: 800;
+  --weight-extrabold: 1000;
 
   /* --- Radii --- */
   /* --radius-lg is used on project cards. Change it here to round/sharpen all cards. */
@@ -108,4 +108,14 @@
   --duration-normal:  260ms;
   --duration-slow:    500ms;
   --duration-page:    600ms;
+
+  
+}
+
+@media (max-width: 768px) {
+   :root {
+      --text-xs:  0.75rem;   /* 12px */
+      --text-sm:  0.875rem;  /* 14px */
+     /* only override what changes — everything else inherits from :root above */
+   }
 }

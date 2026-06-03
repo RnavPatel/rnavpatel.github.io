@@ -1,0 +1,280 @@
+---
+/**
+ * ProjectLayout.astro — src/layouts/ProjectLayout.astro
+ * ============================================================
+ * Layout for all project/case-study pages.
+ *
+ * CMD+F GUIDE:
+ *   "IMAGE MARGIN"   → padding-inline on .project-page (how far images sit from viewport edge)
+ *   "TEXT MARGIN"    → extra padding-inline on .project-content (body text sits further in)
+ *   "TEXT WIDTH"     → max-width cap on the article column
+ *   "SECTION SPACING"→ margin-top on .p-section-open and .p-detail
+ *
+ * TYPOGRAPHY — only two custom classes needed in project pages:
+ *   .label    → small muted uppercase tag above headings  e.g. "Case Study", "Problem"
+ *   .caption  → small muted centered text under images
+ *   Everything else uses plain HTML: <h1> <h2> <h3> <p>
+ *   Sizes/colors for those are set in typography.css and tokens.css.
+ *
+ * LAYOUT BLOCKS:
+ *   .p-section-open  → major narrative beat (Problem, Case Study, Concept…)
+ *   .p-detail        → sub-point within a section (Design Goal, UX Flow, Process…)
+ *   .p-media         → full-width single image or video
+ *   .p-media-2col    → two-column media grid
+ *   .p-media-3col    → three-column media grid
+ *   .p-divider       → horizontal rule between major sections
+ *   .p-wip           → "more documentation coming" placeholder
+ */
+
+import Nav from "../components/Nav.astro";
+import "../styles/tokens.css";
+import "../styles/reset.css";
+import "../styles/global.css";
+import "../styles/typography.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Aarnav Patel",
+  description = "Experience designer crafting the future of interactive entertainment.",
+} = Astro.props;
+
+const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{fullTitle}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;0,9..40,1000;1,9..40,100;1,9..40,200;1,9..40,300;1,9..40,400;1,9..40,500;1,9..40,600;1,9..40,700;1,9..40,800;1,9..40,900;1,9..40,1000&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <Nav activePage="work" />
+    <div class="project-page">
+      <article class="project-content">
+        <slot />
+      </article>
+    </div>
+  </body>
+</html>
+
+<style is:global>
+
+  /* Override global.css height:100% — project media must be height:auto */
+  .project-content img,
+  .project-content video {
+    height: auto;
+  }
+
+  /* =============================================
+     PROJECT PAGE — centered container with margin split
+
+     IMAGE MARGIN → how far images sit from the viewport edge
+     TEXT MARGIN  → extra inset applied to body text, on top of IMAGE MARGIN
+     TEXT WIDTH   → max-width cap so text never gets too wide
+
+     Images bleed back out by TEXT MARGIN so they land at IMAGE MARGIN.
+  ============================================= */
+
+  .project-page {
+    padding-top: var(--page-padding-top);
+    padding-bottom: var(--space-16);
+    overflow-x: clip;
+    /* IMAGE MARGIN */
+    padding-inline: clamp(1rem, 6vw, 10rem);
+  }
+
+  .project-content {
+    /* TEXT WIDTH */
+    max-width: 1300px;
+    margin-inline: auto;
+    /* TEXT MARGIN — additional inset beyond image margin.
+       Stored as a custom property so media classes can reference
+       the same value when calculating their bleed width. */
+    --_text-margin: clamp(2rem, 8vw, 10rem);
+    padding-inline: var(--_text-margin);
+  }
+
+  /* Images bleed back out to image margin.
+     width compensates for both sides so single media fills the full track. */
+  .p-media,
+  .p-media-2col,
+  .p-media-3col {
+    margin-inline: calc(-1 * var(--_text-margin));
+    width: calc(100% + 2 * var(--_text-margin));
+  }
+
+  /* =============================================
+     TYPOGRAPHY UTILITIES
+     Only two custom classes — everything else is a plain HTML element.
+  ============================================= */
+
+  /* Small muted uppercase tag above headings — e.g. "Case Study", "Problem" */
+  .label {
+    display: block;
+    font-size: var(--text-xs);
+    font-weight: var(--weight-bold);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-3);
+  }
+
+  /* Pill tags — same style as project card tags, for use in the header meta area */
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
+  }
+
+  .tag {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  /* Small muted text under images */
+  .caption {
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    margin-top: var(--space-2);
+    text-align: center;
+  }
+
+  /* =============================================
+     TEXT BLOCK SYSTEM — 2 tiers
+     SECTION SPACING — edit margin-top values here
+
+     .p-section-open  major narrative beat opener (Problem, Case Study, Concept…)
+     .p-detail        sub-point within a section (Design Goal, UX Flow, Process…)
+  ============================================= */
+
+  .p-section-open {
+    margin-top: var(--space-12);
+    margin-bottom: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .p-detail {
+    margin-top: var(--space-8);
+    margin-bottom: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  /* =============================================
+     MEDIA
+  ============================================= */
+
+  .p-media {
+    margin-top: var(--space-6);
+  }
+
+  .p-media img,
+  .p-media video {
+    width: 100%;
+    border-radius: var(--radius-md);
+  }
+
+  .p-media-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .p-media-3col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .p-media-2col img,
+  .p-media-2col video,
+  .p-media-3col img,
+  .p-media-3col video {
+    width: 100%;
+    border-radius: var(--radius-md);
+  }
+
+  @media (max-width: 640px) {
+    .p-media-2col,
+    .p-media-3col {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* =============================================
+     PROJECT HEADER
+  ============================================= */
+
+  .p-header {
+    padding-top: var(--space-8);
+    padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  /* Space between the page title and the meta grid below it */
+   .p-header h1 {
+    padding-bottom: var(--space-4);
+  } 
+
+  .p-header
+
+  .p-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: var(--space-8);
+  }
+
+  /* Links inside the meta section */
+  .p-header a {
+    color: var(--color-text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .p-header a:hover {
+    color: var(--color-text-primary);
+  }
+
+  /* horizontal rule divider between major case study sections */
+  .p-divider {
+    border: none;
+    border-top: 1px solid var(--color-border);
+    margin: var(--space-16) 0 0;
+  }
+
+  /* "More documentation coming" placeholder */
+  .p-wip {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    padding: var(--space-8) 0;
+    border-top: 1px solid var(--color-border);
+    margin-top: var(--space-8);
+  }
+
+</style>
