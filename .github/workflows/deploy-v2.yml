@@ -8,11 +8,12 @@
 name: Deploy v2 (Astro)
 
 on:
-  push:
-    branches:
-      - v2   # only runs on the v2 branch
+  # Disabled auto-deploy on push until v2 is ready to go live
+  # push:
+  #   branches:
+  #     - v2
 
-  # Allow manual trigger from the GitHub Actions UI
+  # Manual trigger only
   workflow_dispatch:
 
 # Allow this workflow to write to Pages
