@@ -24,31 +24,45 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
   <header id="overview" class="p-header">
     <h1>Fracture:<br />A Marvel Pop-Up Experience</h1>
 
-    <div class="p-meta-grid">
-      <div>
-        <p class="label">Premise</p>
-        <p>
-          Like air hockey meets the MCU — players physically control projected Marvel heroes on a
-          shared table to take down Doctor Doom and his army of Doombots.
-        </p>
-      </div>
+    <p>
+      Like air hockey meets the MCU — players physically control projected Marvel heroes on a
+      shared table to take down Doctor Doom and his army of Doombots.
+    </p>
+
+    <hr style="margin-top: var(--space-4)" />
+
+    <div class="p-meta-grid" style="margin-top: var(--space-10)">
       <div>
         <p class="label">Role & Scope</p>
-        <p>
-          <strong>Solo project</strong> — lead developer and gameplay designer for core mechanics
-          and spatial tracking. Lead artist for all 2D assets including characters, environments,
-          and visual effects.
-        </p>
-        <p class="label" style="margin-top: var(--space-5)">Tools</p>
-        <p>Unity 6 · Adobe CC · Blender · Rhino</p>
-        <p class="label" style="margin-top: var(--space-5)">Duration</p>
-        <p>4 weeks</p>
+        <h4>
+          Creative Director<br>
+          UIUX Designer <br>
+          Game Designer <br>
+          Solo Dev<br>
+        </h4>
+      </div>
+      <div>
+        <p class="label">Skills</p>
+        <h4>
+          Visual Identity<br/>
+          Experiential Designer<br/>
+          Game Design<br/>
+          Creative Technology<br/>
+        </h4>
+      </div>
+      <div>
+        <p class="label">Duration</p>
+        <h4>6 weeks</h4>
+      </div>
+      <div>
+        <p class="label">Team</p>
+        <h4>Solo</h4>
       </div>
     </div>
   </header>
 
   <!-- HERO -------------------------------------------------->
-  <div class="p-media" style="margin-top: var(--space-8)">
+  <div class="p-media">
     <video autoplay loop muted playsinline>
       <source src="/images/Marvel/OverallShot.mp4" type="video/mp4" />
     </video>
@@ -56,6 +70,7 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
 
   <!-- PROBLEM ---------------------------------------------->
   <section id="problem">
+    <hr class="p-divider" />
     <div class="p-section-open">
       <p class="label">Problem</p>
       <h2>MCU fans aren't equally prepped for games.</h2>
@@ -65,18 +80,15 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
       </p>
     </div>
 
-    <div class="process-slideshow" data-folder="/images/Marvel/Market/" data-max="5">
-      <div class="process-strip-wrapper">
-        <div class="process-strip"></div>
-      </div>
-      <div class="process-progress">
-        <div class="process-progress-fill"></div>
-      </div>
+    <div class="p-media-2col">
+      <img src="/images/Marvel/Market/Process_01.png" alt="Exterior of the Fracture pop-up dome" />
+      <img src="/images/Marvel/Market/Process_02.png" alt="Exterior of the Fracture pop-up dome" />
     </div>
   </section>
 
   <!-- OPPORTUNITY ------------------------------------------>
   <section id="opportunity">
+    <hr class="p-divider" />
     <div class="p-section-open">
       <p class="label">Opportunity</p>
       <h2>Bringing gaming to non-gamers.</h2>
@@ -96,12 +108,32 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
       <video autoplay loop muted playsinline>
         <source src="/images/Marvel/OnTableOptimized.mp4" type="video/mp4" />
       </video>
-      <p class="caption">Immersive gaming table that invites 3–4 players at a time.</p>
+      <p class="caption">Immersive gaming table that invites 3 players at a time.</p>
+    </div>
+
+    <div class="p-media-2col">
+      <div>
+        <img src="/images/Marvel/AIPath.png" alt="Scene 1" />
+        <p class="caption">1. Players illuminate projected paths as Marvel characters.</p>
+      </div>
+      <div>
+        <img src="/images/Marvel/3VBot.png" alt="Scene 2" />
+        <p class="caption">2. Players end up at different game tables with grabbable controllers.</p>
+      </div>
+      <div>
+        <img src="/images/Marvel/2v2Table.png" alt="Scene 3" />
+        <p class="caption">3. The room creates unique teams based on each player's character</p>
+      </div>
+      <div>
+        <img src="/images/Marvel/ExitWPeople.png" alt="Scene 4" />
+        <p class="caption">4. Players leave the game dome.</p>
+      </div>
     </div>
   </section>
 
   <!-- CONCEPT ---------------------------------------------->
   <section id="concept">
+    <hr class="p-divider" />
     <div class="p-section-open">
       <p class="label">Concept</p>
       <h2>When Heroes Cross Paths, Sparks Fly.</h2>
@@ -126,6 +158,7 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
 
   <!-- GAME DESIGN ------------------------------------------>
   <section id="game-design">
+    <hr class="p-divider" />
     <div class="p-section-open">
       <p class="label">Game Design Overview</p>
       <h2>Designed for gamers of all skill-levels.</h2>
@@ -146,10 +179,9 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
   </section>
 
   <!-- FEATURES --------------------------------------------->
-  <hr class="p-divider" />
 
   <section id="features">
-
+    <hr class="p-divider" />
     <div class="p-section-open">
       <p class="label">Feature 1</p>
       <h2>Shatter the enemy with your Chronoshard</h2>
@@ -237,9 +269,9 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
   </section>
 
   <!-- PROCESS ---------------------------------------------->
-  <hr class="p-divider" />
 
   <section id="process">
+    <hr class="p-divider" />
     <div class="p-section-open">
       <p class="label">Process</p>
       <h2>Ideating a non-gamer-friendly experience.</h2>
@@ -249,40 +281,17 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
       </p>
     </div>
 
-    <div class="process-slideshow" data-folder="/images/Marvel/Process/" data-max="5">
-      <div class="process-strip-wrapper">
-        <div class="process-strip"></div>
-      </div>
-      <div class="process-progress">
-        <div class="process-progress-fill"></div>
-      </div>
+    <div class="p-media-3col">
+      <img src="/images/Marvel/Process/Process_01.png" alt="Process">
+      <img src="/images/Marvel/Process/Process_02.JPG" alt="Process">
+      <img src="/images/Marvel/Process/Process_03.png" alt="Process">
+      <img src="/images/Marvel/Process/Process_04.JPG" alt="Process">
+      <img src="/images/Marvel/Process/Process_05.png" alt="Process">
+      <video autoplay loop muted playsinline>
+        <source src="/images/Marvel/Prototyping/Process_03.mp4" type="video/mp4" />
+      </video>
     </div>
 
-    <div class="process-slideshow" data-folder="/images/Marvel/Sketches/" data-max="5" style="margin-top: var(--space-8)">
-      <div class="process-strip-wrapper">
-        <div class="process-strip"></div>
-      </div>
-      <div class="process-progress">
-        <div class="process-progress-fill"></div>
-      </div>
-    </div>
-    <p class="caption">
-      Inspired by crystal prism geometries, the game's visuals reflect Marvel Rivals' lore of
-      breaking the chromosphere, with sharp designs adding depth to the 2D setting.
-    </p>
-
-    <div class="process-slideshow" data-folder="/images/Marvel/Prototyping/" data-max="5" style="margin-top: var(--space-8)">
-      <div class="process-strip-wrapper">
-        <div class="process-strip"></div>
-      </div>
-      <div class="process-progress">
-        <div class="process-progress-fill"></div>
-      </div>
-    </div>
-    <p class="caption">
-      Prototyping in Unity and OptiTrack spatial tracking allowed for rapid iteration on
-      gameplay mechanics.
-    </p>
   </section>
 
 </ProjectLayout>

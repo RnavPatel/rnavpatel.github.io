@@ -54,12 +54,12 @@
      clamp(mobile-min, fluid-middle, desktop-max)             */
   --font-sans: "DM Sans", sans-serif;
 
-  --text-xs:  1rem;   /* 16px — labels, captions */
-  --text-sm:  1.25rem;   /* 20px */
-  --text-md:  1.5rem;    /* 24px — body text */
-  --text-lg:  2rem;      /* 32px — h3 sub-headings */
-  --text-xl:  2.5rem;    /* 40px — h2 section headings */
-  --text-2xl: 3.5rem;    /* 56px — h1 page title */
+  --text-xs:  1rem;                        /* 16px — labels, captions */
+  --text-sm:  1.25rem;                     /* 20px */
+  --text-md:  clamp(1rem, 2vw, 1.5rem);    /* 16→24px — body text */
+  --text-lg:  clamp(1.25rem, 3vw, 2rem);  /* 20→32px — h3 sub-headings */
+  --text-xl:  clamp(1.5rem, 4vw, 2.5rem); /* 24→40px — h2 section headings */
+  --text-2xl: clamp(2rem, 6vw, 3.5rem);   /* 32→56px — h1 page title */
 
   --leading-tight:  1.1;
   --leading-normal: 1.4;
@@ -113,9 +113,16 @@
 }
 
 @media (max-width: 768px) {
-   :root {
-      --text-xs:  0.75rem;   /* 12px */
-      --text-sm:  0.875rem;  /* 14px */
-     /* only override what changes — everything else inherits from :root above */
-   }
+  :root {
+    /* Typography — small fixed sizes scale down too */
+    --text-xs:  0.75rem;   /* 12px */
+    --text-sm:  0.875rem;  /* 14px */
+
+    /* Spacing — upper end of scale compressed for mobile
+       lg/xl/2xl text sizes already fluid via clamp() above */
+    --space-8:  2rem;      /* 48px → 32px */
+    --space-10: 2.5rem;    /* 64px → 40px */
+    --space-12: 3rem;      /* 80px → 48px */
+    --space-16: 4rem;      /* 112px → 64px */
+  }
 }
