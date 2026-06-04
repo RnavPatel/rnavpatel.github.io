@@ -41,11 +41,30 @@ export const projects: Project[] = [
   // Row 1: square + wide + square  (fills the row perfectly)
   {
     id: "placeholder-1",
-    title: "🔒Coming soon",
+    title: "🔒BestSummerProgram",
     tags: ["Product Design", "UIUX"],
     href: "#",
     image: "/images/Placeholders/BSP_Placeholder.png",
     mediaType: "image",
+    size: "square",
+  },
+  {
+    id: "podpocalypse",
+    title: "Podpocalypse: Bottom of the Bowl",
+    tags: ["Video Game", "UIUX", "Technical Art", "Development"],
+    href: "/work/podpocalypse",
+    image: "/images/PodPocalypse/PodHero.png",
+    mediaType: "image",
+    size: "wide",
+  },
+  // Row 2: square + wide  (3 units, centers in the row)
+  {
+    id: "marvel",
+    title: "Marvel Fracture",
+    tags: ["Visual Identity", "UI/UX", "Technical Art"],
+    href: "/work/marvel",
+    image: "/images/Marvel/HeroAttempt1.mp4",
+    mediaType: "video",
     size: "square",
   },
   {
@@ -59,31 +78,11 @@ export const projects: Project[] = [
   },
   {
     id: "placeholder-2",
-    title: "🔒Coming Soon",
+    title: "🔒YC Stealth Startup",
     tags: ["Brand Identity"],
     href: "#",
     image: "/images/Placeholders/OpenVector_Placeholder.png",
     mediaType: "image",
     size: "square",
-  },
-
-  // Row 2: square + wide  (3 units, centers in the row)
-  {
-    id: "marvel",
-    title: "Marvel Fracture",
-    tags: ["Visual Identity", "UI/UX", "Technical Art"],
-    href: "/work/marvel",
-    image: "/images/Marvel/HeroAttempt1.mp4",
-    mediaType: "video",
-    size: "square",
-  },
-  {
-    id: "podpocalypse",
-    title: "Podpocalypse: Bottom of the Bowl",
-    tags: ["Video Game", "UIUX", "Technical Art", "Development"],
-    href: "/work/podpocalypse",
-    image: "/images/PodPocalypse/PodHero.png",
-    mediaType: "image",
-    size: "wide",
   },
 ];
