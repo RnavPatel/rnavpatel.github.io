@@ -122,6 +122,27 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeModal();
   });
+
+  // Mobile autoplay: IntersectionObserver triggers .play() when videos enter viewport.
+  // Required because iOS Safari and Android Chrome ignore the autoplay attribute for
+  // off-screen videos and silently show a play button instead.
+  const videoObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const video = entry.target as HTMLVideoElement;
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    },
+    { threshold: 0.25 }
+  );
+
+  document.querySelectorAll<HTMLVideoElement>('video[autoplay]').forEach((v) => {
+    videoObserver.observe(v);
+  });
 </script>
 
 <style is:global>
