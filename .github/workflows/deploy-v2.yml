@@ -56,7 +56,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload the dist folder that Astro outputs to
-          path: ./v2-astro/dist
+          path: ./dist
 
   deploy:
     name: Deploy to GitHub Pages
