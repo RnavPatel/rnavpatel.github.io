@@ -138,17 +138,21 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     padding-top: var(--page-padding-top);
     padding-bottom: var(--space-16);
     overflow-x: clip;
-    /* IMAGE MARGIN */
-    padding-inline: clamp(1rem, 6vw, 10rem);
+    padding-inline: 21vw; /* desktop */
+  }
+
+  @media (max-width: 1200px) {
+    .project-page { padding-inline: 15vw; }
+  }
+
+  @media (max-width: 640px) {
+    .project-page { padding-inline: 1.5rem; }
   }
 
   .project-content {
-    /* TEXT WIDTH */
-    max-width: 1300px;
+    max-width: 1100px;
     margin-inline: auto;
-    /* TEXT MARGIN — additional inset beyond image margin.
-       Stored as a custom property so media classes can reference
-       the same value when calculating their bleed width. */
+    /* Text and images share the same margin — no secondary inset */
     --_text-margin: clamp(2rem, 8vw, 10rem);
     padding-inline: var(--_text-margin);
   }
@@ -289,9 +293,10 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
   }
 
   @media (max-width: 640px) {
+
     .p-media-2col,
     .p-media-3col {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 1fr;
     }
 
     /* Meta grid: always at least 2 columns on mobile */

@@ -13,6 +13,9 @@
 }
 
 html {
+  /* Base font size — all rem values scale from this.
+     75% of 16px = 12px, which matches the intended design scale. */
+  font-size: 75%;
   /* Smooth font rendering */
   -webkit-font-smoothing: antialiased;
   /* Prevent font size inflation on mobile */
