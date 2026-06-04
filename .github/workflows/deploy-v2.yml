@@ -8,12 +8,10 @@
 name: Deploy v2 (Astro)
 
 on:
-  # Disabled auto-deploy on push until v2 is ready to go live
-  # push:
-  #   branches:
-  #     - v2
+  push:
+    branches:
+      - v2
 
-  # Manual trigger only
   workflow_dispatch:
 
 # Allow this workflow to write to Pages
