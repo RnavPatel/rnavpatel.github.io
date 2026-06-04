@@ -30,6 +30,7 @@
  */
 
 import Nav from "../components/Nav.astro";
+import AboutModal from "../components/AboutModal.astro";
 
 // Global styles — imported once here, applied everywhere
 import "../styles/tokens.css";
@@ -78,8 +79,48 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
       <slot />
     </main>
 
+    <!-- About modal -->
+    <div id="about-modal" class="modal-backdrop" aria-hidden="true">
+      <div class="modal-panel" role="dialog" aria-modal="true" aria-label="About Aarnav">
+        <button class="modal-close" aria-label="Close">✕</button>
+        <div class="modal-body">
+          <AboutModal />
+        </div>
+      </div>
+    </div>
+
   </body>
 </html>
+
+<script>
+  const modal   = document.getElementById('about-modal')!;
+  const panel   = modal.querySelector('.modal-panel')!;
+  const trigger = document.querySelector('[data-modal="about"]')!;
+  const close   = modal.querySelector('.modal-close')!;
+
+  function openModal() {
+    modal.setAttribute('aria-hidden', 'false');
+    modal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  trigger?.addEventListener('click', openModal);
+  close.addEventListener('click', closeModal);
+
+  modal.addEventListener('click', (e) => {
+    if (!panel.contains(e.target as Node)) closeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>
 
 <style is:global>
   /* =============================================
@@ -137,5 +178,97 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
   */
   main > .full-bleed {
     grid-column: full;
+  }
+
+  /* =============================================
+     About modal
+  ============================================= */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6);
+    box-sizing: border-box;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease;
+  }
+
+  .modal-backdrop.is-open {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* Desktop panel — constrained width so content grows taller, not wider */
+  .modal-panel {
+    position: relative;
+    background: var(--color-bg);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 900px;
+    max-height: 80svh;
+    overflow-y: auto;
+    padding: var(--space-10);
+    box-sizing: border-box;
+
+    transform: translateY(12px);
+    transition: transform 200ms ease;
+  }
+
+  .modal-backdrop.is-open .modal-panel {
+    transform: translateY(0);
+  }
+
+  .modal-close {
+    position: sticky;
+    top: 0;
+    float: right;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    padding: var(--space-1) var(--space-2);
+    line-height: 1;
+    z-index: 1;
+  }
+
+  .modal-close:hover {
+    color: var(--color-text-primary);
+  }
+
+  .modal-body {
+    clear: both;
+  }
+
+  /* Mobile — full-width bottom sheet anchored to the bottom 3/4 of the screen */
+  @media (max-width: 640px) {
+    .modal-backdrop {
+      align-items: flex-end;
+      padding: 0;
+    }
+
+    .modal-panel {
+      width: 100%;
+      max-width: 100%;
+      max-height: 75svh;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      border-bottom: none;
+      padding: var(--space-6);
+
+      transform: translateY(100%);
+    }
+
+    .modal-backdrop.is-open .modal-panel {
+      transform: translateY(0);
+    }
   }
 </style>

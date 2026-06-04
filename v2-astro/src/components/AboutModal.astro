@@ -1,0 +1,156 @@
+---
+/**
+ * AboutModal.astro — src/components/AboutModal.astro
+ * ============================================================
+ * Content for the About modal overlay.
+ *
+ * CHEAT SHEET — CMD+F these labels:
+ *   "Bio"        → the paragraph of intro text
+ *   "Meta grid"  → the 4-column role/skills/etc grid
+ *   "Experience" → the experience rows
+ *   "Links"      → email / linkedin at the bottom
+ * ============================================================
+ *
+ * Layout classes mirror ProjectLayout (.p-meta-grid, .p-section-open, .label)
+ * but are redefined here as scoped styles since BaseLayout doesn't load
+ * ProjectLayout's globals.
+ */
+---
+
+<!-- Photo + content side by side -->
+<div "about-content">
+
+    <!-- Bio -->
+    <div class="p-section-open">
+      <h3 style="line-height: var(-leading-loose)">
+        Aarnav is a product designer focused on prototyping. 
+        <span style="font-weight: var(--weight-regular)">He believes in building out his ideas and is constantly learning new tools to refine his design process. He holds a Bachelors of Design from Carnegie Mellon University.</span>
+      </h3>
+  </div>
+
+    <!-- Meta grid -->
+    <div class="label" style="margin-top: var(--space-10)">Contact: </div>
+    <div class="about-links">
+      <a href="mailto:aarnavpatel2003@gmail.com" class="link text-sm">Email</a>
+      <a href="https://www.linkedin.com/in/aarnav-patel-ba397b244/" target="_blank" rel="noopener" class="link text-sm">LinkedIn</a>
+    </div>
+
+ 
+
+    <!-- Experience -->
+    <div class="label" style="margin-top: var(--space-10)">Experience: </div>
+    <div class="about-experience">
+      <div class="experience-row">
+        <span class="text-sm"><strong>Lead Product Designer</strong> @ <a href="https://www.bestsummerprograms.com/" target="_blank" rel="noopener" class="link">BestSummerPrograms</a></span>
+        <span class="text-sm text-muted">April 2026 – Present</span>
+      </div>
+      <hr class="row-rule" />
+      <div class="experience-row">
+        <span class="text-sm"><strong>Research Prototyper</strong> @ <a href="https://www.design.cmu.edu/" target="_blank" rel="noopener" class="link">CMU School of Design</a></span>
+        <span class="text-sm text-muted">Jan 2025 - March 2026</span>
+      </div>
+      <hr class="row-rule" />
+      <div class="experience-row">
+        <span class="text-sm"><strong>Technical Art Intern</strong> @ <a href="https://feralcatden.com/" target="_blank" rel="noopener" class="link">Feral Cat Den</a></span>
+        <span class="text-sm text-muted">Jun – Aug 2025</span>
+      </div>
+      <hr class="row-rule" />
+      <div class="experience-row">
+        <span class="text-sm"><strong>UX Design Intern</strong> @ <a href="https://nowpresent.co/" target="_blank" rel="noopener" class="link">Present Studios</a></span>
+        <span class="text-sm text-muted">May – Aug 2024</span>
+      </div>
+      <hr class="row-rule" />
+      <div class="experience-row">
+        <span class="text-sm"><strong>Teaching Assistant</strong> @ <a href="https://www.design.cmu.edu/" target="_blank" rel="noopener" class="link">CMU School of Design</a></span>
+        <span class="text-sm text-muted">Aug 2023 – May 2025</span>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<style>
+
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .about-bio {
+    color: var(--color-text-secondary);
+    line-height: var(--leading-loose);
+  }
+
+  /* mirrors ProjectLayout .p-section-open */
+  .p-section-open {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  /* mirrors ProjectLayout .p-meta-grid */
+  .p-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--space-6);
+  }
+
+  /* mirrors ProjectLayout .label */
+  .label {
+    display: block;
+    font-size: var(--text-xs);
+    font-weight: var(--weight-bold);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-1);
+  }
+
+  /* mirrors ProjectLayout .p-divider */
+  .p-divider {
+    border: none;
+    border-top: 2px solid var(--color-border);
+    margin: 0;
+  }
+
+  .about-experience {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .experience-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-4);
+  }
+
+  .row-rule {
+    border: none;
+    height: 1px;
+    background-color: var(--color-border);
+  }
+
+  .about-links {
+    display: flex;
+    gap: var(--space-5);
+  }
+
+  @media (max-width: 640px) {
+    .about-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .about-photo {
+      aspect-ratio: 1 / 1;
+      max-width: 240px;
+    }
+
+    .p-meta-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

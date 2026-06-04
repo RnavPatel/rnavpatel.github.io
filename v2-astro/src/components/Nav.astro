@@ -26,18 +26,15 @@ const { activePage } = Astro.props;
 <nav>
 
   <!-- Tagline pill — left side -->
-  <a href="/about" class="nav-tagline">
-    <span>Aarnav is a Design Engineer</span>
+  <a href="/" class="nav-tagline">
+    <span>Aarnav is a Product Designer</span>
   </a>
 
   <!-- Work / About pills — right side -->
   <div class="nav-links">
-    <a href="/" class="nav-link">
-      <span>Work</span>
-    </a>
-    <a href="/about" class="nav-link">
+    <button data-modal="about" class="nav-link">
       <span>About</span>
-    </a>
+    </button>
   </div>
 
 </nav>
@@ -60,7 +57,7 @@ const { activePage } = Astro.props;
 
     display: flex;
     justify-content: space-between;  /* left pill ←————→ right pills */
-    align-items: center;
+    align-items: flex-start;
 
     padding: var(--space-3) var(--page-padding-x);
     pointer-events: none; /* bar itself doesn't capture clicks */
@@ -103,6 +100,9 @@ const { activePage } = Astro.props;
   }
 
   .nav-link {
+    appearance: none;
+    background: none;
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
     padding: var(--space-2) var(--space-4);

@@ -1,0 +1,474 @@
+---
+/**
+ * nirvananoir.astro — src/pages/work/nirvananoir.astro
+ *
+ * IMAGE PATHS: all media references /images/FeralCatDen/...
+ * These need to live at v2-astro/public/images/FeralCatDen/
+ *
+ * TOC MARKERS (keep ids in sync):
+ *   #overview        → project header
+ *   #office-of-forms → Office of Forms case study
+ *   #reality-estate  → Reality Estate Office case study
+ *   #prop-design     → Prop Design case study
+ *
+ * PASSWORD: case studies are gated behind a password prompt.
+ */
+
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+---
+
+<ProjectLayout
+  title="Nirvana Noir"
+  tocItems={[
+    { id: "overview",        label: "Overview" },
+    { id: "office-of-forms", label: "Office of Forms" },
+    { id: "reality-estate",  label: "Reality Estate" },
+    { id: "prop-design",     label: "Prop Design" },
+  ]}
+>
+
+  <!-- HEADER ------------------------------------------------->
+  <header id="overview" class="p-header">
+    <h1>Nirvana Noir</h1>
+
+    <p>
+      Technical and Environment art internship at Feral Cat Den Studios
+    </p>
+
+    <hr class="p-divider" style="margin-top: var(--space-4)" />
+
+    <div class="p-meta-grid" style="margin-top: var(--space-10)">
+      <div>
+        <p class="label">Role</p>
+        <h4>
+          3D Environment Artist<br />
+          Prop Designer
+        </h4>
+      </div>
+      <div>
+        <p class="label">Scope</p>
+        <h4>
+          Level Production<br />
+          Cutscene Production<br />
+          Asset Modeling<br />
+          Texturing &amp; Set Dressing
+        </h4>
+      </div>
+      <div>
+        <p class="label">Duration</p>
+        <h4>
+          June 2025 - Aug 2025
+        </h4>
+      </div>
+      <div>
+        <p class="label">Team</p>
+        <h4>
+          Evan Anthony<br />
+          Jeremy Abel<br />
+          Evan Stark<br />
+          Marcin Zeglinski<br />
+          Noah Sablan<br />
+          Drew Genel
+        </h4>
+      </div>
+    </div>
+    <div class="p-section-open">  
+      <p>
+        A single-player adventure puzzle noir mystery beyond time, space, and in two parallel
+        storylines — a sequel to the award-winning Genesis Noir.
+        <strong>Check out the <a href="https://www.kickstarter.com/projects/feralcatden/nirvana-noir" target="_blank">Kickstarter</a></strong> ↗ for the project.
+      </p>
+    </div>
+  </header>
+
+  <!-- HERO -------------------------------------------------->
+  <div class="p-media">
+    <iframe
+      class="nn-youtube"
+      src="https://www.youtube.com/embed/kV29mwZ09p8"
+      title="Nirvana Noir trailer"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
+  </div>
+
+  <!-- PASSWORD GATE ----------------------------------------->
+  <div id="pw-gate" class="nn-pw-gate">
+    <p class="label" style="text-align:center">This section is password protected.</p>
+    <form id="pw-form" class="nn-pw-form">
+      <div class="nn-pw-row">
+        <input
+          type="password"
+          id="pw-input"
+          placeholder="Enter password"
+          autocomplete="current-password"
+        />
+        <button type="submit">&rsaquo;</button>
+      </div>
+      <p id="pw-error" class="nn-pw-error"></p>
+    </form>
+  </div>
+
+  <!-- PROTECTED CONTENT ------------------------------------->
+  <div id="protected-content" class="nn-protected" aria-hidden="true">
+
+    <div class="p-section-open" style="margin-top: var(--space-16)">
+      <h2>Designing for player exploration.</h2>
+      <p>
+        My goal was to translate the dense storyline(s) of the game into rich scenes and make
+        every puzzle and mystery more immersive through set design. Below are several case studies
+        of levels where I had significant impact during production.
+      </p>
+      <p><strong>Please note: assets shown are still in production phase.</strong></p>
+    </div>
+
+    <!-- ============================================
+         OFFICE OF FORMS
+    ============================================= -->
+
+    <section id="office-of-forms">
+      <hr class="p-divider" />
+      <div class="p-section-open">
+        <p class="label">Case Study 1</p>
+        <h2>Office of Forms</h2>
+        <p>
+          No-Man visits City Hall's Office of Forms to secure documents for the city's mobster
+          developers and his clocktower — an errand that pulls him into a detective chase
+          uncovering a larger conspiracy.
+        </p>
+      </div>
+
+      <div class="p-media">
+        <video autoplay loop muted playsinline>
+          <source src="/images/FeralCatDen/OfficeOfForms/OfficeOfForms_Scene1.mp4" type="video/mp4" />
+        </video>
+        <p class="caption"><strong>Scene 1:</strong> Player exits the city hall lobby's elevator into the Office of Forms.</p>
+      </div>
+      <div class="p-media">
+        <video autoplay loop muted playsinline>
+          <source src="/images/FeralCatDen/OfficeOfForms/OfficeOfForms_Scene2.mp4" type="video/mp4" />
+        </video>
+        <p class="caption"><strong>Scene 2:</strong> Player finds a clerk window to retrieve their forms, but finds unexpected clues.</p>
+      </div>
+
+      <!-- Outcome -->
+      <div class="p-detail">
+        <p class="label">Outcome</p>
+        <h3>Before &amp; After</h3>
+        <p>
+          Previously, the level only prototyped with placeholder models and focused on interaction
+          click-boxes. My role was to flesh out the space that precedes the main interaction and
+          complement the story.
+        </p>
+      </div>
+
+      <div class="p-media-2col">
+        <div>
+          <img src="/images/FeralCatDen/OfficeOfForms/Before_Scene1.png" alt="Before: player enters a blank office of records" />
+          <p class="caption"><strong>Before:</strong> Player enters a blank "office of records"</p>
+        </div>
+        <div>
+          <img src="/images/FeralCatDen/OfficeOfForms/After_Scene1.png" alt="After: zoomed out shot of Office of Forms with mini interactions" />
+          <p class="caption"><strong>After:</strong> Zoomed out shot of Office of Forms with mini interactions</p>
+        </div>
+      </div>
+      <div class="p-media-2col">
+        <div>
+          <img src="/images/FeralCatDen/OfficeOfForms/Before_Scene2.png" alt="Before: players must find documents at a clerk window" />
+          <p class="caption"><strong>Before:</strong> Players must find appropriate documents at a clerk window</p>
+        </div>
+        <div>
+          <img src="/images/FeralCatDen/OfficeOfForms/After_Scene2.png" alt="After: players must find appropriate documents at a clerk window" />
+          <p class="caption"><strong>After:</strong> Players must find appropriate documents at a clerk window</p>
+        </div>
+      </div>
+
+      <!-- Process: Sketches -->
+      <div class="p-detail">
+        <p class="label">Process</p>
+        <h3>Building an Establishing Shot</h3>
+        <p>
+          We wanted a very dull space that exaggerated the idea of "documents for everything in
+          the world," and foreshadowed the interactions later in the level. The scene contains
+          endless repetition of rectangles, shelves, and cubbies, with staircases leading the
+          player to the clerk window interaction.
+        </p>
+      </div>
+
+      <div class="p-media-3col">
+        <img src="/images/FeralCatDen/OfficeOfForms/Sketches/Process_01.png" alt="Sketch 1" />
+        <img src="/images/FeralCatDen/OfficeOfForms/Sketches/Process_02.png" alt="Sketch 2" />
+        <img src="/images/FeralCatDen/OfficeOfForms/Sketches/Process_03.png" alt="Sketch 3" />
+      </div>
+      <p class="caption">Early sketches and ideation for the opening shot — a play on "Office of Forms" referring to both official documents and complex geometries.</p>
+
+      <div class="p-media-3col">
+        <img src="/images/FeralCatDen/OfficeOfForms/Process/Process_01.png" alt="Blockout 1" />
+        <img src="/images/FeralCatDen/OfficeOfForms/Process/Process_02.png" alt="Blockout 2" />
+        <img src="/images/FeralCatDen/OfficeOfForms/Process/Process_04.png" alt="Blockout 3" />
+      </div>
+      <p class="caption">First blockouts of the space, trying to establish a hero asset that defines the office in some large lobby installation.</p>
+
+      <div class="p-media-3col">
+        <video autoplay loop muted playsinline>
+          <source src="/images/FeralCatDen/OfficeOfForms/Process_2/Process_01.mp4" type="video/mp4" />
+        </video>
+        <img src="/images/FeralCatDen/OfficeOfForms/Process_2/Process_02.png" alt="Adjusted angle 1" />
+        <img src="/images/FeralCatDen/OfficeOfForms/Process_2/Process_03.png" alt="Adjusted angle 2" />
+      </div>
+      <p class="caption">Adjusted the camera angle and added visual cues to guide players toward the next level.</p>
+
+      <div class="p-media-3col">
+        <img src="/images/FeralCatDen/OfficeOfForms/Window_Process/Process_01.png" alt="Window process 1" />
+        <img src="/images/FeralCatDen/OfficeOfForms/Window_Process/Process_02.png" alt="Window process 2" />
+        <img src="/images/FeralCatDen/OfficeOfForms/Window_Process/Process_03.png" alt="Window process 3" />
+      </div>
+      <p class="caption">Redesigned the clerk window setup to enhance legibility and support cinematic framing in later cutscenes.</p>
+    </section>
+
+    <!-- ============================================
+         REALITY ESTATE OFFICE
+    ============================================= -->
+
+    <section id="reality-estate">
+      <hr class="p-divider" />
+      <div class="p-section-open">
+        <p class="label">Case Study 2</p>
+        <h2>Reality Estate Office</h2>
+        <p>
+          This scene introduces one of the big conspiracies of the Black Rapture timeline, which
+          needed an eye-scanner elevator transitioning from this office building lobby into a
+          secret lair.
+        </p>
+      </div>
+
+      <div class="p-media">
+        <video autoplay loop muted playsinline>
+          <source src="/images/FeralCatDen/Reality/Elevator_Trolley_Snippet.mp4" type="video/mp4" />
+        </video>
+        <p class="caption"><strong>Scene 1:</strong> No-Man is sneaking around the reality office when a mysterious trolley is pushed out of the elevator.</p>
+      </div>
+      <div class="p-media">
+        <video autoplay loop muted playsinline>
+          <source src="/images/FeralCatDen/Reality/ToReality_Snippet.mp4" type="video/mp4" />
+        </video>
+        <p class="caption"><strong>Scene 2:</strong> No-Man returns with a glass eye that unlocks the secret elevator into the Developers' lair.</p>
+      </div>
+
+      <!-- Outcome -->
+      <div class="p-detail">
+        <p class="label">Outcome</p>
+        <h3>Before &amp; After</h3>
+        <p>
+          I added the missing elevator, eye-scanner, prop models, and refined the layout to
+          ensure the environment could function consistently across different cutscenes.
+        </p>
+      </div>
+
+      <div class="p-media-2col">
+        <div>
+          <img src="/images/FeralCatDen/Reality/Scene1_BEFORE.png" alt="Before: player stumbles across a mysterious trolley" />
+          <p class="caption"><strong>Before:</strong> Player stumbles across a mysterious trolley from a suspicious elevator</p>
+        </div>
+        <div>
+          <img src="/images/FeralCatDen/Reality/Scene1_AFTER.png" alt="After: elevator and trolley more heavily armored" />
+          <p class="caption"><strong>After:</strong> Both elevator and trolley more heavily armored and relevant to story</p>
+        </div>
+      </div>
+      <div class="p-media-2col">
+        <div>
+          <img src="/images/FeralCatDen/Reality/Scene2_BEFORE.png" alt="Before: player enters the reality secret lair" />
+          <p class="caption"><strong>Before:</strong> Player enters the "reality" secret lair</p>
+        </div>
+        <div>
+          <img src="/images/FeralCatDen/Reality/Scene2_AFTER.png" alt="After: bigger emphasis on secret lair entrance" />
+          <p class="caption"><strong>After:</strong> Bigger emphasis on secret lair entrance</p>
+        </div>
+      </div>
+
+      <!-- Process -->
+      <div class="p-detail">
+        <p class="label">Process</p>
+        <h3>Exaggerating the "Reveal"</h3>
+        <p>
+          Based on the cutscenes, the elevator was the first instance No-Man sees the Developers
+          as a front for something more suspicious. I wanted the elevator, and everything relating
+          to it, to reflect that through more high-tech forms and stronger colors.
+        </p>
+      </div>
+
+      <div class="p-media-3col">
+        <img src="/images/FeralCatDen/Reality/Process/Process_01.png" alt="Elevator blockout 1" />
+        <img src="/images/FeralCatDen/Reality/Process/Process_02.png" alt="Elevator blockout 2" />
+        <img src="/images/FeralCatDen/Reality/Process/Process_03.png" alt="Elevator blockout 3" />
+      </div>
+      <p class="caption">Initial blockouts for the elevator doors, shaped around reflecting the Developers' eye logo, leading to a horizontal sliding mechanism.</p>
+
+      <div class="p-media-3col">
+        <img src="/images/FeralCatDen/Reality/Process_2/Process_01.png" alt="Elevator interior 1" />
+        <img src="/images/FeralCatDen/Reality/Process_2/Process_02.png" alt="Elevator interior 2" />
+        <img src="/images/FeralCatDen/Reality/Process_2/Process_03.png" alt="Elevator interior 3" />
+      </div>
+      <p class="caption">Early iterations focused on more gilded interiors, then shifted to a more industrial platform elevator to complement the overhead shot in later cutscenes.</p>
+    </section>
+
+    <!-- ============================================
+         PROP DESIGN
+    ============================================= -->
+
+    <section id="prop-design">
+      <hr class="p-divider" />
+      <div class="p-section-open">
+        <p class="label">Case Study 3</p>
+        <h2>Prop Design</h2>
+        <p>
+          I created various props used across multiple levels in both timelines, including
+          furniture, vehicles, and set dressing elements that enhanced the environment, narrative,
+          and puzzle mechanics.
+        </p>
+      </div>
+
+      <div class="p-media">
+        <video autoplay loop muted playsinline>
+          <source src="/images/FeralCatDen/NiceRide.mp4" type="video/mp4" />
+        </video>
+        <p class="caption">Detective Dawn and Dusk pull up to No-Man in Dawn's eccentric sunrise cop car.</p>
+      </div>
+      <div class="p-media">
+        <video autoplay loop muted playsinline>
+          <source src="/images/FeralCatDen/cityHall.mp4" type="video/mp4" />
+        </video>
+        <p class="caption">A dynamic elevator system in the back of city hall's lobby.</p>
+      </div>
+
+      <div class="p-media">
+        <video autoplay loop muted playsinline>
+          <source src="/images/FeralCatDen/LuthierGuitar.mp4" type="video/mp4" />
+        </video>      </div>
+      <p class="caption">A custom guitar prop designed for the Luthier, blending classic violas with electric guitar.</p>
+
+      <div class="p-detail">
+        <h3>More to come...</h3>
+      </div>
+    </section>
+
+  </div><!-- /protected-content -->
+
+</ProjectLayout>
+
+<style>
+  .nn-youtube {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-md);
+  }
+
+  /* Password gate */
+  .nn-pw-gate {
+    margin-top: var(--space-16);
+    text-align: center;
+    transition: opacity 0.6s ease;
+  }
+
+  .nn-pw-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+
+  .nn-pw-row {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .nn-pw-row input {
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+    font-size: var(--text-sm);
+    outline: none;
+  }
+
+  .nn-pw-row input:focus {
+    border-color: var(--color-text-secondary);
+  }
+
+  .nn-pw-row button {
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-text-primary);
+    color: white;
+    font-size: var(--text-sm);
+    cursor: pointer;
+  }
+
+  .nn-pw-row button:hover {
+    background: var(--color-border);
+  }
+
+  .nn-pw-error {
+    font-size: var(--text-small);
+    color: var(--color-text-muted);
+    min-height: 1.2em;
+  }
+
+  /* Protected content — display:none removes layout space until unlocked */
+  .nn-protected {
+    display: none;
+  }
+</style>
+
+<script>
+  const PASSWORD = "199Cook";
+  const PROTECTED_TOC_IDS = ["office-of-forms", "reality-estate", "prop-design"];
+
+  const form    = document.getElementById("pw-form")          as HTMLFormElement | null;
+  const input   = document.getElementById("pw-input")         as HTMLInputElement | null;
+  const error   = document.getElementById("pw-error")         as HTMLElement | null;
+  const gate    = document.getElementById("pw-gate")          as HTMLElement | null;
+  const content = document.getElementById("protected-content") as HTMLElement | null;
+
+  // Hide TOC items for protected sections on load
+  PROTECTED_TOC_IDS.forEach((id) => {
+    const link = document.querySelector<HTMLElement>(`[data-toc-id="${id}"]`);
+    const li = link?.closest("li") as HTMLElement | null;
+    if (li) li.style.display = "none";
+  });
+
+  if (form && input && gate && content) {
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (input.value === PASSWORD) {
+        if (error) error.textContent = "";
+        gate.style.opacity = "0";
+        setTimeout(() => {
+          gate.remove();
+          // Set display:block then opacity via style so transition fires
+          content.style.display = "block";
+          content.style.opacity = "0";
+          content.removeAttribute("aria-hidden");
+          // Force a reflow so the browser registers the opacity:0 before transitioning to 1
+          void content.offsetHeight;
+          content.style.transition = "opacity 0.6s ease";
+          content.style.opacity = "1";
+          content.scrollIntoView({ behavior: "smooth", block: "start" });
+          // Reveal protected TOC items
+          PROTECTED_TOC_IDS.forEach((id) => {
+            const link = document.querySelector<HTMLElement>(`[data-toc-id="${id}"]`);
+            const li = link?.closest("li") as HTMLElement | null;
+            if (li) li.style.display = "";
+          });
+        }, 600);
+      } else {
+        if (error) error.textContent = "Incorrect password. Please try again.";
+      }
+    });
+  }
+</script>

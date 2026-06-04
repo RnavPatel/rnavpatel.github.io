@@ -11,7 +11,7 @@
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-sans);
   font-weight: var(--weight-semibold);
-  line-height: var(--leading-tight);
+  line-height: var(--leading-normal);
   color: var(--color-text-secondary);
 }
 
@@ -33,15 +33,16 @@ p {
 
 .text-xl {
   font-size: var(--text-xl);
-  line-height: var(--leading-tight);
+  line-height: var(--leading-regular);
   font-weight: var(--weight-semibold);
 }
 
 .text-lg {
   font-size: var(--text-lg);
-  line-height: var(--leading-tight);
+  line-height: var(--leading-regular);
   font-weight: var(--weight-semibold);
 }
+
 
 .text-md {
   font-size: var(--text-md);

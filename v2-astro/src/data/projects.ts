@@ -52,7 +52,7 @@ export const projects: Project[] = [
     id: "nirvana-noir",
     title: "Nirvana Noir",
     tags: ["Video Game", "Technical Art", "Production"],
-    href: "/work/nirvana-noir",
+    href: "/work/nirvananoir",
     image: "/images/FeralCatDen/NirvanaNoirThumbnail.png",
     mediaType: "image",
     size: "wide",
