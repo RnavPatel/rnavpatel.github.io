@@ -26,12 +26,13 @@ interface Props {
   image: string;
   mediaType: "image" | "video";
   size: "square" | "wide";
+  locked?: boolean;
 }
 
-const { title, tags, href, image, mediaType, size } = Astro.props;
+const { title, tags, href, image, mediaType, size, locked } = Astro.props;
 ---
 
-<article class={`card card--${size}`}>
+<article class={`card card--${size}${locked ? ' card--locked' : ''}`}>
   <a href={href} class="card-link">
 
     <!-- ---- Media (image or video) ---- -->
@@ -58,10 +59,13 @@ const { title, tags, href, image, mediaType, size } = Astro.props;
         </div>
       )}
 
-      <!-- Title — bottom of card -->
-      <p class="card-title">{title}</p>
+      <!-- Title — bottom of card. Desktop: 🔒 prepended when locked -->
+      <p class="card-title">{locked ? `🔒 ${title}` : title}</p>
 
     </div>
+
+    <!-- Mobile lock badge — always visible on touch screens, hidden on desktop -->
+    {locked && <span class="card-lock-badge">🔒</span>}
 
   </a>
 </article>
@@ -203,6 +207,23 @@ const { title, tags, href, image, mediaType, size } = Astro.props;
   }
 
   /* =============================================
+     Lock badge  (mobile only — always visible on the card image)
+     Hidden on desktop; desktop shows 🔒 in the title on hover instead.
+  ============================================= */
+  .card-lock-badge {
+    display: none; /* hidden by default (desktop) */
+    position: absolute;
+    bottom: var(--space-3);
+    left: var(--space-3);
+    font-size: var(--text-sm);
+    line-height: 1;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.85);
+    pointer-events: none;
+  }
+
+  /* =============================================
      Hover state  (desktop / mouse only)
   ============================================= */
   @media (hover: hover) and (pointer: fine) {
@@ -239,6 +260,11 @@ const { title, tags, href, image, mediaType, size } = Astro.props;
 
     .card-title {
       color: var(--color-text-primary);
+    }
+
+    /* Show the lock badge on the image on mobile */
+    .card-lock-badge {
+      display: block;
     }
   }
 </style>

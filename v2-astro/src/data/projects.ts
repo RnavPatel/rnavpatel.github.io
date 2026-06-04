@@ -34,14 +34,16 @@ export interface Project {
   mediaType: "image" | "video";
   /** "square" = 1:1, "wide" = 2:1 (spans ~2 columns) */
   size: "square" | "wide";
-  protected?: boolean;
+  /** If true: desktop shows 🔒 before the title on hover; mobile shows a persistent 🔒 badge */
+  locked?: boolean;
 }
 
 export const projects: Project[] = [
   // Row 1: square + wide + square  (fills the row perfectly)
   {
     id: "placeholder-1",
-    title: "🔒BestSummerProgram",
+    title: "BestSummerProgram",
+    locked: true,
     tags: ["Product Design", "UIUX"],
     href: "#",
     image: "/images/Placeholders/BSP_Placeholder.png",
@@ -78,7 +80,8 @@ export const projects: Project[] = [
   },
   {
     id: "placeholder-2",
-    title: "🔒YC Stealth Startup",
+    title: "YC Stealth Startup",
+    locked: true,
     tags: ["Brand Identity"],
     href: "#",
     image: "/images/Placeholders/OpenVector_Placeholder.png",
