@@ -1,3 +1,7 @@
 root/.DS_Store
 root/Images/.DS_Store
 root/Images/PodPocalypse/.DS_Store
+dist/
+.DS_Store
+v2-astro/node_modules/
+v2-astro/dist/
