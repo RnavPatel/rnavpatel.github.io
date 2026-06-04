@@ -4,7 +4,7 @@
  * ============================================================
  * Layout for all project/case-study pages.
  *
- * CMD+F GUIDE::
+ * CMD+F GUIDE:
  *   "IMAGE MARGIN"   → padding-inline on .project-page (how far images sit from viewport edge)
  *   "TEXT MARGIN"    → extra padding-inline on .project-content (body text sits further in)
  *   "TEXT WIDTH"     → max-width cap on the article column
@@ -27,19 +27,27 @@
  */
 
 import Nav from "../components/Nav.astro";
+import ProjectTOC from "../components/ProjectTOC.astro";
 import "../styles/tokens.css";
 import "../styles/reset.css";
 import "../styles/global.css";
 import "../styles/typography.css";
 
+interface TocItem {
+  id: string;
+  label: string;
+}
+
 interface Props {
   title?: string;
   description?: string;
+  tocItems?: TocItem[];
 }
 
 const {
   title = "Aarnav Patel",
   description = "Experience designer crafting the future of interactive entertainment.",
+  tocItems = [],
 } = Astro.props;
 
 const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`;
@@ -62,6 +70,7 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
 
   <body>
     <Nav activePage="work" />
+    <ProjectTOC items={tocItems} />
     <div class="project-page">
       <article class="project-content">
         <slot />

@@ -1,0 +1,181 @@
+---
+/**
+ * ProjectTOC.astro — src/components/ProjectTOC.astro
+ * ============================================================
+ * Fixed table of contents for project/case-study pages.
+ * Sits in the left IMAGE MARGIN, matching the layout's padding-inline.
+ *
+ * CUSTOMIZING LOOKS — all visual styles live in <style> below:
+ *   "TOC POSITION"    → left/top offset, vertical alignment
+ *   "TOC ITEM"        → font size, weight, color of each link
+ *   "TOC ACTIVE"      → style of the currently-visible section
+ *   "TOC INDICATOR"   → the vertical line / dot indicator
+ *   "TOC BREAKPOINT"  → min-width at which TOC becomes visible
+ *
+ * USAGE in project pages:
+ *   Pass tocItems to ProjectLayout:
+ *     <ProjectLayout tocItems={[
+ *       { id: "overview",  label: "Overview" },
+ *       { id: "section-1", label: "Section One" },
+ *     ]}>
+ */
+
+interface TocItem {
+  id: string;
+  label: string;
+}
+
+interface Props {
+  items: TocItem[];
+}
+
+const { items } = Astro.props;
+---
+
+{items.length > 0 && (
+  <nav class="p-toc" aria-label="Page sections">
+    <ul>
+      {items.map((item) => (
+        <li>
+          <a href={`#${item.id}`} data-toc-id={item.id}>
+            <span class="p-toc-indicator" aria-hidden="true"></span>
+            <span class="p-toc-label">{item.label}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<script>
+  const links = document.querySelectorAll<HTMLAnchorElement>("[data-toc-id]");
+  if (links.length > 0) {
+    const ids = Array.from(links).map((l) => l.dataset.tocId!);
+
+    const setActive = (id: string) => {
+      links.forEach((l) => {
+        const active = l.dataset.tocId === id;
+        l.closest("li")?.classList.toggle("is-active", active);
+      });
+    };
+
+    // Default to first item
+    setActive(ids[0]);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Find topmost visible section
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible.length > 0) setActive(visible[0].target.id);
+      },
+      { rootMargin: "0px 0px -60% 0px", threshold: 0 }
+    );
+
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    // Smooth scroll on click
+    links.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const id = link.dataset.tocId!;
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+        setActive(id);
+      });
+    });
+  }
+</script>
+
+<style>
+  /* =============================================
+     TOC POSITION
+     left mirrors .project-page padding-inline (IMAGE MARGIN).
+     top is below the nav bar (~60px).
+     Change max-width to widen the TOC column.
+  ============================================= */
+  .p-toc {
+    position: fixed;
+    /* TOC POSITION
+       left mirrors .project-page padding-inline (IMAGE MARGIN).
+       Width is kept just under the TEXT MARGIN so it never overlaps content.
+       TEXT MARGIN = clamp(2rem, 8vw, 10rem) — subtract ~1rem for breathing room. */
+    left: clamp(1rem, 6vw, 10rem);
+    top: 50%;
+    transform: translateY(-50%);
+    width: clamp(5rem, calc(8vw - 1rem), 9rem);
+
+    /* TOC BREAKPOINT — hide on screens too narrow for the margin */
+    display: none;
+  }
+
+  @media (min-width: 1200px) {
+    .p-toc {
+      display: block;
+    }
+  }
+
+  .p-toc ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    /* TOC ITEM spacing */
+    gap: 0.125rem;
+  }
+
+  /* =============================================
+     TOC ITEM
+     Edit font-size, color, weight here.
+  ============================================= */
+  .p-toc a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0;
+    text-decoration: none;
+    /* TOC ITEM */
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-muted);
+    transition: color var(--duration-fast, 150ms) ease;
+    line-height: 1.3;
+  }
+
+  .p-toc a:hover {
+    color: var(--color-text-secondary);
+  }
+
+  /* =============================================
+     TOC ACTIVE — style when section is in view
+  ============================================= */
+  .p-toc li.is-active a {
+    color: var(--color-text-primary);
+    font-weight: var(--weight-semibold);
+  }
+
+  /* =============================================
+     TOC INDICATOR — small dot left of label
+     Change width/height/border-radius/background to restyle.
+     Set display: none to remove it entirely.
+  ============================================= */
+  .p-toc-indicator {
+    display: block;
+    flex-shrink: 0;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--color-text-muted);
+    transition: background var(--duration-fast, 150ms) ease,
+                transform var(--duration-fast, 150ms) ease;
+  }
+
+  .p-toc li.is-active .p-toc-indicator {
+    background: var(--color-text-primary);
+    transform: scale(1.4);
+  }
+</style>

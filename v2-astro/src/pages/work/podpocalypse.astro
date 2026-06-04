@@ -15,7 +15,15 @@
 import ProjectLayout from "../../layouts/ProjectLayout.astro";
 ---
 
-<ProjectLayout title="Podpocalypse">
+<ProjectLayout
+  title="Podpocalypse"
+  tocItems={[
+    { id: "overview",         label: "Overview" },
+    { id: "character-select", label: "Character Select" },
+    { id: "hud",              label: "In-Game HUD" },
+    { id: "pause-ending",     label: "Pause & Ending" },
+  ]}
+>
 
   <!-- HEADER ------------------------------------------------->
   <header id="overview" class="p-header">
