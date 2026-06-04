@@ -33,15 +33,10 @@ import "../styles/reset.css";
 import "../styles/global.css";
 import "../styles/typography.css";
 
-interface TocItem {
-  id: string;
-  label: string;
-}
-
 interface Props {
   title?: string;
   description?: string;
-  tocItems?: TocItem[];
+  tocItems?: { id: string; label: string }[];
 }
 
 const {
@@ -292,7 +287,6 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     font-size: var(--text-sm);
     color: var(--color-text-muted);
     padding: var(--space-8) 0;
-    border-top: 1px solid var(--color-border);
     margin-top: var(--space-8);
   }
 

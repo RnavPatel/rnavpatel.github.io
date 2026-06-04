@@ -18,7 +18,18 @@
 import ProjectLayout from "../../layouts/ProjectLayout.astro";
 ---
 
-<ProjectLayout title="Fracture: A Marvel Pop-Up Experience">
+<ProjectLayout
+  title="Fracture: A Marvel Pop-Up Experience"
+  tocItems={[
+    { id: "overview",    label: "Overview" },
+    { id: "problem",     label: "Problem" },
+    { id: "opportunity", label: "Opportunity" },
+    { id: "concept",     label: "Concept" },
+    { id: "game-design", label: "Game Design" },
+    { id: "features",    label: "Features" },
+    { id: "process",     label: "Process" },
+  ]}
+>
 
   <!-- HEADER ------------------------------------------------->
   <header id="overview" class="p-header">
