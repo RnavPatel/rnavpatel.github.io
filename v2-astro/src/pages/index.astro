@@ -30,27 +30,40 @@ import { projects } from "../data/projects";
 
 <BaseLayout title="Work" activePage="work">
 
-  <!-- =============================================
-       GALLERY
-       Cards flow left-to-right and wrap to new rows.
-       Each row is center-aligned — partial rows
-       automatically sit in the middle.
-       To reorder cards: reorder objects in projects.ts.
-       To add a card: add an object in projects.ts.
-       ============================================= -->
-  <section class="gallery">
-    {projects.map((project) => (
-      <ProjectCard
-        title={project.title}
-        tags={project.tags}
-        href={project.href}
-        image={project.image}
-        mediaType={project.mediaType}
-        size={project.size}
-        locked={project.locked}
-      />
-    ))}
-  </section>
+  <!-- .page-grid owns --col-unit so both .intro and .gallery share the same
+       column reference width. To span N cols on any child:
+         1 col → width: calc(1 * var(--col-unit))
+         2 col → width: calc(2 * var(--col-unit) + 1 * var(--gap-grid))
+         3 col → width: calc(3 * var(--col-unit) + 2 * var(--gap-grid))
+         4 col → width: 100%
+  -->
+  <div class="page-grid">
+
+    <p class="intro">Aarnav is a designer who loves to build joyful interactive experiences across products and games.
+    </p>
+    <!-- =============================================
+         GALLERY
+         Cards flow left-to-right and wrap to new rows.
+         Each row is center-aligned — partial rows
+         automatically sit in the middle.
+         To reorder cards: reorder objects in projects.ts.
+         To add a card: add an object in projects.ts.
+         ============================================= -->
+    <section class="gallery">
+      {projects.map((project) => (
+        <ProjectCard
+          title={project.title}
+          tags={project.tags}
+          href={project.href}
+          image={project.image}
+          mediaType={project.mediaType}
+          size={project.size}
+          locked={project.locked}
+        />
+      ))}
+    </section>
+
+  </div>
 
 
 </BaseLayout>
@@ -74,9 +87,32 @@ import { projects } from "../data/projects";
      Reordering: change the array order in projects.ts.
      Changing size: edit size: "square" | "wide" in projects.ts.
   ============================================= */
-  .gallery {
-    /* Define the column unit — cards read this via CSS inheritance */
+  /* PAGE GRID — owns --col-unit so all children share the same column reference */
+  .page-grid {
     --col-unit: calc((100% - 3 * var(--gap-grid)) / 4);
+  }
+
+  @media (max-width: 1000px) and (min-width: 601px) {
+    .page-grid {
+      --col-unit: calc((100% - 2 * var(--gap-grid)) / 3);
+    }
+  }
+
+  /* INTRO — currently 1 column wide. Change N to span more columns:
+     2 col → calc(2 * var(--col-unit) + 1 * var(--gap-grid))
+     3 col → calc(3 * var(--col-unit) + 2 * var(--gap-grid))
+     4 col → 100% */
+  .intro {
+    width: calc(1 * var(--col-unit));
+    padding-top: var(--space-5);
+    padding-bottom: var(--space-10);
+  }
+
+  @media (max-width: 600px) {
+    .intro { width: 100%; }
+  }
+
+  .gallery {
 
     /* container-type: inline-size makes .gallery a CSS container.
        Cards can then use cqi (container inline size) units in their
@@ -94,17 +130,6 @@ import { projects } from "../data/projects";
 
     padding-top: var(--space-6);
     padding-bottom: var(--space-6);
-  }
-
-  /* =============================================
-     Tablet  (601px – 1000px)
-     Switch to a 3-column unit basis.
-     A square + wide combo still fills one row exactly.
-     ============================================= */
-  @media (max-width: 1000px) and (min-width: 601px) {
-    .gallery {
-      --col-unit: calc((100% - 2 * var(--gap-grid)) / 3);
-    }
   }
 
   /* =============================================
