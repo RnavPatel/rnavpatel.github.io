@@ -44,7 +44,7 @@ export const projects: Project[] = [
     id: "placeholder-1",
     title: "BestSummerProgram",
     locked: true,
-    tags: ["Product Design", "UIUX"],
+    tags: ["Product Design", "UIUX", "Design Systems"],
     href: "#",
     image: "/images/Placeholders/BSP_Placeholder.png",
     mediaType: "image",
@@ -53,7 +53,7 @@ export const projects: Project[] = [
   {
     id: "podpocalypse",
     title: "Podpocalypse: Bottom of the Bowl",
-    tags: ["Video Game", "UIUX", "Technical Art", "Development"],
+    tags: ["UIUX", "Motion Design", "Design Systems"],
     href: "/work/podpocalypse",
     image: "/images/PodPocalypse/PodHero.png",
     mediaType: "image",
@@ -63,7 +63,7 @@ export const projects: Project[] = [
   {
     id: "marvel",
     title: "Marvel Fracture",
-    tags: ["Visual Identity", "UI/UX", "Technical Art"],
+    tags: ["UIUX", "Motion Design", "Design System"],
     href: "/work/marvel",
     image: "/images/Marvel/HeroAttempt1.mp4",
     mediaType: "video",
@@ -72,7 +72,7 @@ export const projects: Project[] = [
   {
     id: "nirvana-noir",
     title: "Nirvana Noir",
-    tags: ["Video Game", "Technical Art", "Production"],
+    tags: ["Technical Art", "Production", "QA"],
     href: "/work/nirvananoir",
     image: "/images/FeralCatDen/NirvanaNoirThumbnail.png",
     mediaType: "image",
