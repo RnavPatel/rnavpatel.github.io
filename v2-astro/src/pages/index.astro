@@ -53,6 +53,7 @@ import { projects } from "../data/projects";
       {projects.map((project) => (
         <ProjectCard
           title={project.title}
+          subtitle={project.subtitle}
           tags={project.tags}
           href={project.href}
           image={project.image}
@@ -105,7 +106,7 @@ import { projects } from "../data/projects";
   .intro {
     width: calc(1 * var(--col-unit));
     padding-top: var(--space-5);
-    padding-bottom: var(--space-10);
+    padding-bottom: var(--space-5);
   }
 
   @media (max-width: 600px) {
@@ -130,6 +131,7 @@ import { projects } from "../data/projects";
 
     padding-top: var(--space-6);
     padding-bottom: var(--space-6);
+    /* background-color: red;  */
   }
 
   /* =============================================

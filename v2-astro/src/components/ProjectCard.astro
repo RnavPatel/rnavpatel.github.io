@@ -10,9 +10,8 @@
  *   "Caption"        → the overlay that appears on hover
  *   "Gradient"       → dual gradient (dark top + dark bottom)
  *   "Tag pills"      → the individual white pill badges at the top
- *   "Title style"    → the bold white title at the bottom
+ *   "Title style"    → the bold white title below the image
  *   "Hover state"    → what animates when mouse enters the card
- *   "Mobile caption" → how caption looks on touch screens
  * ============================================================
  *
  * To change appearance: edit the <style> block below
@@ -26,16 +25,20 @@ interface Props {
   image: string;
   mediaType: "image" | "video";
   size: "square" | "wide";
+  subtitle?: string;
   locked?: boolean;
 }
 
-const { title, tags, href, image, mediaType, size, locked } = Astro.props;
+const { title, subtitle, tags, href, image, mediaType, size, locked } = Astro.props;
 ---
 
-<article class={`card card--${size}${locked ? ' card--locked' : ''}`}>
-  <a href={href} class="card-link">
+<!-- Wrapper <a> is the clickable element — covers both image and title below -->
+<a href={href} class={`card-wrapper card--${size}${locked ? ' card--locked' : ''}`}>
 
-    <!-- ---- Media (image or video) ---- -->
+  <!-- ---- Image area: fixed size, clips media and overlays ---- -->
+  <div class="card-image-area">
+
+    <!-- Media (image or video) -->
     <div class="card-media">
       {image && mediaType === "video" && (
         <video autoplay muted loop playsinline>
@@ -47,78 +50,96 @@ const { title, tags, href, image, mediaType, size, locked } = Astro.props;
       )}
     </div>
 
-    <!-- ---- Caption (hover overlay) ---- -->
-    <div class="card-caption">
-
-      <!-- Tag pills — top of card -->
-      {tags.length > 0 && (
+    <!-- Tag pills overlay — top of card on hover -->
+    {tags.length > 0 && (
+      <div class="card-caption">
         <div class="card-tag-row">
           {tags.map(tag => (
             <span class="card-tag">{tag}</span>
           ))}
         </div>
-      )}
+      </div>
+    )}
 
-      <!-- Title — bottom of card. Desktop: 🔒 prepended when locked -->
-      <p class="card-title">{locked ? `🔒 ${title}` : title}</p>
-
-    </div>
-
-    <!-- Mobile lock badge — always visible on touch screens, hidden on desktop -->
+    <!-- Mobile lock badge — always visible on touch screens -->
     {locked && <span class="card-lock-badge">🔒</span>}
 
-  </a>
-</article>
+  </div>
+
+  <!-- ---- Title below the image, always visible ---- -->
+  <div class="card-text-box">
+    <p class="card-title">{locked ? `🔒 ${title}` : title}</p>
+    {subtitle && <p class="card-subtitle">{subtitle}</p>}
+  </div>
+
+</a>
 
 <style>
   /* =============================================
      Card shape
      Width is driven by --col-unit set on .gallery in index.astro.
-     Cards inherit that variable and compute their own width.
 
-     Height:
-       Square uses aspect-ratio: 1/1 → height = width = col-unit. ✓
-       Wide cannot use aspect-ratio: 2/1 because its width includes
-       an extra gap term (+ var(--gap-grid)), which makes height
-       come out as col-unit + gap/2 — slightly taller than the square.
-       Instead, wide uses height: calc((100cqi - N*gap) / cols),
-       which is col-unit expressed as an absolute length via the
-       gallery container (set up with container-type in index.astro).
-       cqi = container inline size → resolves to px, safe in height.
+     Desktop/tablet: square and wide cards keep their original
+     dimensions. The image area holds the fixed size; the title
+     sits below it as plain text.
+
+     Mobile (≤ 600px): index.astro collapses both sizes to
+     width:100% / aspect-ratio:16/9 on the wrapper. We reset the
+     wrapper's aspect-ratio (it now contains title text too) and
+     apply 16/9 to .card-image-area instead.
   ============================================= */
-  .card {
+
+  /* Wrapper is the link — flex column: image on top, title below */
+  .card-wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    color: inherit;
+    padding: var(--gap-grid);
+  }
+
+  .card-wrapper:hover {
+    background-color: var(--color-surface);
+  }
+
+  /* Square: 1 column unit wide */
+  .card--square {
+    width: var(--col-unit);
+  }
+
+  /* Wide: 2 column units wide */
+  .card--wide {
+    width: calc(2 * var(--col-unit) + var(--gap-grid));
+  }
+
+  /* ---- Image area: fixed size, clips media and overlays ---- */
+  .card-image-area {
     position: relative;
-    border-radius: var(--radius-lg);
     overflow: hidden;
     background-color: var(--color-surface);
     flex-shrink: 0;
+    border-radius: var(--radius-sm);
   }
 
-  /* Square: 1 column unit wide, 1:1 ratio */
-  .card--square {
-    width: var(--col-unit);
-    aspect-ratio: 1 / 1;
-  }
-
-  /* Wide: 2 column units wide, same height as square.
-     Desktop (4-column): height = (gallery-width - 3 gaps) / 4 = col-unit */
-  .card--wide {
-    width: calc(2 * var(--col-unit) + var(--gap-grid));
+  /* Square image area: same explicit height as wide (1 col-unit via cqi),
+     so wrapper padding never skews the height the way aspect-ratio would. */
+  .card--square .card-image-area {
     height: calc((100cqi - 3 * var(--gap-grid)) / 4);
   }
 
-  /* Tablet (601–1000px): 3-column grid, recalculate col-unit height */
-  @media (max-width: 1000px) and (min-width: 601px) {
-    .card--wide {
-      height: calc((100cqi - 2 * var(--gap-grid)) / 3);
-    }
+  /* Wide image area: same height as a square card.
+     Desktop (4-column): height = (gallery-width - 3 gaps) / 4 = col-unit */
+  .card--wide .card-image-area {
+    height: calc((100cqi - 3 * var(--gap-grid)) / 4);
   }
 
-  .card-link {
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: relative;
+  /* Tablet (601–1000px): 3-column grid */
+  @media (max-width: 1000px) and (min-width: 601px) {
+    .card--wide .card-image-area {
+      height: calc((100cqi - 2 * var(--gap-grid)) / 3);
+    }
   }
 
   /* =============================================
@@ -129,6 +150,7 @@ const { title, tags, href, image, mediaType, size, locked } = Astro.props;
     inset: 0;
     width: 100%;
     height: 100%;
+    border-radius: var(--radius-sm);
   }
 
   .card-media img,
@@ -139,28 +161,25 @@ const { title, tags, href, image, mediaType, size, locked } = Astro.props;
     display: block;
     transition: transform var(--duration-slow) var(--ease-out-expo);
     will-change: transform;
+    border-radius: var(--radius-sm);
   }
 
   /* =============================================
      Caption
-     Covers the full card. Uses space-between to push
-     tag pills to the top and title to the bottom.
+     Tag-pills overlay at the top of the image on hover.
   ============================================= */
   .card-caption {
     position: absolute;
     inset: 0;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* tags ↑ top,  title ↓ bottom */
+    justify-content: flex-start;
     padding: var(--space-4);
 
-    /* Gradient — dark at top (for tags) AND dark at bottom (for title) */
     background: linear-gradient(
       to bottom,
-      rgba(0, 0, 0, 0.55) 0%,     /* dark at top — behind tag pills */
-      transparent          35%,
-      transparent          60%,
-      rgba(0, 0, 0, 0.70) 100%    /* dark at bottom — behind title */
+      rgba(0, 0, 0, 0.55) 0%,
+      transparent          40%
     );
 
     opacity: 0;
@@ -170,9 +189,6 @@ const { title, tags, href, image, mediaType, size, locked } = Astro.props;
 
   /* =============================================
      Tag pills  (top of card on hover)
-     Each tag is its own white rounded pill badge.
-     To change pill color: edit background below.
-     To change pill font: edit font-size / font-weight below.
   ============================================= */
   .card-tag-row {
     display: flex;
@@ -194,24 +210,35 @@ const { title, tags, href, image, mediaType, size, locked } = Astro.props;
   }
 
   /* =============================================
-     Title style  (bottom of card on hover)
-     Bold white text at the bottom of the card.
-     To change size: edit font-size.
-     To change weight: edit font-weight.
+     Title style  (below the image, always visible)
   ============================================= */
+  .card-text-box {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-3);
+    gap: var(--space-1);
+  }
+
   .card-title {
-    font-size: var(--text-lg);
+    font-size: var(--text-sl);
     font-weight: var(--weight-semibold);
-    color: var(--color-text-inverse);
+    color: var(--color-text-primary);
     line-height: var(--leading-tight);
   }
 
+  .card-subtitle {
+    font-size: var(--text-sl);
+    font-weight: var(--weight-regular);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-tight);
+  }
+
+
   /* =============================================
-     Lock badge  (mobile only — always visible on the card image)
-     Hidden on desktop; desktop shows 🔒 in the title on hover instead.
+     Lock badge  (mobile only — on top of the image)
   ============================================= */
   .card-lock-badge {
-    display: none; /* hidden by default (desktop) */
+    display: none;
     position: absolute;
     bottom: var(--space-3);
     left: var(--space-3);
@@ -227,42 +254,40 @@ const { title, tags, href, image, mediaType, size, locked } = Astro.props;
      Hover state  (desktop / mouse only)
   ============================================= */
   @media (hover: hover) and (pointer: fine) {
-    /* Image zooms slightly */
-    .card:hover .card-media img,
-    .card:hover .card-media video {
+    .card-wrapper:hover .card-media img,
+    .card-wrapper:hover .card-media video {
       transform: scale(1.04);
     }
 
-    /* Caption fades in */
-    .card:hover .card-caption {
+    .card-wrapper:hover .card-caption {
       opacity: 1;
     }
   }
 
   /* =============================================
-     Mobile caption  (touch screens, ≤ 768px)
-     Caption sits below the image as plain text —
-     no overlay, always visible.
+     Mobile (≤ 600px)
+     index.astro sets width:100% / aspect-ratio:16/9 on the wrapper.
+     Reset wrapper's aspect-ratio (it has title text below the image)
+     and apply 16/9 to the image area only.
   ============================================= */
-  @media (hover: none), (max-width: 768px) {
+  @media (max-width: 600px) {
+    .card-wrapper {
+      aspect-ratio: unset !important;
+      height: auto !important;
+    }
+
+    .card-image-area,
+    .card--square .card-image-area,
+    .card--wide .card-image-area {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+    }
+
     .card-caption {
-      position: static;
-      background: none;
-      padding: var(--space-3) var(--space-2);
-      opacity: 1;
-      pointer-events: auto;
+      display: none;
     }
 
-    .card-tag {
-      background: var(--color-surface);
-      color: var(--color-text-secondary);
-    }
-
-    .card-title {
-      color: var(--color-text-primary);
-    }
-
-    /* Show the lock badge on the image on mobile */
     .card-lock-badge {
       display: block;
     }

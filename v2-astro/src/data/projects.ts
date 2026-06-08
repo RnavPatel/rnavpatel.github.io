@@ -27,6 +27,7 @@
 export interface Project {
   id: string;
   title: string;
+  subtitle: string;
   tags: string[];
   href: string;
   /** Path relative to /public, e.g. "/images/Marvel/hero.mp4" */
@@ -43,16 +44,18 @@ export const projects: Project[] = [
   {
     id: "placeholder-1",
     title: "BestSummerProgram",
+    subtitle: "Education Discovery Platform",
     locked: true,
     tags: ["Product Design", "UIUX", "Design Systems"],
     href: "#",
-    image: "/images/Placeholders/BSP_Placeholder.png",
+    image: "/images/Placeholders/BSP_Placeholder2.png",
     mediaType: "image",
-    size: "square",
+    size: "wide",
   },
   {
     id: "podpocalypse",
-    title: "Podpocalypse: Bottom of the Bowl",
+    title: "Podpocalypse",
+    subtitle: "Local Couch-Party Videogame",
     tags: ["UIUX", "Motion Design", "Design Systems"],
     href: "/work/podpocalypse",
     image: "/images/PodPocalypse/PodHero.png",
@@ -63,7 +66,8 @@ export const projects: Project[] = [
   {
     id: "marvel",
     title: "Marvel Fracture",
-    tags: ["UIUX", "Motion Design", "Design System"],
+    subtitle: "Experiential Marvel Activation",
+    tags: ["UIUX", "Motion Design", "IxD"],
     href: "/work/marvel",
     image: "/images/Marvel/HeroAttempt1.mp4",
     mediaType: "video",
@@ -72,6 +76,7 @@ export const projects: Project[] = [
   {
     id: "nirvana-noir",
     title: "Nirvana Noir",
+    subtitle: "Cinematic Puzzle RPG",
     tags: ["Technical Art", "Production", "QA"],
     href: "/work/nirvananoir",
     image: "/images/FeralCatDen/NirvanaNoirThumbnail.png",
@@ -81,6 +86,7 @@ export const projects: Project[] = [
   {
     id: "placeholder-2",
     title: "YC Stealth Startup",
+    subtitle: "Coming Soon",
     locked: true,
     tags: ["Brand Identity"],
     href: "#",

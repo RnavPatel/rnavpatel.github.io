@@ -74,6 +74,7 @@
 
   /* --- Radii --- */
   /* --radius-lg is used on project cards. Change it here to round/sharpen all cards. */
+  --radius-xs:   3px;
   --radius-sm:   6px;
   --radius-md:   12px;
   --radius-lg:   16px;   /* project cards */
@@ -88,7 +89,7 @@
   /* --gap-grid: space between tiles on homepage
      --page-padding-x: left/right margin on all pages (auto-scales with viewport)
      --page-padding-top: clears the fixed nav — increase if nav height changes  */
-  --gap-grid:          10px;   /* gap between project tiles */
+  --gap-grid:          5px;   /* gap between project tiles */
   --page-padding-x:    clamp(1rem, 5vw, 10rem);   /* side margins on all pages clamp(min, preferred, max) */
   --page-padding-top:  5rem;   /* clears the fixed nav */
 
