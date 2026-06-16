@@ -6,6 +6,8 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
   title="Best Summer Programs"
   tocItems={[
     { id: "overview", label: "Overview" },
+    {id: "section1", label: "Navigation Design"},
+    {id: "section2", label:"Competitions Page"},
   ]}
 >
 
@@ -15,7 +17,7 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
   <h1>BestSummerPrograms</h1>
 
   <p>
-    Designing a comprehesive database for the precollege landscape.
+    An accessible database for high school students to navigate the precollege landscape. <strong>Product is still ongoing</strong>
   </p>
 
   <hr class="p-divider"></hr>
@@ -51,15 +53,248 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
       </div>
     </div>
   </div>
-  <div class="p-section-open">      
-    <p>
-      BestSummerPrograms is a free tool compiling programs, courses, and competitions for high school students to navigate. My role as a Product designer has been refining and contributing to the existing design system to improve information hierarchy, and UX features across devices.     </p>
+  <div class="p-media">
+    <img src="/images/Placeholders/BSP_Placeholder2.png">
+  </div>
+
+
+  <div class="p-section-open">
+    <p class="label">Context</p>
+    <h3><span style="background-color: #ffdb5baa">The platform was growing</span> its summer program database and expanding into high school competitions as a new vertical.
+    </h3>
+  </div>
+
+  <div class="p-section-open">
+    <p class="label">Overview</p>
+    <h3><span style="background-color: #5BFFA5AA">I owned the scale-up initiative:</span> redesigning the visual systems, and UX flows to support a larger database and user base across devices.
+    </h3>
+  </div>
+
+
+
+  <!-- <div class="p-section-open">
+    <div class="p-media-2col">
+      <div>
+        <img src="/images/Placeholders/BSP_Placeholder2.png" alt="BSP Placeholder">
+        <p class="caption"><strong>1. Navigation Redesign</strong></p>
+      </div>
+      
+      <div>
+        <img src="/images/Placeholders/BSP_Placeholder2.png" alt="BSP Placeholder">
+        <p class="caption"><strong>2. Competitions Pages</strong></p>
+      </div>
+      <div>
+        <img src="/images/Placeholders/BSP_Placeholder2.png" alt="BSP Placeholder">
+        <p class="caption"><strong>3. Compare and Bookmark</strong></p>
+      </div> 
+    </div> -->
+
   </div>
 </header>
 
-<!-- HERO -------------------------------------------------->
-<div class="p-media">
-  <img src="/images/Placeholders/BSP_Placeholder2.png">
-</div>
+
+<!-- SECTION STRUCTURE -->
+<section id="section1">
+  <hr class="p-divider" />
+  <div class="p-section-open">
+    <p class="label">Case Study 1</p>
+    <h2>Navigation Redesign</h2>
+  </div>
+
+  <div class="p-media">
+    <img src="/images/Placeholders/BSP_Placeholder2.png" alt="BSP Placeholder">
+
+  </div>
+
+  <!-- Problem -->
+  <div class="p-detail">
+    <p class="label">Problem</p>
+    <h3>Users couldn’t easily access all of the databases
+    </h3>
+    <p>
+      Previous UX flows were only designed for the single program database, and 
+      less metadata attributed to each entry, limiting access to all corners of the site.
+    </p>
+  </div>
+
+  <div class="p-media">
+    <img src="/images/BestSummerPrograms/Old.png" alt="Previous Design">
+    <p class="caption">Previous Design built just for programs (Not my work)</p>
+  </div>
+
+    <!-- Problem -->
+    <div class="p-detail">
+      <p class="label">Solution</p>
+      <h3>Bring visibility to new data
+      </h3>
+      <p>
+        Create more entry points throughout the site to explore and learn 
+        seamlessly between programs, competitions, and their respective pages.
+      </p>
+    </div>
+  
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/BestSummerPrograms/NavRedesign_Hero.mov" type="video/mp4" />
+      </video>      
+      <p class="caption"><strong>Desktop navigation usage (search hover, subject pick, category pick, more filters)</strong></p>
+    </div>
+
+    <!-- Feature -->
+    <div class="p-detail">
+      <p class="label">UI Layout</p>
+      <h3>Restructured navigation hierarchy: search, tabs, filters
+      </h3>
+      <p>
+        The layout aims to keep users aware of their selections 
+        and location throughout the browse experience.  
+      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/BestSummerPrograms/Navigation_UI_Diagram.png" alt="Diagram">
+      <p class="caption"><strong>Desktop navigation usage (search hover, subject pick, category pick, more filters)</strong></p>
+    </div>
+
+    <div class="p-detail">
+      <p class="label">Filter Modal</p>
+      <h3>Icon driven filters to for quick readability
+      </h3>
+      <p>
+        Introduce icon association with metadata filters that will be used frequently 
+        throughout project and competition pages.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/BestSummerPrograms/Filters.mov" type="video/mp4" />
+      </video>        
+      <p class="caption"><strong>Mobile navigation usage (Menu expand, subject pick, category pick, more filters)</strong></p>
+    </div>
+
+
+    <div class="p-detail">
+      <p class="label">Mobile Compatability</p>
+      <h3>Condense navigation for familiar mobile interactions
+      </h3>
+    </div>
+
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/BestSummerPrograms/NavRedesign_Mobile.mov" type="video/mp4" />
+      </video>        
+      <p class="caption"><strong>Mobile navigation usage (Menu expand, subject pick, category pick, more filters)</strong></p>
+    </div>
+
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/BestSummerPrograms/Mobile_Filter.mov" type="video/mp4" />
+      </video>        
+      <p class="caption"><strong>Filter modal</strong></p>
+    </div>
+</section>
+
+<!-- SECTION STRUCTURE -->
+<section id="section2">
+  <hr class="p-divider" />
+  <div class="p-section-open">
+    <p class="label">Case Study 2</p>
+    <h2>Competitions Pages</h2>
+  </div>
+
+  <div class="p-media">
+    <img src="/images/Placeholders/BSP_Placeholder2.png" alt="BSP Placeholder">
+
+  </div>
+
+  <!-- Problem -->
+  <div class="p-detail">
+    <p class="label">Problem</p>
+    <h3>
+      Data didn't fit a single format      
+    </h3>
+    <p>
+      Fields like deadlines and costs for programs often had multiple values or conditions for competitions — 
+      a single bullet point couldn't represent that range, creating inconsistent patterns across pages.
+    </p>
+  </div>
+  <!-- <div class="p-media">
+    <video autoplay loop muted playsinline>
+      <source src="/images/BestSummerPrograms/BSP_Old.mp4" type="video/mp4">
+    </video>
+    <p class="caption">Not my design</p>
+  </div> -->
+
+  <div class="p-media">
+    <img src="/images/BestSummerPrograms/Pages_Old.png" alt="old page design">
+    <p class="caption">Previous project page layout (Not my design)</p>
+  </div>
+
+    <!-- Solution -->
+    <div class="p-detail">
+      <p class="label">Solution</p>
+      <h3>
+        A clearer hierarchy for variable data
+      </h3>
+      <p>
+        Redesigned page layouts to surface the most relevant information first, with new components built to handle variable data like tuition and deadlines.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/BestSummerPrograms/Competitions_Scroll.mov" type="video/mp4" />
+      </video>        
+      <p class="caption"><strong>Filter modal</strong></p>
+    </div>
+
+    <!-- Solution -->
+    <div class="p-detail">
+      <p class="label">Displaying Lists</p>
+      <h3>
+        Presenting deadlines and fees functionally
+      </h3>
+      <p>
+        These lists are designed around the content type, showcasing deadlines chronologically and color-assigned based on urgency, and multiple fees in a way for quick calculations.      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/BestSummerPrograms/NewDataComponents.png" alt="detail">
+      <p class="caption"><strong>Presenting listed information legibly and functionally </strong></p>
+    </div>
+
+    <div class="p-detail">
+      <p class="label">Comparison</p>
+      <h3>
+        A landing page that showcases relevant data first
+      </h3>
+    </div>
+
+    <div class="p-media-2col" style="margin-bottom: var(--space-16)">
+      <div>
+        <img src="/images/BestSummerPrograms/Old_Landing.png" alt="oldDesign">
+      </div>
+      <div>
+        <img src="/images/BestSummerPrograms/New_Landing.png" alt="oldDesign">
+      </div>
+    </div>
+
+    <div class="p-detail">
+      <p class="label">Mobile Compatability</p>
+      <h3>
+        Minimizing scroll time of information dense pages.
+      </h3>
+    </div>
+    <div class="p-media">
+      <video loop autoplay playsinline>
+        <source src="/images/BestSummerPrograms/Mobile_Page_Modal.mov" type="video/mp4">
+      </video>
+    </div>
+
+
+
+  </section>
+
 
 </ProjectLayout>
