@@ -8,6 +8,7 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
     { id: "overview", label: "Overview" },
     {id: "section1", label: "Navigation Design"},
     {id: "section2", label:"Competitions Page"},
+    // {id: "section3", label:"Compare and Bookmarks"}
   ]}
 >
 
@@ -204,7 +205,7 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
   </div>
 
   <div class="p-media">
-    <img src="/images/BestSummerPrograms/Competitions_CaseStudy_Hero.png" alt="BSP Placeholder">
+    <img src="/images/BestSummerPrograms/CompetitionsPageHero.png" alt="BSP Placeholder">
 
   </div>
 
@@ -212,11 +213,11 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
   <div class="p-detail">
     <p class="label">Problem</p>
     <h3>
-      Data didn't fit a single format      
+      Data was too long and inconsistent  
     </h3>
     <p>
-      Fields like deadlines and costs for programs often had multiple values or conditions for competitions — 
-      a single bullet point couldn't represent that range, creating inconsistent patterns across pages.
+      Fields like deadlines and costs often had multiple values or conditions for competitions, 
+      creating inconsistent patterns across pages and lengthening our page scroll time.
     </p>
   </div>
   <!-- <div class="p-media">
@@ -226,28 +227,62 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
     <p class="caption">Not my design</p>
   </div> -->
 
-  <div class="p-media">
-    <img src="/images/BestSummerPrograms/Pages_Old.png" alt="old page design">
-    <p class="caption">Previous project page layout (Not my design)</p>
+  <div class="p-media" style="margin-bottom: var(--space-1)">
+    <img src="/images/BestSummerPrograms/CompetitionsPage_Old1.png" alt="old page design">
+    <p class="caption">Initial landing page showed no information on first glance (Not my design)</p>
+  </div>
+    <div class="p-media">
+    <img src="/images/BestSummerPrograms/CompetitionsPage_Old2.png" alt="old page design">
+    <p class="caption">Project categories had inconsistent data formats (Not my design)</p>
   </div>
 
     <!-- Solution -->
     <div class="p-detail">
       <p class="label">Design Goal</p>
       <h3>
-        A clearer hierarchy for variable data
+        Clearer information hierarchy for pages
       </h3>
       <p>
-        Redesigned page layouts to surface the most relevant information first, with new components built to handle variable data like tuition and deadlines.
-      </p>
+Redesigned page layouts to surface the most relevant information first, with new components built to handle variable data like tuition and deadlines, metadata, and summaries.      </p>
     </div>
 
     <div class="p-media">
       <video autoplay loop muted playsinline>
-        <source src="/images/BestSummerPrograms/Competitions_Scroll.mov" type="video/mp4" />
+        <source src="/images/BestSummerPrograms/CompetitionsPage_FullScroll.mov" type="video/mp4" />
       </video>        
-      <p class="caption"><strong>Filter modal</strong></p>
     </div>
+
+    <div class="p-detail">
+      <p class="label">UX Design</p>
+      <h3>
+        New UX flow designed to improve glanceability
+      </h3>
+      <p>
+        Restructured page layout based on user decision patterns, surfacing critical metadata like dates, disciplines, and experience over long-form descriptions. 
+      </p>
+    </div>
+
+
+    <div class="p-media">
+      <img src="/images/BestSummerPrograms/CompetitionsPage_LayoutDiagram.png" alt="Landing">
+      <p class="caption"><strong>Shortened banner and surfaced/emphasized key info.</strong></p>
+    </div>
+
+    <div class="p-detail">
+      <p class="label">Landing Page</p>
+      <h3>
+        A landing page that showcases relevant data first
+      </h3>
+      <p>
+        Reduced the banner height and pulled the title closer to the page content, making room for a new "Expert Overview" card — a component built to surface counselor-written summaries on what the competition is and why it matters.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/BestSummerPrograms/Competitions_Landing.png" alt="Landing">
+      <p class="caption"><strong>Shortened banner and surfaced/emphasized key info.</strong></p>
+    </div>
+
 
     <!-- Solution -->
     <div class="p-detail">
@@ -264,31 +299,34 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
       <p class="caption"><strong>Presenting listed information legibly and functionally </strong></p>
     </div>
 
-    <div class="p-detail">
-      <p class="label">Comparison</p>
-      <h3>
-        A landing page that showcases relevant data first
-      </h3>
-    </div>
-
-    <div class="p-media-2col" style="margin-bottom: var(--space-16)">
+    <!-- <div class="p-media-2col" style="margin-bottom: var(--space-16)">
       <div>
         <img src="/images/BestSummerPrograms/Old_Landing.png" alt="oldDesign">
       </div>
       <div>
         <img src="/images/BestSummerPrograms/New_Landing.png" alt="oldDesign">
       </div>
+    </div> -->
+
+    <div class="p-detail">
+      <p class="label">Design System</p>
+      <h3>
+        New components built for variable data and legibility.
+      </h3>
+    </div>
+    <div class="p-media">
+      <img src="/images/BestSummerPrograms/Competitions_Components_2.png" alt="Design Zoom">
     </div>
 
     <div class="p-detail">
-      <p class="label">Mobile Compatability</p>
+      <p class="label">Mobile Compatibility</p>
       <h3>
         Minimizing scroll time of information dense pages.
       </h3>
     </div>
     <div class="p-media">
       <video autoplay loop muted playsinline>
-        <source src="/images/BestSummerPrograms/Mobile_Competitions_Scroll.mov" type="video/mp4" />
+        <source src="/images/BestSummerPrograms/CompetitionsPage_MobileCompatability.mov" type="video/mp4" />
       </video>     
     </div>
 
@@ -296,5 +334,29 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
 
   </section>
 
+  <!-- 
+<section id="section3">
+  <hr class="p-divider" />
+  <div class="p-section-open">
+    <p class="label">Case Study 3</p>
+    <h2>Compare and Bookmarks</h2>
+  </div>
+
+  <div class="p-media">
+    <img src="/images/BestSummerPrograms/BookmarksCompareHero.png" alt="BSP Placeholder">
+  </div>
+
+    
+  <div class="p-detail">
+    <p class="label">Problem</p>
+    <h3>Repeating UX features across multiple databases
+    </h3>
+    <p>
+      With the new competitions vertical, existing flows for saving and comparing programs weren't built to handle two content types in parallel.
+    </p>
+  </div>
+
+</section>
+-->
 
 </ProjectLayout>
