@@ -24,7 +24,11 @@ interface Props {
   href: string;
   image: string;
   mediaType: "image" | "video";
-  size: "square" | "wide";
+  /** "square"/"wide" = homepage gallery tiles (sized off --col-unit).
+   *  "col2" = fills one column of a 2-column CSS grid (e.g. a project
+   *  hub page's case-study grid) — sizes itself off its grid cell
+   *  instead of --col-unit, and stacks full-width on mobile. */
+  size: "square" | "wide" | "col2";
   subtitle?: string;
   locked?: boolean;
 }
@@ -114,6 +118,12 @@ const { title, subtitle, tags, href, image, mediaType, size, locked } = Astro.pr
     width: calc(2 * var(--col-unit) + var(--gap-grid));
   }
 
+  /* Col2: fills one cell of a 2-column CSS grid (not --col-unit based —
+     the grid it sits in already owns the column math). */
+  .card--col2 {
+    width: 100%;
+  }
+
   /* ---- Image area: fixed size, clips media and overlays ---- */
   .card-image-area {
     position: relative;
@@ -133,6 +143,14 @@ const { title, subtitle, tags, href, image, mediaType, size, locked } = Astro.pr
      Desktop (4-column): height = (gallery-width - 3 gaps) / 4 = col-unit */
   .card--wide .card-image-area {
     height: calc((100cqi - 3 * var(--gap-grid)) / 4);
+  }
+
+  /* Col2 image area: aspect-ratio based instead of cqi — col2 isn't
+     necessarily inside the homepage's --col-unit/container-query context,
+     so it sizes off its own width instead of the gallery container. */
+  .card--col2 .card-image-area {
+    height: auto;
+    aspect-ratio: 16 / 9;
   }
 
   /* Tablet (601–1000px): 3-column grid */

@@ -47,7 +47,7 @@ export const projects: Project[] = [
     subtitle: "Education Discovery Platform",
     locked: false,
     tags: ["Product Design", "UIUX", "Design Systems"],
-    href: "/work/BestSummerPrograms",
+    href: "/work/best-summer-programs",
     image: "/images/Placeholders/BSP_Placeholder2.png",
     mediaType: "image",
     size: "wide",

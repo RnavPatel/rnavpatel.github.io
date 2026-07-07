@@ -1,0 +1,122 @@
+---
+/**
+ * index.astro — src/pages/work/best-summer-programs/index.astro
+ *
+ * This is the project HUB page: overview + a grid of ProjectCard
+ * tiles (size="col2"), each linking out to its own dedicated
+ * case-study sub-page in this same folder (navigation-redesign.astro,
+ * competitions.astro, compare-bookmarks.astro).
+ *
+ * TO ADD ANOTHER CASE STUDY:
+ *   1. Copy one of the sibling .astro files in this folder
+ *   2. Add a matching <ProjectCard size="col2"> below in the ".p-card-grid"
+ */
+
+import ProjectLayout from "../../../layouts/ProjectLayout.astro";
+import ProjectCard from "../../../components/ProjectCard.astro";
+---
+
+<ProjectLayout
+  title="Best Summer Programs"
+  tocItems={[
+    { id: "overview", label: "Overview" },
+    { id: "case-studies", label: "Case Studies" },
+  ]}
+>
+
+  <!-- HEADER ------------------------------------------------->
+<header id="overview" class="p-header">
+  <h1>BestSummerPrograms</h1>
+
+  <p>
+    An accessible database for high school students to navigate the precollege landscape. <strong>Product is still ongoing</strong>
+  </p>
+
+  <hr class="p-divider"></hr>
+
+  <div class="p-meta-grid" style="margin-top: var(--space-10)">
+    <div>
+      <p class="label">Role</p>
+      <h4>
+        Product Designer <br>
+      </h4>
+    </div>
+
+    <div>
+      <p class="label">Skills</p>
+      <h4>
+        Product Designer <br>
+        Lead UIUX Designer <br>
+      </h4>
+    </div>
+    <div>
+      <p class="label">Duration</p>
+      <h4>
+        March 2026 - Present
+      </h4>
+    </div>
+    <div>
+        <p class="label">Team</p>
+
+        <a href="https://www.ethanhuangdesign.com/" target="_blank">Ethan Huang</a> <br />
+        Saul Lelchuk <br/>
+          Maisea Bailey <br/>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="p-section-open">
+    <p class="label">Context</p>
+    <h3><span style="background-color: #ffdb5baa">The platform was growing</span> its summer program database and expanding into high school competitions as a new vertical.
+    </h3>
+  </div>
+
+  <div class="p-section-open">
+    <p class="label">Overview</p>
+    <h3><span style="background-color: #5BFFA5AA">I owned the scale-up initiative:</span> redesigning the visual systems, and UX flows to support a larger database and user base across devices.
+    </h3>
+  </div>
+</header>
+
+<!-- CASE STUDIES -->
+<section id="case-studies">
+  <hr class="p-divider" />
+  <div class="p-section-open">
+    <p class="label">Case Studies</p>
+    <h2>Explore the redesign</h2>
+  </div>
+
+  <div class="p-card-grid">
+    <ProjectCard
+      title="Navigation Redesign"
+      subtitle="Database Browsing System"
+      tags={[]}
+      href="/work/best-summer-programs/navigation-redesign"
+      image="/images/BestSummerPrograms/Nav_CaseStudy_Hero.png"
+      mediaType="image"
+      size="col2"
+    />
+    <ProjectCard
+      title="Competitions Pages"
+      subtitle="Presenting Variable Data"
+      tags={[]}
+      href="/work/best-summer-programs/competitions"
+      image="/images/BestSummerPrograms/CompetitionsPageHero.png"
+      mediaType="image"
+      size="col2"
+    />
+    <ProjectCard
+      title="Compare and Bookmarks"
+      subtitle="User-Item Collections"
+      tags={[]}
+      href=""
+      image="/images/BestSummerPrograms/BookmarksCompareHero.png"
+      mediaType="image"
+      size="col2"
+      locked
+    />
+  </div>
+</section>
+
+</ProjectLayout>

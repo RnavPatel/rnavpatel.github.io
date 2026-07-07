@@ -18,27 +18,41 @@
 
 interface Props {
   activePage: "work" | "about";
+  /** Set on case-study sub-pages to render a "← Back to [Project]" pill
+   *  as its own row directly under the primary Work/About row. */
+  backHref?: string;
+  backLabel?: string;
 }
 
-const { activePage } = Astro.props;
+const { activePage, backHref, backLabel } = Astro.props;
 ---
 
 <nav>
 
-  <!-- Tagline pill — left side -->
-  <!-- <a href="/" class="nav-tagline">
-    <span>Work</span>
-  </a> -->
-
-  <!-- Work / About pills — right side -->
-  <div class="nav-links">
-    <a href="/" class="nav-tagline">
+  <div class="nav-row">
+    <!-- Tagline pill — left side -->
+    <!-- <a href="/" class="nav-tagline">
       <span>Work</span>
-    </a>
-    <button data-modal="about" class="nav-link">
-      <span>About</span>
-    </button>
+    </a> -->
+
+    <!-- Work / About pills — right side -->
+    <div class="nav-links">
+      <a href="/" class="nav-tagline">
+        <span>Work</span>
+      </a>
+      <button data-modal="about" class="nav-link">
+        <span>About</span>
+      </button>
+    </div>
   </div>
+
+  <!-- Back pill — second row, only on case-study sub-pages -->
+  {backHref && (
+    <a href={backHref} class="nav-link nav-back">
+      <span>&lt; {backLabel}</span> 
+      {/* < symbol = &lt; */}
+    </a>
+  )}
 
 </nav>
 
@@ -59,11 +73,21 @@ const { activePage } = Astro.props;
     box-sizing: border-box;
 
     display: flex;
-    justify-content: space-between;  /* left pill ←————→ right pills */
-    align-items: flex-start;
+    flex-direction: column;   /* stacks .nav-row above the optional back pill */
+    gap: var(--space-2);
 
     padding: var(--space-3) var(--page-padding-x);
     pointer-events: none; /* bar itself doesn't capture clicks */
+  }
+
+  /* Primary row — left pill ←————→ right pills. Explicit width:100% since
+     nav's flex-direction:column would otherwise stretch it (fine here,
+     but .nav-back below relies on the same stretch unless overridden). */
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
   }
 
   /* =============================================
@@ -117,7 +141,16 @@ const { activePage } = Astro.props;
     background-color: var(--color-nav-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    pointer-events: all;
     transition: background-color var(--duration-fast) ease;
+  }
+
+  /* Back pill — second nav row, sits directly under the primary row.
+     align-self overrides nav's stretch so it hugs its own content
+     instead of spanning the full bar width like .nav-row does. */
+  .nav-back {
+    align-self: flex-start;
+    text-decoration: none;
   }
 
   /* =============================================

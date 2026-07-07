@@ -1,0 +1,158 @@
+---
+import ProjectLayout from "../../../layouts/ProjectLayout.astro";
+---
+
+<ProjectLayout
+  title="Best Summer Programs — Competitions Pages"
+  backHref="/work/best-summer-programs"
+  backLabel="Best Summer Programs"
+  tocItems={[
+    { id: "overview", label: "Overview" },
+    { id: "problem", label: "Problem" },
+    { id: "design-goal", label: "Design Goal" },
+    { id: "ux-design", label: "UX Design" },
+    { id: "landing-page", label: "Landing Page" },
+    { id: "displaying-lists", label: "Displaying Lists" },
+    { id: "design-system", label: "Design System" },
+    { id: "mobile", label: "Mobile" },
+  ]}
+>
+
+  <!-- HEADER ------------------------------------------------->
+  <header id="overview" class="p-header">
+    <p class="label">Case Study 2</p>
+    <h1>Competitions Pages</h1>
+    <p>
+      A new page template designed to keep variable competitions data glanceable.
+    </p>
+  </header>
+
+  <div class="p-media">
+    <img src="/images/BestSummerPrograms/CompetitionsPageHero.png" alt="BSP Placeholder">
+  </div>
+
+  <!-- Problem -->
+  <section id="problem">
+    <div class="p-detail">
+      <p class="label">Problem</p>
+      <h3>
+        Data was too long and inconsistent
+      </h3>
+      <p>
+        Fields like deadlines and costs often had multiple values or conditions for competitions,
+        creating inconsistent patterns across pages and lengthening our page scroll time.
+      </p>
+    </div>
+
+    <div class="p-media" style="margin-bottom: var(--space-1)">
+      <img src="/images/BestSummerPrograms/CompetitionsPage_Old1.png" alt="old page design">
+      <p class="caption">Initial landing page showed no information on first glance (Not my design)</p>
+    </div>
+    <div class="p-media">
+      <img src="/images/BestSummerPrograms/CompetitionsPage_Old2.png" alt="old page design">
+      <p class="caption">Project categories had inconsistent data formats (Not my design)</p>
+    </div>
+  </section>
+
+  <!-- Design Goal -->
+  <section id="design-goal">
+    <div class="p-detail">
+      <p class="label">Design Goal</p>
+      <h3>
+        Clearer information hierarchy for pages
+      </h3>
+      <p>
+        Redesigned page layouts to surface the most relevant information first, with new components built to handle variable data like tuition and deadlines, metadata, and summaries.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/BestSummerPrograms/CompetitionsPage_FullScroll.mov" type="video/mp4" />
+      </video>
+    </div>
+  </section>
+
+  <!-- UX Design -->
+  <section id="ux-design">
+    <div class="p-detail">
+      <p class="label">UX Design</p>
+      <h3>
+        New UX flow designed to improve glanceability
+      </h3>
+      <p>
+        Restructured page layout based on user decision patterns, surfacing critical metadata like dates, disciplines, and experience over long-form descriptions.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/BestSummerPrograms/CompetitionsPage_LayoutDiagram.png" alt="Landing">
+      <p class="caption"><strong>Shortened banner and surfaced/emphasized key info.</strong></p>
+    </div>
+  </section>
+
+  <!-- Landing Page -->
+  <section id="landing-page">
+    <div class="p-detail">
+      <p class="label">Landing Page</p>
+      <h3>
+        A landing page that showcases relevant data first
+      </h3>
+      <p>
+        Reduced the banner height and pulled the title closer to the page content, making room for a new "Expert Overview" card — a component built to surface counselor-written summaries on what the competition is and why it matters.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/BestSummerPrograms/Competitions_Landing.png" alt="Landing">
+      <p class="caption"><strong>Shortened banner and surfaced/emphasized key info.</strong></p>
+    </div>
+  </section>
+
+  <!-- Displaying Lists -->
+  <section id="displaying-lists">
+    <div class="p-detail">
+      <p class="label">Displaying Lists</p>
+      <h3>
+        Presenting deadlines and fees functionally
+      </h3>
+      <p>
+        These lists are designed around the content type, showcasing deadlines chronologically and color-assigned based on urgency, and multiple fees in a way for quick calculations.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/BestSummerPrograms/NewDataComponents.png" alt="detail">
+      <p class="caption"><strong>Presenting listed information legibly and functionally </strong></p>
+    </div>
+  </section>
+
+  <!-- Design System -->
+  <section id="design-system">
+    <div class="p-detail">
+      <p class="label">Design System</p>
+      <h3>
+        New components built for variable data and legibility.
+      </h3>
+    </div>
+    <div class="p-media">
+      <img src="/images/BestSummerPrograms/Competitions_Components_2.png" alt="Design Zoom">
+    </div>
+  </section>
+
+  <!-- Mobile -->
+  <section id="mobile">
+    <div class="p-detail">
+      <p class="label">Mobile Compatibility</p>
+      <h3>
+        Minimizing scroll time of information dense pages.
+      </h3>
+    </div>
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/BestSummerPrograms/CompetitionsPage_MobileCompatability.mov" type="video/mp4" />
+      </video>
+    </div>
+  </section>
+
+</ProjectLayout>

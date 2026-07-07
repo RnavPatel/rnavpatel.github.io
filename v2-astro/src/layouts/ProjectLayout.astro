@@ -38,12 +38,17 @@ interface Props {
   title?: string;
   description?: string;
   tocItems?: { id: string; label: string }[];
+  /** Set on case-study sub-pages to link back up to their project hub page */
+  backHref?: string;
+  backLabel?: string;
 }
 
 const {
   title = "Aarnav Patel",
   description = "Experience designer crafting the future of interactive entertainment.",
   tocItems = [],
+  backHref,
+  backLabel,
 } = Astro.props;
 
 const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`;
@@ -65,9 +70,9 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
   </head>
 
   <body>
-    <Nav activePage="work" />
+    <Nav activePage="work" backHref={backHref} backLabel={backLabel} />
     <ProjectTOC items={tocItems} />
-    <div class="project-page">
+    <div class={`project-page${backHref ? " project-page--has-back-nav" : ""}`}>
       <article class="project-content">
         <slot />
       </article>
@@ -143,6 +148,11 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     padding-inline: 21vw; /* desktop */
   }
 
+  /* Extra clearance when Nav renders its second "back to hub" pill row */
+  .project-page--has-back-nav {
+    padding-top: calc(var(--page-padding-top) + 3rem);
+  }
+
   @media (max-width: 1200px) {
     .project-page { padding-inline: 15vw; }
   }
@@ -163,7 +173,8 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
      width compensates for both sides so single media fills the full track. */
   .p-media,
   .p-media-2col,
-  .p-media-3col {
+  .p-media-3col,
+  .p-card-grid {
     margin-inline: calc(-1 * var(--_text-margin));
     width: calc(100% + 2 * var(--_text-margin));
   }
@@ -275,6 +286,28 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
   .p-media-3col video {
     width: 100%;
     border-radius: var(--radius-md);
+  }
+
+  /* =============================================
+     CARD GRID — lays out <ProjectCard size="col2"> tiles (e.g. a
+     project hub page's case-study links). 2 columns on desktop,
+     collapses to a single full-width column on mobile — same
+     "cards go full-width" behavior as the homepage gallery, just
+     via grid-template-columns instead of flex-wrap.
+
+     Kept separate from .p-media-2col/.p-media-3col on purpose: those
+     stay 2/3-up on mobile for plain image pairs, this always stacks.
+  ============================================= */
+  .p-card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 640px) {
+    .p-card-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   /* =============================================
