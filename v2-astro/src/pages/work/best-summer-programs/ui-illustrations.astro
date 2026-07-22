@@ -1,0 +1,89 @@
+---
+import ProjectLayout from "../../../layouts/ProjectLayout.astro";
+---
+
+<ProjectLayout
+  title="Best Summer Programs — Compare and Bookmarks"
+  backHref="/work/best-summer-programs"
+  backLabel="Best Summer Programs"
+  tocItems={[
+    { id: "overview", label: "Overview" },
+    { id: "problem", label: "Problem" },
+    { id: "design-goal", label: "Design Goal" },
+    { id: "concept", label: "Visual Concept" },
+  ]}
+>
+
+  <!-- HEADER ------------------------------------------------->
+  <header id="overview" class="p-header">
+    <p class="label">Case Study 4</p>
+    <h1>UI Illustrations</h1>
+  </header>
+
+  <div class="p-media">
+    <img src="/images/BestSummerPrograms/BSP_UI_Illustrations_Hero_v2.png" alt="BSP Placeholder">
+  </div>
+
+  <!-- Problem -->
+  <section id="problem">
+    <div class="p-detail">
+      <p class="label">Problem</p>
+      <h3>Empty states read as broken, not blank.
+      </h3>
+      <p>
+        In informal feedback sessions, users who landed on empty bookmarks or compare screens assumed the site had glitched, with nothing to signal the space was working as intended.
+      </p>
+    </div>
+
+    <div class="p-media" style="margin-bottom: var(--space-1)">
+      <img src="/images/BestSummerPrograms/Illustration_Problem.png" alt="old">
+    </div>
+
+  </section>
+
+  <!-- Design Goal -->
+  <section id="design-goal">
+    <div class="p-detail">
+      <p class="label">Design Goal</p>
+      <h3>Transform dead-end moments with brand personality.
+      </h3>
+      <p>
+        Created vibrant illustrations paired with call-to-action texts to fill up empty states in user collection screens and loading screens. 
+      </p>
+    </div>
+  </section>
+
+
+  <div class="p-media">
+    <video autoplay loop muted playsinline>
+      <source src="/images/BestSummerPrograms/IllustrationsInContext_Prototype.mov" type="video/mp4">
+  </div>
+
+    <!-- Design Goal -->
+  <section id="concept">
+    <div class="p-detail">
+      <p class="label">Visual Concept</p>
+      <h3>Dioramas of Classic Summer Scenes.
+      </h3>
+      <p>
+        Each illustration is built from a consistent top-down angle, like a miniature diorama or a class project made from lined paper and school supplies, evoking nostalgia for daydreaming summer plans.
+      </p>
+    </div>
+  </section>
+      <div class="p-media">
+    <img src="/images/BestSummerPrograms/BSP_UI_Illustrations_Hero.png" alt="UI Diagram">
+  </div>
+  <div class="p-media">
+    <img src="/images/BestSummerPrograms/UI_Concept.png" alt="UI Diagram">
+  </div>
+  <div class="p-detail">
+    <h3>
+      Scalable across UI and marketing assets.
+    </h3>
+  </div>
+  <div class="p-media">
+    <img src="/images/BestSummerPrograms/Banner_Designs.png" alt="UI Diagram">
+  </div>
+
+
+</ProjectLayout>
