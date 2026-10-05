@@ -19,7 +19,7 @@
 
   /* --- Color --- */
   --color-bg:             #ffffff;
-  --color-surface:        #d1d1d1;   /* placeholder gray for cards */
+  --color-surface:        #f6f5f5;   /* placeholder gray for cards */
   --color-surface-raised: #ffffff;   /* slightly darker surface (hover states etc) */
   --color-border:         #e4e4e4;
 
