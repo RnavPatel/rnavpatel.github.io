@@ -117,7 +117,7 @@ export const projects: Project[] = [
     subtitle: "Local Couch-Party Videogame",
     tags: ["UIUX", "Motion Design", "Design Systems", "Art Direction"],
     href: "/work/podpocalypse",
-    image: "/images/Placeholders/PodPoc_HeroImage_Testv1.png",
+    image: "/images/Placeholders/Podpoc_HeroImage_Testv1.png",
     mediaType: "image",
     size: "wide",
   },
