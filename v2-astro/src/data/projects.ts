@@ -60,8 +60,8 @@ export const projects: Project[] = [
     locked: false,
     tags: ["Product Design", "UIUX", "Design Systems"],
     href: "/work/best-summer-programs/ui-illustrations",
-    image: "/images/BestSummerPrograms/BSP_UI_Illustrations_Hero_v2.png",
-    mediaType: "image",
+    image: "/images/Placeholders/UI_Illustrations.mp4",
+    mediaType: "video",
     size: "square",
   },
   /*
@@ -77,17 +77,6 @@ export const projects: Project[] = [
     size: "square",
   },
   */
-    {
-    id: "placeholde-2",
-    title: "StreamPredicts",
-    subtitle: "Gamified Livestream Interface",
-    locked: false,
-    tags: ["UIUX", "Motion Design"],
-    href: "/work/stream-predicts",
-    image: "/images/Placeholders/StreamPredicts_Test.mp4",
-    mediaType: "video",
-    size: "square",
-  },
   {
     id: "StreamPredicts Dashboard",
     title: "StreamPredicts",
@@ -97,6 +86,17 @@ export const projects: Project[] = [
     href: "",
     image: "/images/Placeholders/StreamPredicts_Test2.png",
     mediaType: "image",
+    size: "square",
+  },
+      {
+    id: "StreamPredicts Overlay",
+    title: "StreamPredicts",
+    subtitle: "Gamified Livestream Interface",
+    locked: false,
+    tags: ["UIUX", "Motion Design"],
+    href: "/work/stream-predicts",
+    image: "/images/Placeholders/StreamPredicts_Test.mp4",
+    mediaType: "video",
     size: "square",
   },
   /*
