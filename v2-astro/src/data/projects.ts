@@ -54,11 +54,11 @@ export const projects: Project[] = [
   },
 
     {
-    id: "placeholder-1",
+    id: "BSP Illustration Case Study",
     title: "BestSummerProgram",
     subtitle: "UI Illustration Case Study",
     locked: false,
-    tags: ["Product Design", "UIUX", "Design Systems"],
+    tags: ["UI Illustration", "Visual Identity"],
     href: "/work/best-summer-programs/ui-illustrations",
     image: "/images/Placeholders/UI_Illustrations.mp4",
     mediaType: "video",
@@ -115,7 +115,7 @@ export const projects: Project[] = [
     id: "podpocalypse",
     title: "Podpocalypse",
     subtitle: "Local Couch-Party Videogame",
-    tags: ["UIUX", "Motion Design", "Design Systems", "Art Direction"],
+    tags: ["UIUX", "Motion Design", "Design Systems", "Game Design"],
     href: "/work/podpocalypse",
     image: "/images/Placeholders/Podpoc_HeroImage_Testv1.png",
     mediaType: "image",
