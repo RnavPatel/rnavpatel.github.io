@@ -1,0 +1,99 @@
+---
+import ProjectLayout from "../../../layouts/ProjectLayout.astro";
+---
+
+<ProjectLayout
+  title="Stream Predicts - OBS Overlay"
+  tocItems={[
+    { id: "overview", label: "Overview" },
+    {id: "Coming soon", label: "Coming Soon"}
+  ]}
+>
+
+  <!-- HEADER ------------------------------------------------->
+  <header id="overview" class="p-header">
+    <!-- <p class="label">Stream Predicts Case Study</p> -->
+    <h1>Stream Predicts UI</h1>
+    <p>
+      Designing an overlay interface for a fun livestream prediction market experiences.
+    </p>
+
+
+  <hr class="p-divider"></hr>
+
+  <div class="p-meta-grid" style="margin-top: var(--space-10)">
+    <div>
+      <p class="label">Role</p>
+      <h4>
+        Product Designer<br>
+      </h4>
+    </div>
+
+    <div>
+      <p class="label">Skills</p>
+      <h4>
+        UI Design <br>
+        Motion Design <br>
+        Front-end Engineering
+      </h4>
+    </div>
+    <div>
+        <p class="label">Team</p>
+        <h4>
+          Nang Ang
+        </h4>
+      </div>
+    </div>
+  </div>
+  </header>
+
+  <div class="p-media">
+    <img src="/images/StreamPredicts/UI_InContext.png" alt="HeroPlaceholder">
+  </div>
+
+
+  <!-- Design Goal -->
+  <section id="design-goal">
+    <div class="p-detail">
+      <p class="label">Design Goal</p>
+      <h3>
+        Displaying prediction markets as tug-of-wars.
+      </h3>
+      <p>
+        A playful interface that captures the intensity of live prediction markets without the complexity, creating fun, intuitive, and unobtrusive moments for viewers.
+      </p>
+    </div>
+  </section>
+
+    <div class="p-media-2col">
+      <div>
+        <video autoplay loop muted playsinline>
+          <source src="/images/StreamPredicts/Resting_Final.mp4" type="video/mp4" />
+        </video>
+        <p class="caption"><strong>Load State</strong></p>
+      </div>
+      <div>
+        <video autoplay loop muted playsinline>
+          <source src="/images/StreamPredicts/Transition.mp4" type="video/mp4" />
+        </video>
+        <p class="caption"><strong>Incoming Prediction Transition</strong></p>
+      </div>
+      <div>
+        <video autoplay loop muted playsinline>
+          <source src="/images/StreamPredicts/LivePredict.mp4" type="video/mp4" />
+        </video>
+        <p class="caption"><strong>Live Engagement Data</strong></p> 
+      </div>
+      <div>
+        <video autoplay loop muted playsinline>
+          <source src="/images/StreamPredicts/Wins.mp4" type="video/mp4" />
+        </video>
+        <p class="caption"><strong>Winner State</strong></p>
+      </div>
+    </div>
+    <section id="Coming soon">
+      <div class="p-detail">
+        <h3>More to come...</h3>
+      </div>
+    </section>
+</ProjectLayout>

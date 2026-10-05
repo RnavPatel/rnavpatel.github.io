@@ -52,6 +52,18 @@ export const projects: Project[] = [
     mediaType: "image",
     size: "wide",
   },
+
+    {
+    id: "placeholder-1",
+    title: "BestSummerProgram",
+    subtitle: "UI Illustration Case Study",
+    locked: false,
+    tags: ["Product Design", "UIUX", "Design Systems"],
+    href: "/work/best-summer-programs/ui-illustrations",
+    image: "/images/BestSummerPrograms/BSP_UI_Illustrations_Hero_v2.png",
+    mediaType: "image",
+    size: "square",
+  },
   /*
       {
     id: "placeholde-2",
@@ -68,10 +80,10 @@ export const projects: Project[] = [
     {
     id: "placeholde-2",
     title: "StreamPredicts",
-    subtitle: "Gamified Livestream Prediction Market",
-    locked: true,
+    subtitle: "Gamified Livestream Interface",
+    locked: false,
     tags: ["UIUX", "Motion Design"],
-    href: "",
+    href: "/work/stream-predicts",
     image: "/images/Placeholders/StreamPredicts_Test.mp4",
     mediaType: "video",
     size: "square",
@@ -79,7 +91,7 @@ export const projects: Project[] = [
   {
     id: "StreamPredicts Dashboard",
     title: "StreamPredicts",
-    subtitle: "Prediction Engagement Dashboard",
+    subtitle: "Prediction Market Dashboard",
     locked: true,
     tags: ["Product Design", "UIUX", "Visual Identity", "Design Systems"],
     href: "",
@@ -87,6 +99,7 @@ export const projects: Project[] = [
     mediaType: "image",
     size: "square",
   },
+  /*
     {
     id: "nirvana-noir",
     title: "Nirvana Noir",
@@ -97,6 +110,7 @@ export const projects: Project[] = [
     mediaType: "image",
     size: "square",
   },
+  */
   {
     id: "podpocalypse",
     title: "Podpocalypse",
@@ -107,6 +121,7 @@ export const projects: Project[] = [
     mediaType: "image",
     size: "wide",
   },
+  /*
         {
     id: "marvel",
     title: "Marvel Fracture",
@@ -117,4 +132,5 @@ export const projects: Project[] = [
     mediaType: "video",
     size: "square",
   },
+  */
 ];
