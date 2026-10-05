@@ -19,8 +19,8 @@
 
   /* --- Color --- */
   --color-bg:             #ffffff;
-  --color-surface:        #f0f0f0;   /* placeholder gray for cards */
-  --color-surface-raised: #e8e8e8;   /* slightly darker surface (hover states etc) */
+  --color-surface:        #d1d1d1;   /* placeholder gray for cards */
+  --color-surface-raised: #ffffff;   /* slightly darker surface (hover states etc) */
   --color-border:         #e4e4e4;
 
   --color-text-primary:   #1a1a1a;
@@ -30,7 +30,7 @@
 
   --color-accent:         #14D277;   /* your green — used on link hovers etc */
 
-  --color-nav-bg:         rgba(255, 255, 255, 0.3);  /* frosted white pill */
+  --color-nav-bg:         rgba(1, 1, 1, 0.1);;  /* frosted white pill */
   --color-nav-border:     rgba(0, 0, 0, 0.1);        /* subtle outline */
   --color-nav-hover-bg:   rgba(255, 255, 255, 0.3);  /* frosted white pill */
 

@@ -2,17 +2,17 @@
 /**
  * Nav.astro  —  src/components/Nav.astro
  * ============================================================
- * Top navigation: tagline pill on the left, work/about on the right.
- * Aligns to the same page margins as all other content.
+ * Top navigation: Work/About pills, plus an optional "< Back" pill
+ * on case-study sub-pages. Aligns to the same page margins as all
+ * other content.
  *
  * CHEAT SHEET — CMD+F these labels:
  *   "Nav layout"   → how the bar is positioned and spaced
- *   "Tagline pill" → the left "Aarnav is a Design Engineer" pill
- *   "Nav links"    → the right work/about pills
+ *   "Nav links"    → the shared .nav-link pill style (Work, About, Back)
  *   "Hover"        → mouse-over state
  * ============================================================
  *
- * To change the tagline text: edit the <span> in .nav-tagline below
+ * To restyle every nav pill at once: edit .nav-link below
  * To change pill colors: edit --color-nav-bg and --color-nav-border in tokens.css
  */
 
@@ -30,14 +30,9 @@ const { activePage, backHref, backLabel } = Astro.props;
 <nav>
 
   <div class="nav-row">
-    <!-- Tagline pill — left side -->
-    <!-- <a href="/" class="nav-tagline">
-      <span>Work</span>
-    </a> -->
-
-    <!-- Work / About pills — right side -->
+    <!-- Work / About pills -->
     <div class="nav-links">
-      <a href="/" class="nav-tagline">
+      <a href="/" class="nav-link">
         <span>Work</span>
       </a>
       <button data-modal="about" class="nav-link">
@@ -48,7 +43,7 @@ const { activePage, backHref, backLabel } = Astro.props;
 
   <!-- Back pill — second row, only on case-study sub-pages -->
   {backHref && (
-    <a href={backHref} class="nav-link nav-back">
+    <a href={backHref} class="nav-link">
       <span>&lt; {backLabel}</span> 
       {/* < symbol = &lt; */}
     </a>
@@ -59,8 +54,8 @@ const { activePage, backHref, backLabel } = Astro.props;
 <style>
   /* =============================================
      Nav layout
-     Fixed bar across the top. Pushes tagline to the
-     left and the work/about group to the right.
+     Fixed bar across the top holding the Work/About
+     group, with the optional Back pill on a second row.
      Padding matches --page-padding-x so pills align
      to the same edges as the gallery content below.
   ============================================= */
@@ -74,50 +69,26 @@ const { activePage, backHref, backLabel } = Astro.props;
 
     display: flex;
     flex-direction: column;   /* stacks .nav-row above the optional back pill */
+    align-items: center;      /* centers both rows horizontally */
     gap: var(--space-2);
 
     padding: var(--space-3) var(--page-padding-x);
     pointer-events: none; /* bar itself doesn't capture clicks */
   }
 
-  /* Primary row — left pill ←————→ right pills. Explicit width:100% since
-     nav's flex-direction:column would otherwise stretch it (fine here,
-     but .nav-back below relies on the same stretch unless overridden). */
+  /* Primary row — holds the Work/About group. Explicit width:100% since
+     nav's align-items:center would otherwise shrink it to its content. */
   .nav-row {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    justify-content: center;   /* centers the Work/About group horizontally */
+    align-items: center;
     width: 100%;
   }
 
   /* =============================================
-     Tagline pill  (left side)
-     Shared pill shape with the nav-link style.
-  ============================================= */
-  .nav-tagline {
-    display: inline-flex;
-    align-items: center;
-    padding: var(--space-2) var(--space-4);
-    border-radius: var(--radius-pill);
-    border: 2px solid var(--color-nav-border);
-    font-size: var(--text-sm);
-    font-weight: var(--weight-medium);
-    color: var(--color-text-primary);
-    background-color: var(--color-nav-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    pointer-events: all;
-    transition: background-color var(--duration-fast) ease;
-  }
-
-  .nav-tagline:hover {
-    background-color: var(--color-nav-hover-bg);
-    text-decoration: none;
-  }
-
-  /* =============================================
-     Nav links  (right side)
-     Two pills grouped in a flex row.
+     Nav links
+     .nav-link is the one shared pill style for every
+     nav button: Work, About, and the Back pill.
   ============================================= */
   .nav-links {
     display: flex;
@@ -130,34 +101,30 @@ const { activePage, backHref, backLabel } = Astro.props;
     appearance: none;
     background: none;
     cursor: pointer;
+    pointer-events: all;   /* re-enable clicks — nav itself has pointer-events:none */
     display: inline-flex;
     align-items: center;
     padding: var(--space-2) var(--space-4);
-    border-radius: var(--radius-pill);
-    border: 2px solid var(--color-nav-border);
+    /* border-radius: var(--radius-pill); */
+    border-radius: 4px;
+    text-decoration: none;
+    border: none;   /* <button> ships with a default outset border; <a> doesn't */
+
     font-size: var(--text-sm);
     font-weight: var(--weight-medium);
-    color: var(--color-text-primary);
-    background-color: var(--color-nav-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    pointer-events: all;
-    transition: background-color var(--duration-fast) ease;
-  }
+    color: var(--color-text-secondary);
+    background-color: transparent;
+    backdrop-filter: blur(12px);          /* frosted blur of whatever scrolls behind */
+    -webkit-backdrop-filter: blur(12px);  /* Safari */
 
-  /* Back pill — second nav row, sits directly under the primary row.
-     align-self overrides nav's stretch so it hugs its own content
-     instead of spanning the full bar width like .nav-row does. */
-  .nav-back {
-    align-self: flex-start;
-    text-decoration: none;
+    transition: background-color var(--duration-fast) ease;
   }
 
   /* =============================================
      Hover
   ============================================= */
   .nav-link:hover {
-    background-color: var(--color-nav-hover-bg);
+    background-color: var(--color-surface-raised);
     text-decoration: none;
   }
 </style>

@@ -39,8 +39,10 @@ import { projects } from "../data/projects";
   -->
   <div class="page-grid">
 
-    <p class="intro">Aarnav is a product designer who builds joyful interactive experiences.
-    </p>
+  <p class="intro">
+    Aarnav is a product designer who builds joyful interactive experiences.
+  </p>
+
     <!-- =============================================
          GALLERY
          Cards flow left-to-right and wrap to new rows.
@@ -107,19 +109,22 @@ import { projects } from "../data/projects";
     width: calc(1 * var(--col-unit));
     padding-top: var(--space-5);
     padding-bottom: var(--space-5);
+    /* background-color: red; */
+    margin-inline: auto;   /* centers the BOX within .page-grid */
+    text-align: center;    /* centers the TEXT lines within the box */
   } 
 
-  /* .intro {
-  width: calc(1 * var(--col-unit));
-  margin-inline: auto;   /* centers the BOX within .page-grid */
-  text-align: center;    /* centers the TEXT lines within the box */
-  /*
-  padding-top: var(--space-5);
-  padding-bottom: var(--space-5);
+  /* Centered variant:
+  .intro {
+    width: calc(1 * var(--col-unit));
+    margin-inline: auto;   — centers the BOX within .page-grid
+    text-align: center;    — centers the TEXT lines within the box
+    padding-top: var(--space-5);
+    padding-bottom: var(--space-5);
   } */
 
   @media (max-width: 600px) {
-    .intro { width: 100%; }
+    .intro { width: 50%;}
   }
 
   .gallery {

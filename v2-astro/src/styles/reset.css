@@ -22,6 +22,12 @@ html {
   text-size-adjust: none;
 }
 
+@media (max-width: 600px) {
+  html {
+    font-size: 100%;   /* 16px */
+  }
+}
+
 body {
   line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
