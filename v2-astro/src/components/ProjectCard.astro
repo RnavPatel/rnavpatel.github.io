@@ -12,6 +12,7 @@
  *   "Tag pills"      → the individual white pill badges at the top
  *   "Title style"    → the bold white title below the image
  *   "Hover state"    → what animates when mouse enters the card
+ *   "Jelly"          → the spring wobble on the image when hovered
  * ============================================================
  *
  * To change appearance: edit the <style> block below
@@ -40,7 +41,7 @@ const { title, subtitle, tags, href, image, mediaType, size, locked } = Astro.pr
 <a href={href} class={`card-wrapper card--${size}${locked ? ' card--locked' : ''}`}>
 
   <!-- ---- Image area: fixed size, clips media and overlays ---- -->
-  <div class="card-image-area">
+  <div class="card-image-area" data-jelly>
 
     <!-- Media (image or video) -->
     <div class="card-media">
@@ -283,6 +284,35 @@ const { title, subtitle, tags, href, image, mediaType, size, locked } = Astro.pr
   }
 
   /* =============================================
+     Jelly
+     The image area wobbles via a spring (see <script> below +
+     src/motion/springs.ts). JS writes these numbers; CSS decides
+     what they mean:
+       --jelly-s     current scale (rests at 1)
+       --jelly-r     current tilt in deg (rests at 0)
+       --jelly-y     vertical hop in px (rests at 0, negative = up)
+       --jelly-lift  0→1, how far "up" the image is mid-wobble —
+                     drives the shadow so it reads as lifting off
+                     the card rather than just zooming.
+     Only the image area moves — the wrapper (hover target) and
+     title stay put, so the hover never flickers at the edges.
+  ============================================= */
+  .card-image-area {
+    transform: translateY(var(--jelly-y, 0px)) scale(var(--jelly-s, 1)) rotate(var(--jelly-r, 0deg));
+    box-shadow: 0
+      calc(var(--jelly-lift, 0) * 10px)
+      calc(var(--jelly-lift, 0) * 24px)
+      rgba(0, 0, 0, calc(var(--jelly-lift, 0) * 0.18));
+  }
+
+  /* While wobbling, lift the whole card above its neighbours so
+     the scaled image overlaps them instead of tucking under. */
+  .card-wrapper[data-jelly-active] {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* =============================================
      Mobile (≤ 600px)
      index.astro sets width:100% / aspect-ratio:16/9 on the wrapper.
      Reset wrapper's aspect-ratio (it has title text below the image)
@@ -311,3 +341,112 @@ const { title, subtitle, tags, href, image, mediaType, size, locked } = Astro.pr
     }
   }
 </style>
+
+<script>
+  import { Spring, springs } from "../motion/springs";
+
+  /* Jelly tuning — how hard a hover punches the image at FULL strength.
+     Peak ≈ kick / √stiffness with the jelly preset:
+       scale  0.8 → ~1.045×      rotate  35 → ~2° */
+  const KICK = 0.8;
+  const ROTATE_KICK = 35;
+  const PEAK = KICK / Math.sqrt(springs.jelly.stiffness / springs.jelly.mass);
+
+  /* Mouse speed → strength. Entering at FAST px/ms or quicker gets the full
+     kick; slower entries scale down, but never below MIN. sqrt lifts the
+     middle so normal browsing still feels lively and only flicks max out. */
+  const FAST = 2;
+  const MIN = 0.15;
+
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+
+  /* Mouse velocity in px/ms, smoothed so one jittery event doesn't spike it.
+     Tracked page-wide so it's already up to date when a card is entered. */
+  let vx = 0, vy = 0, lastX = 0, lastY = 0, lastT = 0;
+  window.addEventListener("pointermove", (e) => {
+    const dt = e.timeStamp - lastT;
+    if (dt > 0 && dt < 100) {   // skip the first move and anything after a pause
+      vx = vx * 0.6 + ((e.clientX - lastX) / dt) * 0.4;
+      vy = vy * 0.6 + ((e.clientY - lastY) / dt) * 0.4;
+    } else {
+      vx = vy = 0;
+    }
+    lastX = e.clientX; lastY = e.clientY; lastT = e.timeStamp;
+  });
+
+  /* Jump — the "everyone hop" on page load and space bar.
+     JUMP_KICK is upward velocity: peak ≈ 210 / √300 ≈ 12px up, then it
+     bounces back down past rest a few times. JUMP_STAGGER ripples the
+     hop across the grid card-by-card (set to 0 for all-at-once). */
+  const JUMP_KICK = -210;
+  const JUMP_SCALE = 0.5;    // fraction of KICK added as a little stretch mid-hop
+  const JUMP_STAGGER = 45;   // ms between each card's hop
+  const JUMP_PEAK = Math.abs(JUMP_KICK) / Math.sqrt(springs.jelly.stiffness / springs.jelly.mass);
+
+  const jumps: (() => void)[] = [];
+
+  document.querySelectorAll<HTMLElement>("[data-jelly]").forEach((image) => {
+    const card = image.closest<HTMLElement>(".card-wrapper")!;
+
+    // One render for all springs: the shadow ("lift") follows whichever is
+    // higher — scaling up toward you, or hopping up off the card.
+    const render = () => {
+      image.style.setProperty("--jelly-s", scale.value.toFixed(4));
+      image.style.setProperty("--jelly-r", `${rotate.value.toFixed(3)}deg`);
+      image.style.setProperty("--jelly-y", `${jump.value.toFixed(2)}px`);
+      const lift = Math.max((scale.value - 1) / PEAK, -jump.value / JUMP_PEAK);
+      image.style.setProperty("--jelly-lift", Math.max(0, lift).toFixed(3));
+    };
+
+    // Drop back under the neighbours only once every spring has settled.
+    const settle = () => {
+      if ([scale, rotate, jump].every((sp) => sp.velocity === 0 && sp.value === sp.target)) {
+        card.removeAttribute("data-jelly-active");
+      }
+    };
+
+    const scale  = new Spring(1, springs.jelly, render, settle);
+    const rotate = new Spring(0, springs.jelly, render, settle);
+    const jump   = new Spring(0, springs.jelly, render, settle);
+
+    card.addEventListener("pointerenter", () => {
+      if (!finePointer.matches) return;
+      card.setAttribute("data-jelly-active", "");
+
+      const speed = Math.hypot(vx, vy);
+      const strength = MIN + (1 - MIN) * Math.sqrt(Math.min(speed / FAST, 1));
+      scale.kick(KICK * strength);
+
+      // Tilt follows travel direction: sweeping right tips it clockwise,
+      // sweeping left counter-clockwise, straight up/down barely tilts.
+      const sideways = speed > 0 ? vx / speed : 0;
+      rotate.kick(ROTATE_KICK * strength * sideways);
+    });
+
+    jumps.push(() => {
+      card.setAttribute("data-jelly-active", "");
+      jump.kick(JUMP_KICK);
+      scale.kick(KICK * JUMP_SCALE);
+    });
+  });
+
+  function jumpAll() {
+    jumps.forEach((hop, i) => setTimeout(hop, i * JUMP_STAGGER));
+  }
+
+  // On load — wait for images so the hop is actually visible, plus a beat
+  // so it doesn't fire while the page is still settling in.
+  if (document.readyState === "complete") setTimeout(jumpAll, 250);
+  else window.addEventListener("load", () => setTimeout(jumpAll, 250), { once: true });
+
+  // Space bar — but leave space alone wherever it already means something
+  // (typing, pressing a focused button/link, an open modal).
+  window.addEventListener("keydown", (e) => {
+    if (e.code !== "Space" || e.repeat) return;
+    const target = e.target;
+    if (target instanceof Element && target.closest("input, textarea, select, button, a, [contenteditable]")) return;
+    if (document.querySelector(".is-open")) return;
+    e.preventDefault();   // otherwise space scrolls the page down
+    jumpAll();
+  });
+</script>
