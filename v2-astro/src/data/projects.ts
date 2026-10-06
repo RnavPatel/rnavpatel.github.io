@@ -48,7 +48,7 @@ export const projects: Project[] = [
     locked: false,
     tags: ["Product Design", "UIUX", "Design Systems"],
     href: "/work/best-summer-programs",
-    image: "/images/Placeholders/BSP_Hero_V2.png",
+    image: "/images/Placeholders/BSP_Hero_V3.png",
     mediaType: "image",
     size: "wide",
   },
