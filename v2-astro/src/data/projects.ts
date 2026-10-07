@@ -24,6 +24,8 @@
      Files live in /public/images/ — path starts with /images/
    ============================================================ */
 
+import type { Status } from "../components/StatusChip.astro";
+
 export interface Project {
   id: string;
   title: string;
@@ -37,6 +39,8 @@ export interface Project {
   size: "square" | "wide";
   /** If true: desktop shows 🔒 before the title on hover; mobile shows a persistent 🔒 badge */
   locked?: boolean;
+  /** Optional chip right of the title: "shipped" | "in-construction" | "coming-soon" */
+  status?: Status;
 }
 
 export const projects: Project[] = [
@@ -49,6 +53,7 @@ export const projects: Project[] = [
     tags: ["Product Design", "UIUX", "Design Systems"],
     href: "/work/best-summer-programs",
     image: "/images/Placeholders/BSP_Hero_V3.png",
+    status: "shipped",
     mediaType: "image",
     size: "wide",
   },
@@ -61,6 +66,7 @@ export const projects: Project[] = [
     tags: ["UI Illustration", "Visual Identity"],
     href: "/work/best-summer-programs/ui-illustrations",
     image: "/images/Placeholders/UI_Illustrations.mp4",
+    status: "shipped",
     mediaType: "video",
     size: "square",
   },
@@ -85,6 +91,7 @@ export const projects: Project[] = [
     tags: ["Product Design", "UIUX", "Visual Identity", "Design Systems"],
     href: "",
     image: "/images/Placeholders/StreamPredicts_Test2.png",
+    status: "in-construction",
     mediaType: "image",
     size: "square",
   },
@@ -118,6 +125,7 @@ export const projects: Project[] = [
     href: "/work/nirvananoir",
     image: "/images/Placeholders/FCD_Hero_v1.png",
     mediaType: "image",
+    status: "coming-soon",
     size: "square",
   }
   /*

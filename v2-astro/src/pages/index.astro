@@ -28,7 +28,7 @@ import ProjectCard from "../components/ProjectCard.astro";
 import { projects } from "../data/projects";
 ---
 
-<BaseLayout title="Work" activePage="work">
+<BaseLayout title="Work" activePage="work" flushTop>
 
   <!-- .page-grid owns --col-unit so both .intro and .gallery share the same
        column reference width. To span N cols on any child:
@@ -40,7 +40,8 @@ import { projects } from "../data/projects";
   <div class="page-grid">
 
   <p class="intro">
-    Aarnav is a product designer who builds joyful interactive experiences.
+    Aarnav is a product designer who makes joyful interactive experiences.
+    He is passionate about entertainment and education, and driven to build his ideas.
   </p>
 
     <!-- =============================================
@@ -62,6 +63,7 @@ import { projects } from "../data/projects";
           mediaType={project.mediaType}
           size={project.size}
           locked={project.locked}
+          status={project.status}
         />
       ))}
     </section>
@@ -101,18 +103,17 @@ import { projects } from "../data/projects";
     }
   }
 
-  /* INTRO — currently 1 column wide. Change N to span more columns:
+  /* INTRO — top-left, 1 column wide. Change N to span more columns:
      2 col → calc(2 * var(--col-unit) + 1 * var(--gap-grid))
      3 col → calc(3 * var(--col-unit) + 2 * var(--gap-grid))
-     4 col → 100% */
+     4 col → 100%
+     padding-left = the card's own padding (--gap-grid), so the text's
+     left edge lines up with the first image's left edge below. */
   .intro {
-    width: calc(1 * var(--col-unit));
-    padding-top: var(--space-5);
+    width: calc(1.5*var(--col-unit));
+    padding-left: var(--gap-grid);
     padding-bottom: var(--space-5);
-    /* background-color: red; */
-    margin-inline: auto;   /* centers the BOX within .page-grid */
-    text-align: center;    /* centers the TEXT lines within the box */
-  } 
+  }
 
   /* Centered variant:
   .intro {
@@ -124,7 +125,9 @@ import { projects } from "../data/projects";
   } */
 
   @media (max-width: 600px) {
-    .intro { width: 50%;}
+    .intro { 
+      width: 80%;
+    }
   }
 
   .gallery {

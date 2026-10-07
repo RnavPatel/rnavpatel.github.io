@@ -51,16 +51,27 @@
   --space-24: 10rem;
 
   /* --- Typography --- */
-  /* To change a font size site-wide: edit the clamp() value here.
-     clamp(mobile-min, fluid-middle, desktop-max)             */
-  --font-sans: "DM Sans", sans-serif;
+  /* To change a font size site-wide: edit the value here.
+     clamp(min, fluid-middle, max)
 
-  --text-xs:  1rem;                        /* 16px — labels, captions */
-  --text-sm:  1.25rem;                     /* 20px */
-  --text-md:  clamp(1rem, 2vw, 1.5rem);    /* 16→24px — body text */
-  --text-lg:  clamp(1.25rem, 3vw, 2rem);  /* 20→32px — h3 sub-headings */
-  --text-xl:  clamp(1.5rem, 4vw, 2.5rem); /* 24→40px — h2 section headings */
-  --text-2xl: clamp(2rem, 6vw, 3.5rem);   /* 32→56px — h1 page title */
+     1rem is NOT 16px here: reset.css sets the root to 75%, so
+       desktop/tablet (> 600px): 1rem = 12px
+       phone          (≤ 600px): 1rem = 16px
+     Comments below show "desktop / phone" in px.
+
+     Homepage roles:
+       --text-xs  caption  — hover tag pills
+       --text-sm  body/UI  — nav, card title + subtitle, status chips
+       --text-md  lead     — intro paragraph, About modal
+       --text-lg  heading                                      */
+  --font-sans: "Host Grotesk", sans-serif;
+
+  --text-xs:  1rem;                        /* 12 / 16px — captions, tags */
+  --text-sm:  1.25rem;                     /* 15 / 20px — body, UI */
+  --text-md:  clamp(1rem, 2vw, 1.5rem);    /* 12→18 / 16px — lead text (18px from 900px wide) */
+  --text-lg:  clamp(1.25rem, 3vw, 2rem);   /* 15→24 / 20px — h3 sub-headings */
+  --text-xl:  clamp(1.5rem, 4vw, 2.5rem);  /* 18→30 / 24px — h2 section headings */
+  --text-2xl: clamp(2rem, 6vw, 3.5rem);    /* 24→42 / 32px — h1 page title */
 
   --leading-tight:  1.1;
   --leading-normal: 1.4;
@@ -102,10 +113,15 @@
      --duration-fast: hover color changes (150ms)
      --duration-normal: hover transforms like scale/slide (260ms)
      --duration-slow: entrance animations, page transitions (500ms)
-     --duration-page: full page-to-page transitions (600ms)          */
+     --duration-page: full page-to-page transitions (600ms)
+     --ease-spring: springy — overshoots ~12%, dips once, settles.
+       A sampled damped spring (damping ratio 0.55). Pair it with
+       --duration-spring; the curve is shaped for that length.        */
   --ease-out-expo:   cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-quart:  cubic-bezier(0.25, 1, 0.5, 1);
   --ease-in-out:     cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring:     linear(0, 0.044, 0.154, 0.302, 0.464, 0.624, 0.768, 0.889, 0.984, 1.052, 1.096, 1.12, 1.126, 1.121, 1.106, 1.088, 1.067, 1.047, 1.029, 1.014, 1.002, 0.993, 0.988, 0.985, 0.984, 0.985, 0.987, 0.989, 0.992, 0.994, 0.996, 0.998, 1, 1.001, 1.002, 1.002, 1.002, 1.002, 1.002, 1.001, 1);
+  --duration-spring: 800ms;
 
   --duration-fast:    150ms;
   --duration-normal:  260ms;

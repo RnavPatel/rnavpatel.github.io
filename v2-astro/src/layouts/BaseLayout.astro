@@ -42,12 +42,16 @@ interface Props {
   title?: string;
   description?: string;
   activePage: "work" | "about";
+  /** Pull content up so its first line sits level with the nav pills
+   *  (homepage intro). Off on phones, where the nav would overlap it. */
+  flushTop?: boolean;
 }
 
 const {
   title = "Aarnav Patel",
   description = "Experience designer crafting the future of interactive entertainment.",
   activePage,
+  flushTop = false,
 } = Astro.props;
 
 const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`;
@@ -63,11 +67,11 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
 
     <!-- <link rel="icon" type="image/svg+xml" href="/favicon.svg" /> -->
 
-    <!-- DM Sans — preconnect for faster load, only load weights we use -->
+    <!-- Host Grotesk — preconnect for faster load, only load weights we use -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;0,9..40,1000;1,9..40,100;1,9..40,200;1,9..40,300;1,9..40,400;1,9..40,500;1,9..40,600;1,9..40,700;1,9..40,800;1,9..40,900;1,9..40,1000&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -75,7 +79,7 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
   <body>
     <Nav activePage={activePage} />
 
-    <main>
+    <main class:list={{ "main--flush-top": flushTop }}>
       <slot />
     </main>
 
@@ -177,6 +181,14 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     overflow-x: clip;
   }
 
+  /* Flush top — matches Nav.astro's top padding + pill padding, so
+     the first line of content lines up with the Work/About text. */
+  @media (min-width: 601px) {
+    main.main--flush-top {
+      padding-top: calc(var(--space-3) + var(--space-2));
+    }
+  }
+
   /* =============================================
      Content column
      Default for every direct child of <main>.
@@ -268,7 +280,7 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     background-color: var(--color-nav-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    font-size: var(--text-sm);
+    font-size: var(--text-md);
     font-weight: var(--weight-medium);
     color: var(--color-text-primary);
     cursor: pointer;

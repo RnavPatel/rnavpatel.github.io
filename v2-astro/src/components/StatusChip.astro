@@ -1,0 +1,176 @@
+---
+/**
+ * StatusChip.astro  —  src/components/StatusChip.astro
+ * ============================================================
+ * Small icon + label chip showing a project's status.
+ * Used in ProjectCard's title row; set `status` in projects.ts.
+ *
+ * CHEAT SHEET — CMD+F these labels:
+ *   "Variants"      → label + icon for each status (edit copy here)
+ *   "Chip style"    → shared shape, size, type
+ *   "Reveal"        → icon-only at rest, label springs open on card hover
+ *   "Variant colors"→ per-status text/background colors
+ * ============================================================
+ *
+ * To add a variant: add a key to `variants` below, add it to the
+ * Status type, and give it a color block under "Variant colors".
+ */
+
+export type Status = "shipped" | "in-construction" | "coming-soon";
+
+interface Props {
+  status: Status;
+}
+
+const { status } = Astro.props;
+
+/* =============================================
+   Variants
+   icon = inner SVG markup, drawn in a 16×16 box with
+   stroke/fill="currentColor" so it picks up the text color.
+============================================= */
+const variants: Record<Status, { label: string; icon: string }> = {
+  "shipped": {
+    label: "Shipped",
+    icon: `<circle cx="8" cy="8" r="3" fill="currentColor" />`,
+  },
+  "in-construction": {
+    label: "In Construction",
+    icon: `<path d="M6 2.5c-1.5 0-2 .7-2 2v1.6c0 .9-.5 1.4-1.5 1.9 1 .5 1.5 1 1.5 1.9v1.6c0 1.3.5 2 2 2M10 2.5c1.5 0 2 .7 2 2v1.6c0 .9.5 1.4 1.5 1.9-1 .5-1.5 1-1.5 1.9v1.6c0 1.3-.5 2-2 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />`,
+  },
+  "coming-soon": {
+    label: "Coming Soon",
+    icon: `<circle cx="8" cy="8" r="5.5" fill="none" stroke="currentColor" stroke-width="1.5" /><path d="M8 5v3l2 1.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />`,
+  },
+};
+
+const { label, icon } = variants[status];
+---
+
+<span class={`status-chip status-chip--${status}`}>
+  <svg class="status-chip-icon" viewBox="0 0 16 16" aria-hidden="true" set:html={icon} />
+  <span class="status-chip-label"><span class="status-chip-text">{label}</span></span>
+</span>
+
+<style>
+  /* =============================================
+     Chip style
+  ============================================= */
+  .status-chip {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    /* Height + equal side padding make the chip a square when the
+       label is collapsed: (1.75em height - 1em icon) / 2 per side. */
+    height: 1.75em;
+    padding-inline: 0.375em;
+    border-radius: var(--radius-xs);
+
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    line-height: 1;
+    white-space: nowrap;
+
+    color: var(--chip-fg);
+    background-color: var(--chip-bg);
+  }
+
+  .status-chip-icon {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+  }
+
+  /* .status-chip-label is the clipping box that animates;
+     the gap between icon and text lives on the text inside it,
+     so the gap collapses away along with the label. */
+  .status-chip-label {
+    display: block;
+    overflow: hidden;
+  }
+
+  /* max-content keeps the text at its natural width even while the
+     label around it is clipped to 0 — that's the width the script
+     measures and the chip opens to. */
+  .status-chip-text {
+    display: block;
+    width: max-content;
+    padding-left: var(--space-1);
+  }
+
+  /* =============================================
+     Reveal  (mouse/trackpad only — touch keeps the label showing)
+     One sprung number, --reveal, drives everything: 0 = icon-only
+     square, 1 = label fully open. Hovering the card (or keyboard-
+     focusing it) springs it to 1; un-hovering springs it back to 0.
+
+     --ease-spring overshoots both ways, so --reveal briefly goes past
+     its target:
+       above 1 → label grows past its text (shows as extra padding)
+       below 0 → width can't go negative, so the side padding takes
+                 the overshoot instead and the square squeezes a few
+                 px narrower before settling.
+     --label-w is each label's measured width (script below).
+  ============================================= */
+  @property --reveal {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 1;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .status-chip {
+      --reveal: 0;
+      transition: --reveal var(--duration-spring) var(--ease-spring);
+      padding-inline: max(0px, calc(0.375em + min(var(--reveal), 0) * var(--label-w, 0px) / 2));
+    }
+
+    .status-chip-label {
+      width: calc(max(var(--reveal), 0) * var(--label-w, 0px));
+    }
+
+    :global(.card-wrapper:hover) .status-chip,
+    :global(.card-wrapper:focus-visible) .status-chip {
+      --reveal: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .status-chip { transition: none; }
+  }
+
+  /* =============================================
+     Variant colors
+  ============================================= */
+  .status-chip--shipped {
+    --chip-fg: #1e9e4a;
+    --chip-bg: #e2f8e6;
+  }
+
+  .status-chip--in-construction {
+    --chip-fg: #e07800;
+    --chip-bg: #ffecd6;
+  }
+
+  .status-chip--coming-soon {
+    --chip-fg: #5a5f73;
+    --chip-bg: #eceef3;
+  }
+</style>
+
+<script>
+  /* Chip length — width can't transition to "auto", so each chip opens
+     to --label-w: its text's natural width (incl. the icon gap), measured
+     here. A ResizeObserver re-measures whenever that width changes — most
+     importantly when Host Grotesk finishes loading and replaces the
+     narrower fallback font — so the open chip always fits its word.
+     Rounded up so a fractional width never clips the last letter. */
+  const observer = new ResizeObserver((entries) => {
+    for (const entry of entries) {
+      const text = entry.target as HTMLElement;
+      const width = Math.ceil(text.getBoundingClientRect().width);
+      text.closest<HTMLElement>(".status-chip")!.style.setProperty("--label-w", `${width}px`);
+    }
+  });
+  document.querySelectorAll<HTMLElement>(".status-chip-text").forEach((text) => observer.observe(text));
+</script>

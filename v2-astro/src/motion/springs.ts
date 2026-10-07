@@ -1,7 +1,7 @@
 /**
  * springs.ts  —  src/motion/springs.ts
  * ============================================================
- * Tiny spring-physics engine behind every "jelly" motion on the site.
+ * Tiny spring-physics engine behind the space-bar card jump.
  *
  * CHEAT SHEET — CMD+F these labels:
  *   "Presets"   → the named feels (jelly, snappy…) — tune these, not per-component numbers
