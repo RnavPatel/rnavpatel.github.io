@@ -44,13 +44,26 @@ const variants: Record<Status, { label: string; icon: string }> = {
   },
 };
 
-const { label, icon } = variants[status];
+/* Forgiving lookup — "Coming Soon", "coming_soon" and "coming-soon" all
+   work. An unknown value skips the chip (with a dev-console warning)
+   instead of throwing, which would cut the page off mid-render. */
+const key = String(status ?? "").trim().toLowerCase().replace(/[\s_]+/g, "-") as Status;
+const variant = variants[key];
+
+if (status && !variant) {
+  console.warn(
+    `[StatusChip] Unknown status "${status}" — chip skipped. ` +
+    `Use one of: ${Object.keys(variants).map((k) => `"${k}"`).join(", ")}.`
+  );
+}
 ---
 
-<span class={`status-chip status-chip--${status}`}>
-  <svg class="status-chip-icon" viewBox="0 0 16 16" aria-hidden="true" set:html={icon} />
-  <span class="status-chip-label"><span class="status-chip-text">{label}</span></span>
-</span>
+{variant && (
+  <span class={`status-chip status-chip--${key}`}>
+    <svg class="status-chip-icon" viewBox="0 0 16 16" aria-hidden="true" set:html={variant.icon} />
+    <span class="status-chip-label"><span class="status-chip-text">{variant.label}</span></span>
+  </span>
+)}
 
 <style>
   /* =============================================

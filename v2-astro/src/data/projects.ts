@@ -125,7 +125,6 @@ export const projects: Project[] = [
     href: "/work/nirvananoir",
     image: "/images/Placeholders/FCD_Hero_v1.png",
     mediaType: "image",
-    status: "coming-soon",
     size: "square",
   }
   /*
