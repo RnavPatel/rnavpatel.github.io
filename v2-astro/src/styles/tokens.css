@@ -92,7 +92,7 @@
      --page-padding-top: clears the fixed nav — increase if nav height changes  */
   --gap-grid:          5px;   /* gap between project tiles */
   --label-padding:     5px;
-  --page-padding-x:    clamp(1rem, 5vw, 10rem);   /* side margins on all pages clamp(min, preferred, max) */
+  --page-padding-x:    1rem;   /* side margins on all pages clamp(min, preferred, max) */
   --page-padding-top:  5rem;   /* clears the fixed nav */
 
   /* --- Motion --- */

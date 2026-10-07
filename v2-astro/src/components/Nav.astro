@@ -90,12 +90,21 @@ const { activePage, backHref, backLabel } = Astro.props;
      .nav-link is the one shared pill style for every
      nav button: Work, About, and the Back pill.
   ============================================= */
+  /* Gap matches the visible gutter between card images:
+       card padding (--gap-grid) + flex gap (--gap-grid) + card padding (--gap-grid)
+     Two equal 1fr columns keep that gutter on the page's center line
+     even though "Work" and "About" are different widths. */
   .nav-links {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     align-items: center;
-    gap: var(--space-2);
-    pointer-events: all;
+    column-gap: calc(3 * var(--gap-grid));
+    width: 100%;
+    pointer-events: none;   /* empty column space shouldn't block clicks */
   }
+
+  .nav-links > :first-child { justify-self: end; }
+  .nav-links > :last-child  { justify-self: start; }
 
   .nav-link {
     appearance: none;

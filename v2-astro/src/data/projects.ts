@@ -99,18 +99,7 @@ export const projects: Project[] = [
     mediaType: "video",
     size: "square",
   },
-  /*
-    {
-    id: "nirvana-noir",
-    title: "Nirvana Noir",
-    subtitle: "Cinematic Puzzle RPG",
-    tags: ["Technical Art", "Production", "UIUX"],
-    href: "/work/nirvananoir",
-    image: "/images/FeralCatDen/NirvanaNoirThumbnail.png",
-    mediaType: "image",
-    size: "square",
-  },
-  */
+
   {
     id: "podpocalypse",
     title: "Podpocalypse",
@@ -121,6 +110,16 @@ export const projects: Project[] = [
     mediaType: "image",
     size: "wide",
   },
+  {
+    id: "nirvana-noir",
+    title: "Nirvana Noir",
+    subtitle: "Cinematic Puzzle RPG",
+    tags: ["Technical Art", "Production", "UIUX"],
+    href: "/work/nirvananoir",
+    image: "/images/Placeholders/FCD_Hero_v1.png",
+    mediaType: "image",
+    size: "square",
+  }
   /*
         {
     id: "marvel",
