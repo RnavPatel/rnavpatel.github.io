@@ -56,8 +56,8 @@ const { activePage, backHref, backLabel } = Astro.props;
      Nav layout
      Fixed bar across the top holding the Work/About
      group, with the optional Back pill on a second row.
-     Padding matches --page-padding-x so pills align
-     to the same edges as the gallery content below.
+     Padding matches --grid-inset so pills align to the
+     same image edges as the gallery / project grid.
   ============================================= */
   nav {
     position: fixed;
@@ -69,19 +69,20 @@ const { activePage, backHref, backLabel } = Astro.props;
 
     display: flex;
     flex-direction: column;   /* stacks .nav-row above the optional back pill */
-    align-items: center;      /* centers both rows horizontally */
+    align-items: flex-end;    /* both rows sit top-right */
     gap: var(--space-2);
 
-    padding: var(--space-3) var(--page-padding-x);
+    /* Side padding = --grid-inset (tokens.css), the same inset as the image
+       edges, so the PILL BOX (visible via its backdrop blur) lines up with
+       the right edge of the last image/media column. */
+    padding: var(--space-3) var(--grid-inset);
     pointer-events: none; /* bar itself doesn't capture clicks */
   }
 
-  /* Primary row — holds the Work/About group. Explicit width:100% since
-     nav's align-items:center would otherwise shrink it to its content. */
+  /* Primary row — holds the Work/About group, pushed to the right edge. */
   .nav-row {
     display: flex;
-    justify-content: center;   /* centers the Work/About group horizontally */
-    align-items: center;
+    justify-content: flex-end;
     width: 100%;
   }
 
@@ -90,21 +91,12 @@ const { activePage, backHref, backLabel } = Astro.props;
      .nav-link is the one shared pill style for every
      nav button: Work, About, and the Back pill.
   ============================================= */
-  /* Gap matches the visible gutter between card images:
-       card padding (--gap-grid) + flex gap (--gap-grid) + card padding (--gap-grid)
-     Two equal 1fr columns keep that gutter on the page's center line
-     even though "Work" and "About" are different widths. */
+  /* Gap matches the visible gutter between card images (--grid-gutter). */
   .nav-links {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     align-items: center;
-    column-gap: calc(3 * var(--gap-grid));
-    width: 100%;
-    pointer-events: none;   /* empty column space shouldn't block clicks */
+    gap: var(--grid-gutter);
   }
-
-  .nav-links > :first-child { justify-self: end; }
-  .nav-links > :last-child  { justify-self: start; }
 
   .nav-link {
     appearance: none;

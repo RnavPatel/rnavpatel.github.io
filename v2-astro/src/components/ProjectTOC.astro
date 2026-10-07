@@ -2,11 +2,11 @@
 /**
  * ProjectTOC.astro — src/components/ProjectTOC.astro
  * ============================================================
- * Fixed table of contents for project/case-study pages.
- * Sits in the left IMAGE MARGIN, matching the layout's padding-inline.
+ * Sticky table of contents for project/case-study pages.
+ * Rendered inside ProjectLayout's col-1 sidebar, below the meta.
  *
  * CUSTOMIZING LOOKS — all visual styles live in <style> below:
- *   "TOC POSITION"    → left/top offset, vertical alignment
+ *   "TOC POSITION"    → sticky offset, spacing below the meta
  *   "TOC ITEM"        → font size, weight, color of each link
  *   "TOC ACTIVE"      → style of the currently-visible section
  *   "TOC INDICATOR"   → the vertical line / dot indicator
@@ -94,29 +94,28 @@ const { items } = Astro.props;
 <style>
   /* =============================================
      TOC POSITION
-     left mirrors .project-page padding-inline (IMAGE MARGIN).
-     top is below the nav bar (~60px).
-     Change max-width to widen the TOC column.
+     Lives in the col-1 sidebar (ProjectLayout.astro) under the meta.
+     Sticky, not fixed: it scrolls up with the meta, then holds just
+     below the nav for the rest of the page. Width = col 1.
   ============================================= */
   .p-toc {
-    position: fixed;
-    /* TOC POSITION
-       left mirrors .project-page padding-inline (IMAGE MARGIN).
-       Width is kept just under the TEXT MARGIN so it never overlaps content.
-       TEXT MARGIN = clamp(2rem, 8vw, 10rem) — subtract ~1rem for breathing room. */
-    left: clamp(1rem, 6vw, 10rem);
-    top: 50%;
-    transform: translateY(-50%);
-    width: clamp(5rem, calc(20vw - 1rem), 10rem);
+    position: sticky;
+    top: calc(var(--page-padding-top) + var(--space-5));
+    margin-top: var(--space-10);
 
-    /* TOC BREAKPOINT — hide on screens too narrow for the margin */
+    /* TOC BREAKPOINT — hidden once the sidebar stops being a column */
     display: none;
   }
 
-  @media (min-width: 1200px) {
+  @media (min-width: 1001px) {
     .p-toc {
       display: block;
     }
+  }
+
+  /* No meta above it (case-study sub-pages) — sit level with the title */
+  .p-toc:first-child {
+    margin-top: 0;
   }
 
   .p-toc ul {

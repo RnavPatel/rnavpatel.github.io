@@ -24,20 +24,9 @@ import ProjectCard from "../../../components/ProjectCard.astro";
   ]}
 >
 
-  <!-- HEADER ------------------------------------------------->
-<header id="overview" class="p-header">
-  <p class="p-media">
-    <img src="/images/Placeholders/BSP_Hero_V3.png" alt="Best Summer Programs Hero Image" />
-  </p>
-  <h1>BestSummerPrograms</h1>
-
-  <p>
-    An accessible database for high school students to navigate the precollege landscape. <strong>Product is still ongoing</strong>
-  </p>
-
-  <hr class="p-divider"></hr>
-
-  <div class="p-meta-grid" style="margin-top: var(--space-10)">
+  <!-- META (sidebar, col 1) ------------------------------>
+  <div slot="meta">
+    <div class="p-meta-grid">
     <div>
       <p class="label">Role</p>
       <h4>
@@ -64,6 +53,19 @@ import ProjectCard from "../../../components/ProjectCard.astro";
       </div>
     </div>
   </div>
+
+  <!-- HEADER ------------------------------------------------->
+<header id="overview" class="p-header" slot="header">
+  <p class="p-media">
+    <img src="/images/Placeholders/BSP_Hero_V3.png" alt="Best Summer Programs Hero Image" />
+  </p>
+  <h1>BestSummerPrograms</h1>
+
+  <p>
+    An accessible database for high school students to navigate the precollege landscape. <strong>Product is still ongoing</strong>
+  </p>
+
+  <hr class="p-divider"></hr>
 
   <div class="p-section-open">
     <p class="label">Context</p>

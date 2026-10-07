@@ -10,18 +10,9 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
   ]}
 >
 
-  <!-- HEADER ------------------------------------------------->
-  <header id="overview" class="p-header">
-    <!-- <p class="label">Stream Predicts Case Study</p> -->
-    <h1>Stream Predicts UI</h1>
-    <p>
-      Designing an overlay interface for a fun livestream prediction market experiences.
-    </p>
-
-
-  <hr class="p-divider"></hr>
-
-  <div class="p-meta-grid" style="margin-top: var(--space-10)">
+  <!-- META (sidebar, col 1) ------------------------------>
+  <div slot="meta">
+    <div class="p-meta-grid">
     <div>
       <p class="label">Role</p>
       <h4>
@@ -45,6 +36,18 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
       </div>
     </div>
   </div>
+
+  <!-- HEADER ------------------------------------------------->
+  <header id="overview" class="p-header" slot="header">
+    <!-- <p class="label">Stream Predicts Case Study</p> -->
+    <h1>Stream Predicts UI</h1>
+    <p>
+      Designing an overlay interface for a fun livestream prediction market experiences.
+    </p>
+
+
+  <hr class="p-divider"></hr>
+
   </header>
 
   <div class="p-media">

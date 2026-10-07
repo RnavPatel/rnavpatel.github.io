@@ -106,6 +106,14 @@
   --page-padding-x:    1rem;   /* side margins on all pages clamp(min, preferred, max) */
   --page-padding-top:  5rem;   /* clears the fixed nav */
 
+  /* Visible 4-column grid — measured at IMAGE edges, not card edges.
+     Homepage cards carry --gap-grid padding and sit --gap-grid apart, so
+     the gutter you actually see is 3 × --gap-grid and the first image edge
+     is --page-padding-x + --gap-grid from the viewport. Project pages use
+     these two values so their columns land on the same lines. */
+  --grid-gutter: calc(3 * var(--gap-grid));                  /* 15px */
+  --grid-inset:  calc(var(--page-padding-x) + var(--gap-grid)); /* 17 / 21px */
+
   /* --- Motion --- */
   /* --ease-out-expo: snappy, decelerating — best for things sliding into place
      --ease-out-quart: slightly softer version of above

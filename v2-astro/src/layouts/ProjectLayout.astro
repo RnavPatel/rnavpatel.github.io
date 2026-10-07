@@ -4,10 +4,26 @@
  * ============================================================
  * Layout for all project/case-study pages.
  *
+ * GRID — same 4 columns as the homepage gallery (lines land on image edges):
+ *
+ *   | col 1     | col 2      col 3 | col 4   |
+ *   | sidebar   | TEXT (2x)        |         |
+ *   | meta+TOC  | MEDIA (3x) ─────────────────►
+ *
+ *   >1000px   4 cols. Sidebar in col 1; TOC sticks while scrolling.
+ *   601–1000  3 cols (like the homepage). Header, then meta row, then body.
+ *             Text spans 2 cols, media spans 3. TOC hidden.
+ *   ≤600      1 col. Everything stacks full width.
+ *
+ * PAGE SLOTS:
+ *   <header slot="header" …>   → title block (cols 2–4, top row)
+ *   <div slot="meta">…</div>   → Role / Skills / Team (.p-meta-grid) for col 1
+ *   everything else            → article body (cols 2–4)
+ *
  * CMD+F GUIDE:
- *   "IMAGE MARGIN"   → padding-inline on .project-page (how far images sit from viewport edge)
- *   "TEXT MARGIN"    → extra padding-inline on .project-content (body text sits further in)
- *   "TEXT WIDTH"     → max-width cap on the article column
+ *   "PROJECT GRID"   → column/area definitions + breakpoints
+ *   "TEXT WIDTH"     → --p-text-w, the 2-column text measure
+ *   "SIDEBAR"        → col-1 meta + sticky TOC
  *   "SECTION SPACING"→ margin-top on .p-section-open and .p-detail
  *
  * TYPOGRAPHY — only two custom classes needed in project pages:
@@ -71,8 +87,18 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
 
   <body>
     <Nav activePage="work" backHref={backHref} backLabel={backLabel} />
-    <ProjectTOC items={tocItems} />
     <div class={`project-page${backHref ? " project-page--has-back-nav" : ""}`}>
+      <div class="p-head">
+        <slot name="header" />
+      </div>
+      <aside class="p-sidebar">
+        {Astro.slots.has("meta") && (
+          <div class="p-sidebar-meta">
+            <slot name="meta" />
+          </div>
+        )}
+        <ProjectTOC items={tocItems} />
+      </aside>
       <article class="project-content">
         <slot />
       </article>
@@ -126,26 +152,47 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
 <style is:global>
 
   /* Override global.css height:100% — project media must be height:auto */
+  .p-head img,
+  .p-head video,
   .project-content img,
   .project-content video {
     height: auto;
   }
 
   /* =============================================
-     PROJECT PAGE — centered container with margin split
+     PROJECT GRID
+     Same 4 columns as the homepage gallery. Padding and gap come from
+     --grid-inset / --grid-gutter (tokens.css), so column edges land
+     exactly on the homepage's image edges.
 
-     IMAGE MARGIN → how far images sit from the viewport edge
-     TEXT MARGIN  → extra inset applied to body text, on top of IMAGE MARGIN
-     TEXT WIDTH   → max-width cap so text never gets too wide
-
-     Images bleed back out by TEXT MARGIN so they land at IMAGE MARGIN.
+     Areas:  side = col 1 (meta + TOC)
+             head = cols 2–4, title block
+             body = cols 2–4, article
+     Inside head/body, media fills all 3 columns; text is capped to 2
+     (see TEXT WIDTH below), leaving col 4 empty only beside text.
   ============================================= */
 
   .project-page {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "side head head head"
+      "side body body body";
+    column-gap: var(--grid-gutter);
+    padding-inline: var(--grid-inset);
     padding-top: var(--page-padding-top);
     padding-bottom: var(--space-16);
+    /* clip (not hidden) so position: sticky in the sidebar keeps working */
     overflow-x: clip;
-    padding-inline: 21vw; /* desktop */
+
+    /* TEXT WIDTH — 2 of the 3 columns head/body span.
+       cqi = width of .p-head / .project-content (both are containers), so
+       this resolves the same at any nesting depth inside them. */
+    --p-text-w: calc((100cqi - 2 * var(--grid-gutter)) * 1.75 / 3 + var(--grid-gutter));
+
+    /* TEXT POSITION — see the rule below "Running text" */
+    --p-text-margin: auto;
   }
 
   /* Extra clearance when Nav renders its second "back to hub" pill row */
@@ -153,30 +200,106 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     padding-top: calc(var(--page-padding-top) + 3rem);
   }
 
-  @media (max-width: 1200px) {
-    .project-page { padding-inline: 15vw; }
-  }
-
-  @media (max-width: 640px) {
-    .project-page { padding-inline: 1.5rem; }
-  }
-
+  .p-head,
   .project-content {
-    max-width: 1100px;
-    margin-inline: auto;
-    /* Text and images share the same margin — no secondary inset */
-    --_text-margin: clamp(2rem, 8vw, 10rem);
-    padding-inline: var(--_text-margin);
+    container-type: inline-size;
+    min-width: 0;
   }
 
-  /* Images bleed back out to image margin.
-     width compensates for both sides so single media fills the full track. */
-  .p-media,
-  .p-media-2col,
-  .p-media-3col,
-  .p-card-grid {
-    margin-inline: calc(-1 * var(--_text-margin));
-    width: calc(100% + 2 * var(--_text-margin));
+  .p-head          { grid-area: head; }
+  .project-content { grid-area: body; }
+
+  /* Tablet — homepage is 3 columns here. Sidebar drops below the title
+     block as a row; text still spans 2 of 3 columns, media all 3. */
+  @media (max-width: 1000px) {
+    .project-page {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-rows: auto;
+      grid-template-areas:
+        "head head head"
+        "side side side"
+        "body body body";
+    }
+  }
+
+  /* Phone — single column, everything full width */
+  @media (max-width: 600px) {
+    .project-page {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas: "head" "side" "body";
+      --p-text-w: 100cqi;
+    }
+  }
+
+  /* Running text never runs wider than 2 columns. Media blocks (and
+     anything inside them, e.g. captions, cards) are left at full width. */
+  /* (no whitespace between the :is() and :not() — they're one compound) */
+  :is(.p-head, .project-content)
+    :is(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, hr,
+        .p-section-open, .p-detail, .p-meta-grid, .p-wip):not(
+          .p-media, .p-media-2col, .p-media-3col, .p-card-grid,
+          :is(.p-media, .p-media-2col, .p-media-3col, .p-card-grid) *) {
+    max-width: var(--p-text-w);
+  }
+
+  /* TEXT POSITION — where the text measure sits inside the 3 content cols.
+     Set via --p-text-margin on .project-page:
+       auto     → centred under the media (current)
+       0 auto   → flush left on col 2 (on-grid)
+     Only the OUTERMOST text block gets it. Nested ones (a <p> in a
+     .p-detail, a .p-detail in a .p-meta-grid) already sit inside a centred
+     parent; auto margins there would shrink-wrap them inside flex/grid. */
+  :is(.p-head, .project-content)
+    :is(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, hr,
+        .p-section-open, .p-detail, .p-meta-grid, .p-wip):not(
+          .p-media, .p-media-2col, .p-media-3col, .p-card-grid,
+          :is(.p-media, .p-media-2col, .p-media-3col, .p-card-grid) *,
+          :is(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote,
+              .p-section-open, .p-detail, .p-meta-grid, .p-wip) *) {
+    margin-inline: var(--p-text-margin);
+  }
+
+  /* =============================================
+     SIDEBAR — col 1. Meta sits level with the title; the TOC below it
+     is sticky (ProjectTOC.astro), so it follows the reader down the page.
+  ============================================= */
+
+  .p-sidebar {
+    grid-area: side;
+    min-width: 0;
+    /* matches .p-header padding-top so the first label lines up with the title */
+    padding-top: var(--space-8);
+  }
+
+  .p-sidebar-meta .p-meta-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+  }
+
+  .p-sidebar-meta a {
+    color: var(--color-text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .p-sidebar-meta a:hover {
+    color: var(--color-text-primary);
+  }
+
+  @media (max-width: 1000px) {
+    .p-sidebar {
+      padding-top: 0;
+    }
+
+    .p-sidebar-meta {
+      padding-bottom: var(--space-8);
+    }
+
+    /* One meta item per grid column */
+    .p-sidebar-meta .p-meta-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: var(--grid-gutter);
+    }
   }
 
   /* =============================================
@@ -269,14 +392,15 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
   .p-media-2col {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-4);
+    gap: var(--grid-gutter);
     margin-top: var(--space-6);
   }
 
+  /* gap = grid gutter, so at 3x wide each tile is exactly one page column */
   .p-media-3col {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: var(--space-4);
+    gap: var(--grid-gutter);
     margin-top: var(--space-6);
   }
 
@@ -298,10 +422,16 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
      Kept separate from .p-media-2col/.p-media-3col on purpose: those
      stay 2/3-up on mobile for plain image pairs, this always stacks.
   ============================================= */
+  /* Cards carry --gap-grid padding (as on the homepage), so the grid
+     bleeds out by that much to put the card IMAGES on the media edges,
+     and the gap makes the visible gutter 3 × --gap-grid. */
   .p-card-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: var(--gap-grid);
     margin-top: var(--space-6);
+    margin-inline: calc(-1 * var(--gap-grid));
+    width: calc(100% + 2 * var(--gap-grid));
   }
 
   @media (max-width: 640px) {
@@ -338,7 +468,8 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     }
 
     /* Meta grid: always at least 2 columns on mobile */
-    .p-meta-grid {
+    .p-meta-grid,
+    .p-sidebar-meta .p-meta-grid {
       grid-template-columns: 1fr 1fr;
     }
   }

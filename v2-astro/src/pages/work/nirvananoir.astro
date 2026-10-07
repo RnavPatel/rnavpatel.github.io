@@ -27,17 +27,9 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
   ]}
 >
 
-  <!-- HEADER ------------------------------------------------->
-  <header id="overview" class="p-header">
-    <h1>Nirvana Noir</h1>
-
-    <p>
-      Technical and Environment art internship at Feral Cat Den Studios
-    </p>
-
-    <hr class="p-divider" style="margin-top: var(--space-4)" />
-
-    <div class="p-meta-grid" style="margin-top: var(--space-10)">
+  <!-- META (sidebar, col 1) ------------------------------>
+  <div slot="meta">
+    <div class="p-meta-grid">
       <div>
         <p class="label">Role</p>
         <h4>
@@ -72,6 +64,18 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
         </h4>
       </div>
     </div>
+  </div>
+
+  <!-- HEADER ------------------------------------------------->
+  <header id="overview" class="p-header" slot="header">
+    <h1>Nirvana Noir</h1>
+
+    <p>
+      Technical and Environment art internship at Feral Cat Den Studios
+    </p>
+
+    <hr class="p-divider" style="margin-top: var(--space-4)" />
+
     <div class="p-section-open">  
       <p>
         A single-player adventure puzzle noir mystery beyond time, space, and in two parallel
@@ -367,6 +371,8 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
 
   /* Password gate */
   .nn-pw-gate {
+    max-width: var(--p-text-w); /* sit on the text column, not the media */
+    margin-inline: var(--p-text-margin);
     margin-top: var(--space-16);
     text-align: center;
     transition: opacity 0.6s ease;

@@ -31,17 +31,9 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
   ]}
 >
 
-  <!-- HEADER ------------------------------------------------->
-  <header id="overview" class="p-header">
-    <h1>Fracture:<br />A Marvel Pop-Up Experience</h1>
-
-    <p>
-      An immersive phygital game prototype for MCU fans.
-    </p>
-
-    <hr class="p-divider" style="margin-top: var(--space-4)" />
-
-    <div class="p-meta-grid" style="margin-top: var(--space-10)">
+  <!-- META (sidebar, col 1) ------------------------------>
+  <div slot="meta">
+    <div class="p-meta-grid">
       <div>
         <p class="label">Role & Scope</p>
         <h4>
@@ -69,6 +61,18 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
         <h4>Solo</h4>
       </div>
     </div>
+  </div>
+
+  <!-- HEADER ------------------------------------------------->
+  <header id="overview" class="p-header" slot="header">
+    <h1>Fracture:<br />A Marvel Pop-Up Experience</h1>
+
+    <p>
+      An immersive phygital game prototype for MCU fans.
+    </p>
+
+    <hr class="p-divider" style="margin-top: var(--space-4)" />
+
     <div class="p-section-open">  
       <p>
         Like air hockey meets the MCU — players physically control projected Marvel heroes on a shared table to take down Doctor Doom and his army of Doombots.
