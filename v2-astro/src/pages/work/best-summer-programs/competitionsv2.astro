@@ -1,0 +1,192 @@
+---
+import ProjectLayout from "../../../layouts/ProjectLayout.astro";
+---
+
+<ProjectLayout
+  title="Best Summer Programs — Competitions Pages"
+  backHref="/work/best-summer-programs"
+  backLabel="Best Summer Programs"
+  tocItems={[
+    { id: "overview", label: "Overview" },
+    { id: "problem", label: "Problem" },
+    /*new*/ {id: "design-goal", label: "Design Goal"},
+    /*new*/{id: "solution", label: "Solution"},
+    { id: "features", label: "Design Features" },
+    { id: "mobile", label: "Mobile" },
+    /*new*/{ id: "takeaways", label: "Takeaways" },
+  ]}
+>
+
+  <!-- HEADER ------------------------------------------------->
+  <header id="overview" class="p-header" slot="header">
+    <p class="label">Case Study 2</p>
+    <!-- <h1>Competitions Pages V2</h1> -->
+    <p style="font-size: 36px; line-height: 1.2;">
+      Guiding families and counselors through the complexities of <span style="font-weight: bold;">variable high school competitions</span>.
+    </p>
+  </header>
+
+  <div class="p-media">
+    <img src="/images/BestSummerPrograms/CompetitionsPageHero.png" alt="BSP Placeholder">
+  </div>
+
+  <!-- Problem -->
+  <section id="problem">
+    <div class="p-detail">
+      <p style="font-size: 36px; line-height: 1.2;">
+        <span class="text-sup">Context</span>Our team collected, and evaluated data on hundreds of high-school competitions, <span style="color: red;"><span class="text-sup">Problem</span>but our current layout overcomplicated the information for our users.</span>
+      </p>
+      <p style="margin-top: 1rem">
+        Fields like deadlines and costs often had multiple values or conditions for competitions,
+        creating inconsistent patterns across pages and lengthening our page scroll time.
+      </p>
+    </div>
+
+    <div class="p-media-2col">
+      <div class="p-not-mine">
+        <img src="/images/BestSummerPrograms/CompetitionsPage_Old1.png" alt="old page design">
+        <p class="caption"><strong>Landing lacked information</strong></p>
+      </div>
+      <div class="p-not-mine">
+        <img src="/images/BestSummerPrograms/CompetitionsPage_Old2.png" alt="old page design">
+        <p class="caption"><strong>Data fields lacked hierarchy</strong></p>
+      </div>
+      <div class="p-not-mine">
+        <img src="/images/BestSummerPrograms/Competitions/Before_IssueZoom_1.png" alt="old page design">
+        <p class="caption"><strong>Large lists overloaded our components</strong></p>
+      </div>
+      <div class="p-not-mine">
+        <img src="/images/BestSummerPrograms/Competitions/Before_IssueZoom_2.png" alt="old page design">
+        <p class="caption"><strong>Unnecessary urgency for our users</strong></p>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="design-goal">
+    <div class="p-detail">
+      <!-- <p class="label">insights</p> -->
+      <p style="font-size: 36px; line-height: 1.2;">
+      <span class="text-sup">Insights</span>Students, parents, and counselors each valued <strong>functionality, legibility,</strong> and<strong> transparency.</strong><span style="color: rgb(0, 168, 0);"> <span class="text-sup">Design Goal</span>So we redesigned a system to support those values</strong></span>. 
+      </p>
+    </div>
+<!-- 
+    <div class="p-media">
+      <div class="p-media-ph">Diagram of personas -> values</div>
+    </div> -->
+
+  </section>
+
+  <section id="solution">
+    <div class="p-detail">
+      <p style="font-size: 36px; line-height: 1.2;">
+        <span style="color: rgb(0, 168, 0);"><span class="text-sup">Solution</span>A new page format and component system</span> that makes our competition data more glanceable.
+      </p>
+      <p style="margin-top: 1rem">
+        Untangling our complex data through functional design patterns. 
+    </div>
+
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/BestSummerPrograms/CompetitionsPage_FullScroll.mov" type="video/mp4" />
+      </video>
+    </div>
+    <div class="p-media">
+      <img src="/images/BestSummerPrograms/Competitions_Components_2.png" alt="Design Zoom">
+    </div>
+
+  </section>
+
+  <!-- Information Design -->
+  <section id="features">
+    <div class="p-detail">
+      <p style="font-size: 36px; line-height: 1.2;">
+        <span class="text-sup">1/4</span>Introducing our users to relevant information, transitioning from critical metadata to long-form descriptions.
+      </p>
+
+    </div>
+
+    <div class="p-media">
+      <img src="/images/BestSummerPrograms/CompetitionsPage_LayoutDiagram.png" alt="Landing">
+      <p class="caption"><strong>Shortened banner and surfaced/emphasized key info.</strong></p>
+    </div>
+
+
+  <!-- Landing Page -->
+
+    <div class="p-detail">
+      <p style="font-size: 36px; line-height: 1.2;">
+        <span class="text-sup">2/4</span>Upon landing, users are met with our expert anlayses through an overview card.
+      </p>
+     <p>
+        To prevent our counselor-written summaries from being skipped, I displayed them through an overview card format as an easier entry point.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/BestSummerPrograms/Competitions_Landing.png" alt="Landing">
+      <p class="caption"><strong>Shortened banner and surfaced/emphasized key info.</strong></p>
+    </div>
+
+
+  <!-- Displaying Lists -->
+
+    <div class="p-detail">
+      <p style="font-size: 36px; line-height: 1.2;">
+        <span class="text-sup">3/4</span>Prizes, deadlines, and fees are presented functionally for users to quickly scan, plan, and calculate.
+      </p>
+    </div>
+
+
+    <div class="p-media">
+      <img src="/images/BestSummerPrograms/NewDataComponents.png" alt="detail">
+      <p class="caption"><strong>Presenting listed information legibly and functionally </strong></p>
+    </div>
+
+    <!-- Displaying Lists -->
+
+    <div class="p-detail">
+      <p style="font-size: 36px; line-height: 1.2;">
+        <span class="text-sup">4/4</span>Categorizing prizes by types to help users assess the value of each competition.
+      </p>
+    </div>
+
+
+    <div class="p-media">
+      <img src="/images/BestSummerPrograms/Competitions/Feature_PrizesCategories.png" alt="Prize Component">
+    </div>
+  </section>
+
+
+  <!-- Mobile -->
+  <section id="mobile">
+    <div class="p-detail">
+      <p style="font-size: 36px; line-height: 1.2;">
+        <span class="text-sup">Mobile</span>Users are unblocked by information dense sections through compact modals, easily reaching all points of the page.
+      </p>
+    </div>
+
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/BestSummerPrograms/CompetitionsPage_MobileCompatability.mov" type="video/mp4" />
+      </video>
+    </div>
+  </section>
+
+    <!-- Mobile -->
+  <section id="takeaways">
+  <hr class="p-divider"></hr>
+
+    <div class="p-detail">
+      <p style="font-size: 36px; line-height: 1.2;">
+        <span class="text-sup">Takeaway</span>Designing for our users meant choosing and advocating for the right data in the backend.
+      </p>
+      <p>
+        This process involved communicating with our data team to shape our database intentionally, and avoiding overloading our users with irrelevant information.
+      </p>
+    </div>
+
+
+  </section>
+
+</ProjectLayout>

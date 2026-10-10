@@ -38,6 +38,8 @@
  *   .p-media         → full-width single image or video
  *   .p-media-2col    → two-column media grid
  *   .p-media-3col    → three-column media grid
+ *   .p-not-mine      → "Not my work" pill on an image's top-left (on the img's wrapper div)
+ *   .p-media-ph      → DRAFT gray placeholder box (stand-in for an img inside the above)
  *   .p-divider       → horizontal rule between major sections
  *   .p-wip           → "more documentation coming" placeholder
  */
@@ -396,6 +398,7 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     margin-top: var(--space-6);
   }
 
+
   /* gap = grid gutter, so at 3x wide each tile is exactly one page column */
   .p-media-3col {
     display: grid;
@@ -410,6 +413,49 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
   .p-media-3col video {
     width: 100%;
     border-radius: var(--radius-md);
+  }
+
+  /* "Not my work" pill pinned to the top-left of the image — same look as
+     the homepage card tags (.card-tag in ProjectCard.astro). Put it on the
+     div that wraps the img (the img must come first, caption after):
+       <div class="p-not-mine"><img …><p class="caption">…</p></div> */
+  .p-not-mine {
+    position: relative;
+  }
+
+  .p-not-mine::before {
+    content: "Not my work";
+    position: absolute;
+    top: var(--space-4);
+    left: var(--space-4);
+    z-index: 1;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--color-text-primary);
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    line-height: 1.4;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  /* DRAFT ONLY — gray stand-in for an img/video while sketching layouts.
+     Drop inside .p-media / .p-media-2col / .p-media-3col in place of the img:
+       <div class="p-media-ph">Hero shot</div>
+     Default 16:9; override with style="aspect-ratio: 1" etc. */
+  .p-media-ph {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    outline: 2px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    text-align: center;
   }
 
   /* =============================================

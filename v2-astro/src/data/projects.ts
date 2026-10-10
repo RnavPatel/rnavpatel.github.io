@@ -90,7 +90,7 @@ export const projects: Project[] = [
     locked: true,
     tags: ["Product Design", "UIUX", "Visual Identity", "Design Systems"],
     href: "",
-    image: "/images/Placeholders/StreamPredicts_Test2.png",
+    image: "/images/Placeholders/StreamPredicts_Dashboard_CS_Hero.png",
     status: "in-construction",
     mediaType: "image",
     size: "square",

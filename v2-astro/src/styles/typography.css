@@ -64,6 +64,19 @@ p {
   text-transform: uppercase;
 }
 
+/* --- Exponent ---
+   Inline span: smaller text pinned to the top of the surrounding text.
+   Sized in em (not a --text-* token) so it scales with whatever it sits
+   beside — an h1, a <p>, a caption. line-height: 1 keeps it from
+   pushing the line taller.
+     <h2>40<span class="text-sup">%</span></h2>                   */
+.text-sup {
+  font-size: 0.5em;
+  padding-right: 1rem;
+  line-height: 1;
+  vertical-align: text-top;
+}
+
 /* --- Color utilities --- */
 .text-primary   { color: var(--color-text-primary); }
 .text-secondary { color: var(--color-text-secondary); }
