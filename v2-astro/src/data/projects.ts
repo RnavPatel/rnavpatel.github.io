@@ -65,7 +65,7 @@ export const projects: Project[] = [
     locked: false,
     tags: ["UI Illustration", "Visual Identity"],
     href: "/work/best-summer-programs/ui-illustrations",
-    image: "/images/Placeholders/UI_Illustrations.mp4",
+    image: "/images/BestSummerPrograms/Illustration/UI_Illustrations.mp4",
     status: "shipped",
     mediaType: "video",
     size: "square",

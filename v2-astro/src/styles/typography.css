@@ -27,19 +27,26 @@ p {
   color: var(--color-text-secondary);
 }
 
-/* --- Utility text classes ---
-   Apply these to any element to control visual size
-   independently of its semantic role.              */
+/* --- Statement lines ---
+   The big type on case-study pages. Works on a <p> or a heading.
+     <p class="text-heading"><span class="text-sup">Problem</span>…</p> */
+.text-heading {
+  font-size: var(--text-heading);
+  line-height: var(--leading-tight);
+}
+
+/* --- Legacy utility text classes ---
+   Not used on the new-format pages. Delete with the legacy tokens. */
 
 .text-xl {
   font-size: var(--text-xl);
-  line-height: var(--leading-regular);
+  line-height: var(--leading-normal);
   font-weight: var(--weight-semibold);
 }
 
 .text-lg {
   font-size: var(--text-lg);
-  line-height: var(--leading-regular);
+  line-height: var(--leading-normal);
   font-weight: var(--weight-semibold);
 }
 
@@ -64,14 +71,12 @@ p {
   text-transform: uppercase;
 }
 
-/* --- Exponent ---
-   Inline span: smaller text pinned to the top of the surrounding text.
-   Sized in em (not a --text-* token) so it scales with whatever it sits
-   beside — an h1, a <p>, a caption. line-height: 1 keeps it from
-   pushing the line taller.
-     <h2>40<span class="text-sup">%</span></h2>                   */
+/* --- Eyebrow ---
+   Inline span: body-size text pinned to the top of a statement line.
+   line-height: 1 keeps it from pushing the line taller.
+     <p class="text-heading"><span class="text-sup">Context</span>…</p> */
 .text-sup {
-  font-size: 0.5em;
+  font-size: var(--text-body);
   padding-right: 1rem;
   line-height: 1;
   vertical-align: text-top;

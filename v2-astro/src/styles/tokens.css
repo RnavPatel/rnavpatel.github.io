@@ -52,28 +52,36 @@
 
   /* --- Typography --- */
   /* To change a font size site-wide: edit the value here.
-     clamp(min, fluid-middle, max)
 
      1rem is NOT 16px here: reset.css sets the root to 75%, so
        desktop/tablet (> 600px): 1rem = 12px
        phone          (≤ 600px): 1rem = 16px
-     Comments below show "desktop / phone" in px.
+     Comments below show "desktop / phone" in px. Phone values are
+     set in the 600px media query at the bottom of this file.
 
-     Homepage roles:
-       --text-xs  caption  — hover tag pills
-       --text-sm  body/UI  — nav, card title + subtitle, status chips
-       --text-md  lead     — intro paragraph, About modal
-       --text-lg  heading                                      */
+     THE SCALE — 4 sizes. Use these for anything new:
+       --text-heading  statement lines (.text-heading)
+       --text-body     paragraphs, intro, About, eyebrows (.text-sup)
+       --text-small    UI — nav, cards, chips, captions
+       --text-label    labels, tags, TOC                          */
   --font-sans: "Host Grotesk", sans-serif;
 
-  --text-xs:  1rem;                        /* 12 / 16px — captions, tags */
-  --text-sm:  1.25rem;                     /* 15 / 20px — body, UI */
-  --text-md:  clamp(1rem, 2vw, 1.5rem);    /* 12→18 / 16px — lead text (18px from 900px wide) */
+  --text-heading: 3rem;     /* 36 / 28px */
+  --text-body:    1.5rem;   /* 18 / 16px */
+  --text-small:   1.25rem;  /* 15 / 14px */
+  --text-label:   1rem;     /* 12 / 12px */
+
+  /* LEGACY — kept so older case studies don't break while they're
+     rewritten. xs/sm/md point at the new scale; lg/xl/2xl are only
+     used by h1–h3 on old pages. Delete once nothing references them. */
+  --text-xs:  var(--text-label);
+  --text-sm:  var(--text-small);
+  --text-md:  var(--text-body);
   --text-lg:  clamp(1.25rem, 3vw, 2rem);   /* 15→24 / 20px — h3 sub-headings */
   --text-xl:  clamp(1.5rem, 4vw, 2.5rem);  /* 18→30 / 24px — h2 section headings */
   --text-2xl: clamp(2rem, 6vw, 3.5rem);    /* 24→42 / 32px — h1 page title */
 
-  --leading-tight:  1.1;
+  --leading-tight:  1.2;    /* headings */
   --leading-normal: 1.4;
   --leading-loose:  1.6;
 
@@ -139,12 +147,19 @@
   
 }
 
+/* Phone type scale — same breakpoint as the root-size switch in reset.css
+   (1rem = 16px from here down). */
+@media (max-width: 600px) {
+  :root {
+    --text-heading: 1.75rem;   /* 28px */
+    --text-body:    1rem;      /* 16px */
+    --text-small:   0.875rem;  /* 14px */
+    --text-label:   0.75rem;   /* 12px */
+  }
+}
+
 @media (max-width: 768px) {
   :root {
-    /* Typography — small fixed sizes scale down too */
-    --text-xs:  0.75rem;   /* 12px */
-    --text-sm:  0.875rem;  /* 14px */
-
     /* Spacing — upper end of scale compressed for mobile
        lg/xl/2xl text sizes already fluid via clamp() above */
     --space-8:  2rem;      /* 48px → 32px */

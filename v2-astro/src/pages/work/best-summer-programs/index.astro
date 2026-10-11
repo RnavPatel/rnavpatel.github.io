@@ -30,7 +30,7 @@ import ProjectCard from "../../../components/ProjectCard.astro";
     <div>
       <p class="label">Role</p>
       <h4>
-        Product Designer <br>
+        Sole Product Designer <br>
       </h4>
     </div>
 
@@ -56,35 +56,39 @@ import ProjectCard from "../../../components/ProjectCard.astro";
 
   <!-- HEADER ------------------------------------------------->
 <header id="overview" class="p-header" slot="header">
-  <h1>BestSummerPrograms</h1>
-  <p>
-    An accessible database for high school students to navigate the precollege landscape. <strong>Product is still ongoing</strong>
+
+  <p class="text-heading">
+    <span style="color: black"><strong>BestSummerPrograms</strong></span> <span class="text-sup">Overview</span>is an accessible database for families and counselors to navigate the precollege landscape.
   </p>
-  <hr class="p-divider"></hr>
+
 
     <p class="p-media">
     <img src="/images/Placeholders/BSP_Hero_V3.png" alt="Best Summer Programs Hero Image" />
   </p>
 
-  <div class="p-section-open">
-    <p class="label">Context</p>
-    <h3><span style="background-color: #ffdb5baa">The platform was growing</span> its summer program database and expanding into high school competitions as a new vertical.
-    </h3>
-  </div>
+  <p class="text-heading">
+    <span style="color: #ffaa00aa">
+      <span class="text-sup">Context</span>
+      The platform was growing
+    </span> 
+    its summer program database and expanding into high school competitions as a new vertical.
+    <br>
+    <span style="color: #ce5bffaa">
+      <span class="text-sup">Scope</span>
+      I owned the scale-up initiative:</span>
+    updating existing visual systems, and building new features to support a larger database and user base across devices.
+  </p>
 
-  <div class="p-section-open">
-    <p class="label">Overview</p>
-    <h3><span style="background-color: #5BFFA5AA">I owned the scale-up initiative:</span> redesigning the visual systems, and UX flows to support a larger database and user base across devices.
-    </h3>
-  </div>
 </header>
 
 <!-- CASE STUDIES -->
 <section id="case-studies">
   <hr class="p-divider" />
-  <div class="p-section-open">
-    <p class="label">Case Studies</p>
-    <h2>Explore the redesign</h2>
+  <div style="padding: 3rem;">
+    <p class="text-heading">
+      
+      <strong>Explore the redesign.</strong>
+    </p>
   </div>
 
   <div class="p-card-grid">
@@ -102,7 +106,7 @@ import ProjectCard from "../../../components/ProjectCard.astro";
       title="Competitions Pages"
       subtitle="Presenting Variable Data"
       tags={[]}
-      href="/work/best-summer-programs/competitions"
+      href="/work/best-summer-programs/competitionsv2"
       image="/images/BestSummerPrograms/CompetitionsPageHero.png"
       mediaType="image"
       size="wide"
@@ -125,7 +129,7 @@ import ProjectCard from "../../../components/ProjectCard.astro";
       subtitle="Extended Visual System"
       tags={[]}
       href="/work/best-summer-programs/ui-illustrations"
-      image="/images/BestSummerPrograms/BSP_UI_Illustrations_Hero_v2.png"
+      image="/images/BestSummerPrograms/Illustration/BSP_UI_Illustrations_Hero_v2.png"
       mediaType="image"
       size="col2"
       status="shipped"

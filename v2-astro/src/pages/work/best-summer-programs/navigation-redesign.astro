@@ -10,19 +10,15 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
     { id: "overview", label: "Overview" },
     { id: "problem", label: "Problem" },
     { id: "design-goal", label: "Design Goal" },
-    { id: "ui-layout", label: "UI Layout" },
-    { id: "filter-modal", label: "Filter Modal" },
-    { id: "mobile", label: "Mobile" },
+    {id: "solution", label: "Solution"},
   ]}
 >
 
   <!-- HEADER ------------------------------------------------->
   <header id="overview" class="p-header" slot="header">
-    <p class="label">Case Study 1</p>
-    <h1>Navigation Redesign</h1>
-
-    <p>
-      A navigation experience rebuilt to stay clear and explorable as BSP's databases grow.
+    <p class="text-heading">
+      <span class="text-sup">Case Study</span>
+      Allowing families and counselors to <strong>filter and navigate</strong> across our growing databases.
     </p>
   </header>
 
@@ -32,35 +28,46 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
 
   <!-- Problem -->
   <section id="problem">
-    <div class="p-detail">
-      <p class="label">Problem</p>
-      <h3>Users couldn’t easily access all of the databases
-      </h3>
-      <p>
-        Previous UX flows were only designed for the single program database, and
-        less metadata attributed to each entry, limiting access to all corners of the site.
-      </p>
-    </div>
+    <p class="text-heading">
+      <span class="text-sup">Context</span>
+        Our database grew from 50 to 500+ programs, and added a new 175+ competitions database to the platform,
+      <span style="color: red;">
+        <span class="text-sup">Problem</span>
+        however, our users weren't aware of how to access the new content.
+      </span>
+    </p>
 
     <div class="p-media">
-      <img src="/images/BestSummerPrograms/Old.png" alt="Previous Design">
-      <p class="caption">Previous Design built just for programs (Not my work)</p>
+      <div class="p-not-mine">
+        <img src="/images/BestSummerPrograms/Old.png" alt="Previous Design">
+      </div>
+      
+      <p class="caption">Previous MVP was built just for 50 programs</p>
     </div>
   </section>
 
   <!-- Design Goal -->
   <section id="design-goal">
+
     <div class="p-detail">
-      <p class="label">Design Goal</p>
-      <h3>Bring visibility to new data
-      </h3>
-      <p>
-        Create more entry points throughout the site to explore and learn
-        seamlessly between programs, competitions, and their respective pages.
+      <p class="text-heading">
+        <span class="text-sup">Insight</span>
+          Our users were unaware of the new content and features,
+        <span style="color:rgb(0, 168, 0)">
+          <span class="text-sup">Design Goal</span>
+          so we needed to create a more intuitive navigation experience.
+        </span>
       </p>
     </div>
 
-    <div class="p-media">
+    <p class="text-heading">
+        <span style="color:rgb(0, 168, 0)">
+          <span class="text-sup">Solution</span>
+           A redesigned filtering and navigation system.
+        </span>
+      </p>
+
+          <div class="p-media">
       <video autoplay loop muted playsinline>
         <source src="/images/BestSummerPrograms/NavRedesign_Hero.mov" type="video/mp4" />
       </video>
@@ -69,16 +76,9 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
   </section>
 
   <!-- UI Layout -->
+
+
   <section id="ui-layout">
-    <div class="p-detail">
-      <p class="label">UI Layout</p>
-      <h3>Restructured navigation hierarchy: search, tabs, filters
-      </h3>
-      <p>
-        The layout aims to keep users aware of their selections
-        and location throughout the browse experience.
-      </p>
-    </div>
 
     <div class="p-media">
       <img src="/images/BestSummerPrograms/Navigation_UI_Diagram.png" alt="Diagram">
@@ -88,15 +88,7 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
 
   <!-- Filter Modal -->
   <section id="filter-modal">
-    <div class="p-detail">
-      <p class="label">Filter Modal</p>
-      <h3>Icon driven filters to for quick readability
-      </h3>
-      <p>
-        Introduce icon association with metadata filters that will be used frequently
-        throughout project and competition pages.
-      </p>
-    </div>
+
 
     <div class="p-media">
       <video autoplay loop muted playsinline>
@@ -108,11 +100,6 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
 
   <!-- Mobile -->
   <section id="mobile">
-    <div class="p-detail">
-      <p class="label">Mobile Compatability</p>
-      <h3>Condense navigation for familiar mobile interactions
-      </h3>
-    </div>
 
     <div class="p-media">
       <video autoplay loop muted playsinline>
@@ -127,6 +114,10 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
       </video>
       <p class="caption"><strong>Filter modal</strong></p>
     </div>
+
+      <p class="text-heading">
+    More to come...
+  </p>
   </section>
 
 </ProjectLayout>

@@ -10,33 +10,39 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
     { id: "overview", label: "Overview" },
     { id: "problem", label: "Problem" },
     { id: "design-goal", label: "Design Goal" },
-    { id: "concept", label: "Visual Concept" },
+    {id: "solution", label: "Solution"},
   ]}
 >
 
   <!-- HEADER ------------------------------------------------->
   <header id="overview" class="p-header" slot="header">
-    <p class="label">Case Study 4</p>
-    <h1>UI Illustrations</h1>
+    
+    <p class="text-heading">
+      <span class="text-sup">Case Study</span>Always engaging students throughout the product with a <strong>playful illustration system</strong>.
+    </p>
+
   </header>
 
   <div class="p-media">
-    <img src="/images/BestSummerPrograms/BSP_UI_Illustrations_Hero_v2.png" alt="BSP Placeholder">
+    <img src="/images/BestSummerPrograms/Illustration/BSP_UI_Illustrations_Hero_v2.png" alt="BSP Placeholder">
   </div>
 
   <!-- Problem -->
   <section id="problem">
-    <div class="p-detail">
-      <p class="label">Problem</p>
-      <h3>Empty states read as broken, not blank.
-      </h3>
-      <p>
-        In informal feedback sessions, users who landed on empty bookmarks or compare screens assumed the site had glitched, with nothing to signal the space was working as intended.
-      </p>
-    </div>
+    <p class="text-heading">
+      <span class="text-sup">Context</span> 
+      Our product uses simple visuals to make our info-dense database clear, 
+      <span style="color:red"><span class="text-sup">Problem</span>
+      however, this sometimes leaves users to <strong>face empty screens</strong> with no guidance.</span>
+    </p>
 
-    <div class="p-media" style="margin-bottom: var(--space-1)">
-      <img src="/images/BestSummerPrograms/Illustration_Problem.png" alt="old">
+    <div class="p-media-2col">
+      <div class="p-not-mine">
+        <img src="/images/BestSummerPrograms/Illustration/Illustration_Problem1.png" alt="old">
+      </div>
+            <div class="p-not-mine">
+        <img src="/images/BestSummerPrograms/Illustration/Illustration_Problem2.png" alt="old">
+      </div>
     </div>
 
   </section>
@@ -44,50 +50,57 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
   <!-- Design Goal -->
   <section id="design-goal">
     <div class="p-detail">
-      <p class="label">Design Goal</p>
-      <h3>Transform dead-end moments with brand personality.
-      </h3>
-      <p>
-        Created vibrant illustrations paired with call-to-action texts to fill up empty states in user collection screens and loading screens. 
+      <p class="text-heading">
+        <span class="text-sup">Insight</span> 
+        Blank screens are read as broken screens,
+        <span style="color:rgb(0, 168, 0)"><span class="text-sup">Design Goal</span>
+        so we needed some way to make our users <strong>always feel welcomed.</strong></span>
       </p>
     </div>
   </section>
+
+  <section id="solution">
+    <div class="p-detail">
+      <p class="text-heading">
+        <span style="color:rgb(0, 168, 0)">
+          <span class="text-sup">Solution</span>
+          A playful illustration system</span> to transform dead-end moments into delightful experiences. 
+      
+      </p>
+      <p>Reimagining classic summer scenes as school - project diaromas.</p>
+    </div>
+
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/BestSummerPrograms/Illustration/UI_Illustrations.mp4" type="video/mp4" />
+    </div>
+
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/BestSummerPrograms/Illustration/IllustrationsInContext_Prototype.mov" type="video/mp4" />
+    </div>
 
 
   <div class="p-media">
-    <video autoplay loop muted playsinline>
-      <source src="/images/BestSummerPrograms/IllustrationsInContext_Prototype.mov" type="video/mp4">
-  </div>
-
-    <!-- Design Goal -->
-  <section id="concept">
-    <div class="p-detail">
-      <p class="label">Visual Concept</p>
-      <h3>Dioramas of Classic Summer Scenes.
-      </h3>
-      <p>
-        Each illustration is built from a consistent top-down angle, like a miniature diorama or a class project made from lined paper and school supplies, evoking nostalgia for daydreaming summer plans.
-      </p>
-    </div>
-  </section>
-      <div class="p-media">
     <img src="/images/BestSummerPrograms/BSP_UI_Illustrations_Hero.png" alt="UI Diagram">
   </div>
+  
   <div class="p-media">
     <img src="/images/BestSummerPrograms/UI_Concept.png" alt="UI Diagram">
   </div>
-  <div class="p-detail">
-    <h3>
-      Scalable across UI and marketing assets.
-    </h3>
-  </div>
+
   <div class="p-media">
     <img src="/images/BestSummerPrograms/Banner_Designs.png" alt="UI Diagram">
   </div>
 
-    <div class="p-media">
+  <div class="p-media">
     <img src="/images/BestSummerPrograms/Illustration_Style_Guide.png" alt="UI Diagram">
   </div>
+
+  <p class="text-heading">
+    More to come...
+  </p>
+  </section>
 
 
 </ProjectLayout>
