@@ -28,7 +28,7 @@ import ProjectCard from "../components/ProjectCard.astro";
 import { projects } from "../data/projects";
 ---
 
-<BaseLayout title="Work" activePage="work" flushTop>
+<BaseLayout title="Aarnav Patel" activePage="work" flushTop>
 
   <!-- .page-grid owns --col-unit so both .intro and .gallery share the same
        column reference width. To span N cols on any child:
@@ -40,7 +40,7 @@ import { projects } from "../data/projects";
   <div class="page-grid">
 
   <p class="intro">
-    Aarnav is a product designer who makes joyful interactive experiences across entertainment and education.
+    Aarnav is a product designer who makes joyful interactive experiences across entertainment and education platforms.
   </p>
 
     <!-- =============================================
@@ -109,7 +109,7 @@ import { projects } from "../data/projects";
      padding-left = the card's own padding (--gap-grid), so the text's
      left edge lines up with the first image's left edge below. */
   .intro {
-    width: calc(1.5*var(--col-unit));
+    width: var(--col-unit);
     padding-left: var(--gap-grid);
     padding-bottom: var(--space-5);
   }
