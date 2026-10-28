@@ -1,5 +1,9 @@
 # Layout brief — carrying the 4-column grid into project pages
 
+> **Outdated (2026-10-27).** Project pages now use an 8-column grid with no
+> sidebar: text cols 3–6, media cols 2–7, hero full width. The current spec is
+> the header comment in `src/layouts/ProjectLayout.astro`. Kept for history.
+
 Priming context for the next layout pass. Read this before touching
 `ProjectLayout.astro`, `ProjectTOC.astro`, `index.astro` or `tokens.css`.
 

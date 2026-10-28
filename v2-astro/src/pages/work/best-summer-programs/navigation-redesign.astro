@@ -17,21 +17,24 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
   <!-- HEADER ------------------------------------------------->
   <header id="overview" class="p-header" slot="header">
     <p class="text-heading">
-      <span class="text-sup">Case Study</span>
+      <span class="tint-bsp">
+        <span class="text-sup">Case Study</span>
+      </span>
       Allowing families and counselors to <strong>filter and navigate</strong> across our growing databases.
     </p>
   </header>
 
-  <div class="p-media">
-    <img src="/images/BestSummerPrograms/Nav_CaseStudy_Hero.png" alt="BSP Placeholder">
-  </div>
+  <!-- HERO (full width) ----------------------------------->
+  <img slot="hero" src="/images/BestSummerPrograms/Nav_CaseStudy_Hero.png" alt="BSP Placeholder">
 
   <!-- Problem -->
   <section id="problem">
     <p class="text-heading">
-      <span class="text-sup">Context</span>
+      <span class="tint-gray">
+        <span class="text-sup">Context</span>
+      </span>
         Our database grew from 50 to 500+ programs, and added a new 175+ competitions database to the platform,
-      <span style="color: red;">
+      <span class="tint-problem">
         <span class="text-sup">Problem</span>
         however, our users weren't aware of how to access the new content.
       </span>
@@ -51,9 +54,11 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
 
     <div class="p-detail">
       <p class="text-heading">
+      <span class="tint-gray">
         <span class="text-sup">Insight</span>
+      </span>
           Our users were unaware of the new content and features,
-        <span style="color:rgb(0, 168, 0)">
+        <span class="tint-goal">
           <span class="text-sup">Design Goal</span>
           so we needed to create a more intuitive navigation experience.
         </span>
@@ -61,7 +66,7 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
     </div>
 
     <p class="text-heading">
-        <span style="color:rgb(0, 168, 0)">
+        <span class="tint-goal">
           <span class="text-sup">Solution</span>
            A redesigned filtering and navigation system.
         </span>

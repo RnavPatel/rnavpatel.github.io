@@ -116,7 +116,7 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
   </div>
 
   <!-- PROTECTED CONTENT ------------------------------------->
-  <div id="protected-content" class="nn-protected" aria-hidden="true">
+  <div id="protected-content" class="nn-protected p-flow" aria-hidden="true">
 
     <div class="p-section-open" style="margin-top: var(--space-16)">
       <h2>Designing for player exploration.</h2>
@@ -371,8 +371,7 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
 
   /* Password gate */
   .nn-pw-gate {
-    max-width: var(--p-text-w); /* sit on the text column, not the media */
-    margin-inline: var(--p-text-margin);
+    /* width comes from ProjectLayout's text zone */
     margin-top: var(--space-16);
     text-align: center;
     transition: opacity 0.6s ease;

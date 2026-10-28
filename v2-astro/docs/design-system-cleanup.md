@@ -40,6 +40,15 @@ Reference page: `src/pages/work/best-summer-programs/competitionsv2.astro`
 - Inline styles for quick experiments are fine. They get counted in the
   **Inline style log** below, and repeated ones get promoted to classes.
 
+**Layout (8-col grid, 2026-10-27).** Pages never set widths; `ProjectLayout.astro`
+places every block by zone:
+- Hero: `<img slot="hero" …>` (or `<video slot="hero">`). Full 8 cols. Top-most image only.
+- Media: `.p-media`, `.p-media-2col`, `.p-media-3col`, `.p-card-grid`. Cols 2–7.
+- Everything else (title, `slot="meta"` row, statements, copy, dividers): cols 3–6.
+- Wrapping blocks in an extra div? Add `class="p-flow"` so its children keep their zones.
+- Not yet on the hero slot: marvel, nirvananoir, podpocalypse, stream-predicts
+  (their first image still renders at 6 cols).
+
 ---
 
 ## The type scale (target end state)
@@ -113,7 +122,7 @@ delete. **Promote** a pattern to a class when the same inline style shows up 3+ 
 | `.p-card-grid` | BSP hub only (1×) | yes | keep |
 | `.p-media-ph` | competitionsv2 (1×, draft) | yes (draft) | keep as draft helper; should hit 0 before publishing |
 | `.p-wip` | **nothing** | — | **dead**. Delete candidate. |
-| `.p-head`, `.p-sidebar`, `.p-sidebar-meta` | layout internals only | — | keep (structural, not authoring classes) |
+| `.p-head`, `.p-hero`, `.p-meta-row` | layout internals only | — | keep (structural, not authoring classes). `.p-sidebar*` removed 2026-10-27 |
 
 Also used on project pages: `.label` (75×), `.caption` (66×), `.text-heading`, `.text-sup`.
 

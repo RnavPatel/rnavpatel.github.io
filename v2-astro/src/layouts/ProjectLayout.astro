@@ -4,26 +4,30 @@
  * ============================================================
  * Layout for all project/case-study pages.
  *
- * GRID — same 4 columns as the homepage gallery (lines land on image edges):
+ * GRID — 8 columns. Every homepage column is two of these (same gutter),
+ * so all 4-col lines still land on the homepage's image edges.
  *
- *   | col 1     | col 2      col 3 | col 4   |
- *   | sidebar   | TEXT (2x)        |         |
- *   | meta+TOC  | MEDIA (3x) ─────────────────►
+ *   | 1 | 2 | 3   4   5   6 | 7 | 8 |
+ *   |   |   | TEXT (4x)     |   |   |   title, meta, all running text
+ *   |   | MEDIA (6x)            |   |   .p-media, -2col, -3col, .p-card-grid
+ *   | HERO (8x)                     |   slot="hero" (top-most image only)
  *
- *   >1000px   4 cols. Sidebar in col 1; TOC sticks while scrolling.
- *   601–1000  3 cols (like the homepage). Header, then meta row, then body.
- *             Text spans 2 cols, media spans 3. TOC hidden.
- *   ≤600      1 col. Everything stacks full width.
+ *   >1000px   8 cols as above.
+ *   601–1000  6 cols (the homepage is 3 here). Text 4x centred, media 6x.
+ *   ≤600      1 col. Everything full width.
+ *
+ * Pages never set widths. Everything in the flow is TEXT by default; the
+ * media classes opt into the wider zone. See "PROJECT GRID" below.
  *
  * PAGE SLOTS:
- *   <header slot="header" …>   → title block (cols 2–4, top row)
- *   <div slot="meta">…</div>   → Role / Skills / Team (.p-meta-grid) for col 1
- *   everything else            → article body (cols 2–4)
+ *   <header slot="header" …>   → title block
+ *   <div slot="meta">…</div>   → Role / Skills / Team (.p-meta-grid), row under the title
+ *   <img slot="hero" …>        → the full-width hero (img or video)
+ *   everything else            → article body
  *
  * CMD+F GUIDE:
- *   "PROJECT GRID"   → column/area definitions + breakpoints
- *   "TEXT WIDTH"     → --p-text-w, the 2-column text measure
- *   "SIDEBAR"        → col-1 meta + sticky TOC
+ *   "PROJECT GRID"   → column math, zones + breakpoints
+ *   "FLOW"           → which wrappers pass the zones through (.p-flow)
  *   "SECTION SPACING"→ margin-top on .p-section-open and .p-detail
  *
  * TYPOGRAPHY — only two custom classes needed in project pages:
@@ -35,7 +39,8 @@
  * LAYOUT BLOCKS:
  *   .p-section-open  → major narrative beat (Problem, Case Study, Concept…)
  *   .p-detail        → sub-point within a section (Design Goal, UX Flow, Process…)
- *   .p-media         → full-width single image or video
+ *   .p-flow          → put on any extra wrapper div so its children keep their zones
+ *   .p-media         → single image or video (6x)
  *   .p-media-2col    → two-column media grid
  *   .p-media-3col    → three-column media grid
  *   .p-not-mine      → "Not my work" pill on an image's top-left (on the img's wrapper div)
@@ -45,7 +50,6 @@
  */
 
 import Nav from "../components/Nav.astro";
-import ProjectTOC from "../components/ProjectTOC.astro";
 import AboutModal from "../components/AboutModal.astro";
 import "../styles/tokens.css";
 import "../styles/reset.css";
@@ -55,6 +59,8 @@ import "../styles/typography.css";
 interface Props {
   title?: string;
   description?: string;
+  /** Not rendered right now. Kept (with ProjectTOC.astro and the section
+      ids) in case the sticky TOC comes back. */
   tocItems?: { id: string; label: string }[];
   /** Set on case-study sub-pages to link back up to their project hub page */
   backHref?: string;
@@ -64,7 +70,6 @@ interface Props {
 const {
   title = "Aarnav Patel",
   description = "Experience designer crafting the future of interactive entertainment.",
-  tocItems = [],
   backHref,
   backLabel,
 } = Astro.props;
@@ -92,15 +97,17 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     <div class={`project-page${backHref ? " project-page--has-back-nav" : ""}`}>
       <div class="p-head">
         <slot name="header" />
-      </div>
-      <aside class="p-sidebar">
         {Astro.slots.has("meta") && (
-          <div class="p-sidebar-meta">
+          <div class="p-meta-row">
             <slot name="meta" />
           </div>
         )}
-        <ProjectTOC items={tocItems} />
-      </aside>
+      </div>
+      {Astro.slots.has("hero") && (
+        <div class="p-media p-hero">
+          <slot name="hero" />
+        </div>
+      )}
       <article class="project-content">
         <slot />
       </article>
@@ -156,6 +163,8 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
   /* Override global.css height:100% — project media must be height:auto */
   .p-head img,
   .p-head video,
+  .p-hero img,
+  .p-hero video,
   .project-content img,
   .project-content video {
     height: auto;
@@ -163,38 +172,33 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
 
   /* =============================================
      PROJECT GRID
-     Same 4 columns as the homepage gallery. Padding and gap come from
-     --grid-inset / --grid-gutter (tokens.css), so column edges land
-     exactly on the homepage's image edges.
+     8 columns. Padding and gutter come from --grid-inset / --grid-gutter
+     (tokens.css), so every second line lands on a homepage image edge.
 
-     Areas:  side = col 1 (meta + TOC)
-             head = cols 2–4, title block
-             body = cols 2–4, article
-     Inside head/body, media fills all 3 columns; text is capped to 2
-     (see TEXT WIDTH below), leaving col 4 empty only beside text.
+     Three zones, set as "columns left empty on each side":
+       text   → --p-text-inset  (2 → cols 3–6)   default for everything
+       media  → --p-media-inset (1 → cols 2–7)   .p-media, -2col, -3col, .p-card-grid
+       hero   → 0               (cols 1–8)       .p-hero (the hero slot)
+
+     Blocks are placed with side margins, not grid-column, on purpose:
+     the page stays normal block flow, so vertical margins still collapse
+     and section spacing works exactly as it did on the 4-col layout.
   ============================================= */
 
   .project-page {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-template-rows: auto 1fr;
-    grid-template-areas:
-      "side head head head"
-      "side body body body";
-    column-gap: var(--grid-gutter);
+    --p-cols: 8;
+    --p-text-inset: 2;
+    --p-media-inset: 1;
+
+    /* One step = one column + one gutter. Resolved where it's used, so
+       100% is the width of the flow wrapper the block sits in. Wrappers
+       are always full width, so that's always all --p-cols columns. */
+    --p-step: calc((100% + var(--grid-gutter)) / var(--p-cols));
+
     padding-inline: var(--grid-inset);
     padding-top: var(--page-padding-top);
     padding-bottom: var(--space-16);
-    /* clip (not hidden) so position: sticky in the sidebar keeps working */
     overflow-x: clip;
-
-    /* TEXT WIDTH — 2 of the 3 columns head/body span.
-       cqi = width of .p-head / .project-content (both are containers), so
-       this resolves the same at any nesting depth inside them. */
-    --p-text-w: calc((100cqi - 2 * var(--grid-gutter)) * 1.75 / 3 + var(--grid-gutter));
-
-    /* TEXT POSITION — see the rule below "Running text" */
-    --p-text-margin: auto;
   }
 
   /* Extra clearance when Nav renders its second "back to hub" pill row */
@@ -202,106 +206,71 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     padding-top: calc(var(--page-padding-top) + 3rem);
   }
 
-  .p-head,
-  .project-content {
-    container-type: inline-size;
-    min-width: 0;
-  }
-
-  .p-head          { grid-area: head; }
-  .project-content { grid-area: body; }
-
-  /* Tablet — homepage is 3 columns here. Sidebar drops below the title
-     block as a row; text still spans 2 of 3 columns, media all 3. */
+  /* Tablet — homepage is 3 columns here, so the page is 6.
+     Text keeps 4 columns, media goes full width. */
   @media (max-width: 1000px) {
     .project-page {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      grid-template-rows: auto;
-      grid-template-areas:
-        "head head head"
-        "side side side"
-        "body body body";
+      --p-cols: 6;
+      --p-text-inset: 1;
+      --p-media-inset: 0;
     }
   }
 
   /* Phone — single column, everything full width */
   @media (max-width: 600px) {
     .project-page {
-      grid-template-columns: minmax(0, 1fr);
-      grid-template-areas: "head" "side" "body";
-      --p-text-w: 100cqi;
+      --p-cols: 1;
+      --p-text-inset: 0;
     }
   }
 
-  /* Running text never runs wider than 2 columns. Media blocks (and
-     anything inside them, e.g. captions, cards) are left at full width. */
-  /* (no whitespace between the :is() and :not() — they're one compound) */
-  :is(.p-head, .project-content)
-    :is(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, hr,
-        .p-section-open, .p-detail, .p-meta-grid, .p-wip):not(
-          .p-media, .p-media-2col, .p-media-3col, .p-card-grid,
-          :is(.p-media, .p-media-2col, .p-media-3col, .p-card-grid) *) {
-    max-width: var(--p-text-w);
+  /* =============================================
+     FLOW — wrappers whose children get a zone. Wrappers themselves stay
+     full width so the column math above holds inside them.
+     Wrapping blocks in an extra div? Give it class="p-flow".
+     Anything nested deeper (a <p> in a .p-detail, an img in a .p-media)
+     just fills its parent.
+  ============================================= */
+
+  .project-page :is(.p-head, .p-header, .project-content, .project-content section, .p-flow) > * {
+    margin-inline: calc(var(--p-text-inset) * var(--p-step));
   }
 
-  /* TEXT POSITION — where the text measure sits inside the 3 content cols.
-     Set via --p-text-margin on .project-page:
-       auto     → centred under the media (current)
-       0 auto   → flush left on col 2 (on-grid)
-     Only the OUTERMOST text block gets it. Nested ones (a <p> in a
-     .p-detail, a .p-detail in a .p-meta-grid) already sit inside a centred
-     parent; auto margins there would shrink-wrap them inside flex/grid. */
-  :is(.p-head, .project-content)
-    :is(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, hr,
-        .p-section-open, .p-detail, .p-meta-grid, .p-wip):not(
-          .p-media, .p-media-2col, .p-media-3col, .p-card-grid,
-          :is(.p-media, .p-media-2col, .p-media-3col, .p-card-grid) *,
-          :is(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote,
-              .p-section-open, .p-detail, .p-meta-grid, .p-wip) *) {
-    margin-inline: var(--p-text-margin);
+  .project-page :is(.p-head, .p-header, .project-content, .project-content section, .p-flow)
+    > :is(.p-media, .p-media-2col, .p-media-3col) {
+    margin-inline: calc(var(--p-media-inset) * var(--p-step));
+  }
+
+  /* Cards carry --gap-grid padding (as on the homepage), so the grid
+     bleeds out by that much to put the card IMAGES on the media edges. */
+  .project-page :is(.p-head, .p-header, .project-content, .project-content section, .p-flow)
+    > .p-card-grid {
+    margin-inline: calc(var(--p-media-inset) * var(--p-step) - var(--gap-grid));
+  }
+
+  .project-page :is(.p-head, .p-header, .project-content, .project-content section, .p-flow)
+    > :is(.p-head, .p-header, .project-content, .project-content section, .p-flow) {
+    margin-inline: 0;
   }
 
   /* =============================================
-     SIDEBAR — col 1. Meta sits level with the title; the TOC below it
-     is sticky (ProjectTOC.astro), so it follows the reader down the page.
+     HERO + META ROW
+     Hero: slot="hero", rendered between the title block and the article.
+     Meta: slot="meta", a row under the title on the text columns.
   ============================================= */
 
-  .p-sidebar {
-    grid-area: side;
-    min-width: 0;
-    /* matches .p-header padding-top so the first label lines up with the title */
-    padding-top: var(--space-8);
+  .p-meta-row {
+    margin-bottom: var(--space-8);
   }
 
-  .p-sidebar-meta .p-meta-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-5);
-  }
-
-  .p-sidebar-meta a {
+  .p-meta-row a {
     color: var(--color-text-secondary);
     text-decoration: underline;
     text-underline-offset: 3px;
   }
 
-  .p-sidebar-meta a:hover {
+  .p-meta-row a:hover {
     color: var(--color-text-primary);
-  }
-
-  @media (max-width: 1000px) {
-    .p-sidebar {
-      padding-top: 0;
-    }
-
-    .p-sidebar-meta {
-      padding-bottom: var(--space-8);
-    }
-
-    /* One meta item per grid column */
-    .p-sidebar-meta .p-meta-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      column-gap: var(--grid-gutter);
-    }
   }
 
   /* =============================================
@@ -390,6 +359,8 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     outline: 2px solid var(--color-border);
   }
 
+  /* gap = grid gutter, so in the 6-col media zone each tile spans exactly
+     3 page columns (2col) or 2 page columns (3col) */
   .p-media-2col {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -397,8 +368,6 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     margin-top: var(--space-6);
   }
 
-
-  /* gap = grid gutter, so at 3x wide each tile is exactly one page column */
   .p-media-3col {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -467,16 +436,15 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
      Kept separate from .p-media-2col/.p-media-3col on purpose: those
      stay 2/3-up on mobile for plain image pairs, this always stacks.
   ============================================= */
-  /* Cards carry --gap-grid padding (as on the homepage), so the grid
-     bleeds out by that much to put the card IMAGES on the media edges,
-     and the gap makes the visible gutter 3 × --gap-grid. */
+  /* Side bleed lives in FLOW above. The gap plus each card's --gap-grid
+     padding makes the visible gutter 3 × --gap-grid (= --grid-gutter).
+     container-type: square/wide cards size their image height off 100cqi. */
   .p-card-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--gap-grid);
     margin-top: var(--space-6);
-    margin-inline: calc(-1 * var(--gap-grid));
-    width: calc(100% + 2 * var(--gap-grid));
+    container-type: inline-size;
   }
 
   @media (max-width: 640px) {
@@ -513,8 +481,7 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     }
 
     /* Meta grid: always at least 2 columns on mobile */
-    .p-meta-grid,
-    .p-sidebar-meta .p-meta-grid {
+    .p-meta-grid {
       grid-template-columns: 1fr 1fr;
     }
   }

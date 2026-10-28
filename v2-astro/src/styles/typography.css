@@ -72,15 +72,65 @@ p {
 }
 
 /* --- Eyebrow ---
-   Inline span: body-size text pinned to the top of a statement line.
-   line-height: 1 keeps it from pushing the line taller.
-     <p class="text-heading"><span class="text-sup">Context</span>…</p> */
+   Inline label raised above a statement line.
+     <p class="text-heading"><span class="text-sup">Context</span>…</p>
+   inline-block: the box (and a .tint pill's background) is line-height +
+   padding tall, not the font's full ~1.3em content area.
+   top nudge: text-top puts the box at the font's ascent, which in Host
+   Grotesk is a full 1em, high enough to hit the descenders of the line
+   above. 0.2 × the statement size drops the top to just above cap height
+   and the bottom to about the baseline (~4px clear above). position:
+   relative, so the line box and line spacing don't change.
+   Gap to the text either side: margin-inline (--sup-gap). Don't type
+   spaces around it; any you do type are stripped at build time
+   (trimEyebrowWhitespace in astro.config.mjs), so the gap is always this. */
 .text-sup {
+  --sup-gap: 0.5em;
+  margin-inline: var(--sup-gap);
+  display: inline-block;
   font-size: var(--text-body);
-  padding-right: 1rem;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
   line-height: 1;
   vertical-align: text-top;
+  position: relative;
+  top: calc(var(--text-heading) * 0.2);
+  border-radius: 4px;
+
+  /* Pill color comes from --tint, set here or inherited from a .tint run.
+     No --tint → text keeps the statement's color, background stays clear. */
+  color: var(--tint, currentColor);
+  background-color: color-mix(in srgb, var(--tint, transparent) var(--tint-alpha, 25%), transparent);
 }
+
+/* An eyebrow that opens the statement sits on the text edge, no left gap.
+   (CSS can't see text nodes: this also matches a first-element eyebrow
+   with plain text before it. Wrap that text, or override inline.) */
+.text-heading > .text-sup:first-child,
+.text-heading > :is(.tint, .tint-context, .tint-scope, .tint-problem, .tint-goal, .tint-bsp, .tint-gray):first-child > .text-sup:first-child {
+  margin-left: 0;
+}
+
+/* --- Tint ---
+   --tint colors whatever it's set on, and any .text-sup inside gets a
+   pill background of that color at --tint-alpha (default 25%).
+   A whole run, eyebrow included:
+     <span class="tint" style="--tint: #0070f3"><span class="text-sup">Insight</span>…</span>
+     <span class="tint-problem"><span class="text-sup">Problem</span>…</span>
+   Just the eyebrow, rest of the line untouched:
+     <span class="text-sup" style="--tint: #0070f3">Insight</span>
+     <span class="text-sup tint-problem">Problem</span>
+   Preset colors live in tokens.css. */
+:is(.tint, .tint-context, .tint-scope, .tint-problem, .tint-goal, .tint-bsp, .tint-gray) {
+  color: var(--tint);
+}
+
+.tint-context { --tint: var(--color-tint-context); }
+.tint-scope   { --tint: var(--color-tint-scope); }
+.tint-problem { --tint: var(--color-tint-problem); }
+.tint-goal    { --tint: var(--color-tint-goal); }
+.tint-bsp     { --tint: var(--color-tint-bsp);}
+.tint-gray     { --tint: var(--color-tint-gray);}
 
 /* --- Color utilities --- */
 .text-primary   { color: var(--color-text-primary); }

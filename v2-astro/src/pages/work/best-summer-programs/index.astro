@@ -24,7 +24,7 @@ import ProjectCard from "../../../components/ProjectCard.astro";
   ]}
 >
 
-  <!-- META (sidebar, col 1) ------------------------------>
+  <!-- META (row under the title) ------------------------------>
   <div slot="meta">
     <div class="p-meta-grid">
     <div>
@@ -58,35 +58,43 @@ import ProjectCard from "../../../components/ProjectCard.astro";
 <header id="overview" class="p-header" slot="header">
 
   <p class="text-heading">
-    <span style="color: black"><strong>BestSummerPrograms</strong></span> <span class="text-sup">Overview</span>is an accessible database for families and counselors to navigate the precollege landscape.
+    <span style="color: black"><strong>BestSummerPrograms </strong></span>
+      <span class="tint-bsp">
+        <span class="text-sup">Overview</span> 
+      </span>
+      is an accessible database for families and counselors to navigate the precollege landscape.
   </p>
 
+</header>
 
-    <p class="p-media">
-    <img src="/images/Placeholders/BSP_Hero_V3.png" alt="Best Summer Programs Hero Image" />
-  </p>
+<!-- HERO (full width) ----------------------------------->
+<img slot="hero" src="/images/Placeholders/BSP_Hero_V3.png" alt="Best Summer Programs Hero Image" />
 
+<!-- CONTEXT -->
+<section id="context">
   <p class="text-heading">
-    <span style="color: #ffaa00aa">
+    <span class="tint-context">
       <span class="text-sup">Context</span>
       The platform was growing
     </span> 
     its summer program database and expanding into high school competitions as a new vertical.
     <br>
-    <span style="color: #ce5bffaa">
+    <span class="tint-scope">
       <span class="text-sup">Scope</span>
       I owned the scale-up initiative:</span>
     updating existing visual systems, and building new features to support a larger database and user base across devices.
   </p>
-
-</header>
+</section>
 
 <!-- CASE STUDIES -->
 <section id="case-studies">
   <hr class="p-divider" />
-  <div style="padding: 3rem;">
+  <div class="heading">
     <p class="text-heading">
-      
+    <span class="tint-bsp">
+      <span class="text-sup">Case Studies</span>
+    </span> 
+
       <strong>Explore the redesign.</strong>
     </p>
   </div>
