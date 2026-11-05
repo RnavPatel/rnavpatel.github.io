@@ -94,7 +94,7 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
 
   <body>
     <Nav activePage="work" backHref={backHref} backLabel={backLabel} />
-    <div class={`project-page${backHref ? " project-page--has-back-nav" : ""}`}>
+    <div class="project-page">
       <div class="p-head">
         <slot name="header" />
         {Astro.slots.has("meta") && (
@@ -199,11 +199,6 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     padding-top: var(--page-padding-top);
     padding-bottom: var(--space-16);
     overflow-x: clip;
-  }
-
-  /* Extra clearance when Nav renders its second "back to hub" pill row */
-  .project-page--has-back-nav {
-    padding-top: calc(var(--page-padding-top) + 3rem);
   }
 
   /* Tablet — homepage is 3 columns here, so the page is 6.
@@ -392,7 +387,7 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
   }
 
   .p-not-mine::before {
-    content: "Not my work";
+    content: "Previous Design";
     position: absolute;
     top: var(--space-4);
     left: var(--space-4);

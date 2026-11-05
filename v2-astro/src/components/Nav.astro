@@ -2,8 +2,8 @@
 /**
  * Nav.astro  —  src/components/Nav.astro
  * ============================================================
- * Top navigation: Work/About pills, plus an optional "< Back" pill
- * on case-study sub-pages. Aligns to the same page margins as all
+ * Top navigation: Work/About pills on the right, plus an optional
+ * "< Back" pill on the left on case-study sub-pages. Aligns to the same page margins as all
  * other content.
  *
  * CHEAT SHEET — CMD+F these labels:
@@ -18,8 +18,8 @@
 
 interface Props {
   activePage: "work" | "about";
-  /** Set on case-study sub-pages to render a "← Back to [Project]" pill
-   *  as its own row directly under the primary Work/About row. */
+  /** Set on case-study sub-pages to render a "< [Project]" pill
+   *  at the top-left, opposite the Work/About group. */
   backHref?: string;
   backLabel?: string;
 }
@@ -30,6 +30,14 @@ const { activePage, backHref, backLabel } = Astro.props;
 <nav>
 
   <div class="nav-row">
+    <!-- Back pill — top-left, only on case-study sub-pages -->
+    {backHref && (
+      <a href={backHref} class="nav-link nav-back">
+        <span>&lt; {backLabel}</span>
+        {/* < symbol = &lt; */}
+      </a>
+    )}
+
     <!-- Work / About pills -->
     <div class="nav-links">
       <a href="/" class="nav-link">
@@ -41,21 +49,13 @@ const { activePage, backHref, backLabel } = Astro.props;
     </div>
   </div>
 
-  <!-- Back pill — second row, only on case-study sub-pages -->
-  {backHref && (
-    <a href={backHref} class="nav-link">
-      <span>&lt; {backLabel}</span> 
-      {/* < symbol = &lt; */}
-    </a>
-  )}
-
 </nav>
 
 <style>
   /* =============================================
      Nav layout
-     Fixed bar across the top holding the Work/About
-     group, with the optional Back pill on a second row.
+     Fixed bar across the top: optional Back pill on the
+     left, Work/About group on the right.
      Padding matches --grid-inset so pills align to the
      same image edges as the gallery / project grid.
   ============================================= */
@@ -67,11 +67,6 @@ const { activePage, backHref, backLabel } = Astro.props;
     z-index: 100;
     box-sizing: border-box;
 
-    display: flex;
-    flex-direction: column;   /* stacks .nav-row above the optional back pill */
-    align-items: flex-end;    /* both rows sit top-right */
-    gap: var(--space-2);
-
     /* Side padding = --grid-inset (tokens.css), the same inset as the image
        edges, so the PILL BOX (visible via its backdrop blur) lines up with
        the right edge of the last image/media column. */
@@ -79,11 +74,27 @@ const { activePage, backHref, backLabel } = Astro.props;
     pointer-events: none; /* bar itself doesn't capture clicks */
   }
 
-  /* Primary row — holds the Work/About group, pushed to the right edge. */
+  /* Single row — Back pill (if any) on the left, Work/About on the right. */
   .nav-row {
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    gap: var(--grid-gutter);
     width: 100%;
+  }
+
+  /* Pushes Work/About to the right edge whether or not the Back pill exists. */
+  .nav-links {
+    margin-left: auto;
+  }
+
+  /* Long project names shouldn't push Work/About off-screen on mobile. */
+  .nav-back {
+    min-width: 0;
+  }
+  .nav-back span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   /* =============================================
@@ -119,6 +130,13 @@ const { activePage, backHref, backLabel } = Astro.props;
     -webkit-backdrop-filter: blur(12px); 
 
     transition: background-color var(--duration-fast) ease;
+  }
+
+  /* Narrow phones — slimmer pills so the Back label fits beside Work/About. */
+  @media (max-width: 480px) {
+    .nav-link {
+      padding-inline: var(--space-2);
+    }
   }
 
   /* =============================================
