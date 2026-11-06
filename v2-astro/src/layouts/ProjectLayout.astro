@@ -51,6 +51,7 @@
 
 import Nav from "../components/Nav.astro";
 import AboutModal from "../components/AboutModal.astro";
+import PageTransitions from "../components/PageTransitions.astro";
 import "../styles/tokens.css";
 import "../styles/reset.css";
 import "../styles/global.css";
@@ -82,6 +83,7 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <PageTransitions />
     <meta name="description" content={description} />
     <title>{fullTitle}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />

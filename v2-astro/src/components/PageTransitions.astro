@@ -1,0 +1,225 @@
+---
+/**
+ * PageTransitions.astro  —  src/components/PageTransitions.astro
+ * ============================================================
+ * Layered "sheet" transitions between pages. Docs + changelog:
+ * docs/page-transitions.md
+ *
+ * MODEL — the site is a stack of sheets. A page's layer = its URL depth:
+ *   /                                   → 0  (home)
+ *   /work/stream-predicts               → 1  (project / hub)
+ *   /work/best-summer-programs/xyz      → 2  (case study)
+ *   ("/work" is ignored when counting, it's just a namespace.)
+ *
+ *   Deeper  → the new sheet slides UP over the current one.
+ *   Shallower → the current sheet slides DOWN, revealing the one below.
+ *   Skipping layers (case study → home) → every layer in between slides
+ *   too, staggered. In-between pages aren't loaded, so they're drawn as
+ *   blank "ghost" sheets.
+ *
+ * New pages need NOTHING — nest the URL and the depth follows.
+ *
+ * HOW — native cross-document View Transitions (no router, no framework).
+ *   The <html> element is the page's snapshot, named "vt-depth-N", so old
+ *   and new pages are separate layers that can stack in any order. On the
+ *   new page, a `pagereveal` listener works out the direction, adds ghost
+ *   sheets, and writes a tiny per-navigation stylesheet that assigns each
+ *   layer its keyframes, delay and z-order. The nav is its own layer and
+ *   stays put on top.
+ *
+ *   Browsers without cross-document view transitions (Firefox for now)
+ *   just get the normal instant page load. Reduced motion → no transition.
+ *
+ * CMD+F GUIDE:
+ *   "Tuning"     → duration, stagger, easing (script) + keyframes (CSS)
+ *   "Depth"      → how a URL becomes a layer number
+ *   "Plan"       → which layers move, in what order
+ *
+ * Must be rendered inside <head>: the script is inline (classic, runs
+ * immediately) so `pagereveal` is registered before the first paint.
+ */
+---
+
+<!-- Prefetch same-site pages on hover so the slide starts without a wait -->
+<script type="speculationrules" is:inline>
+  { "prefetch": [{ "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+</script>
+
+<script is:inline>
+  (() => {
+    /* =============================================
+       Tuning
+       Keyframes live in the CSS below; timing lives here.
+    ============================================= */
+    // Debug: localStorage.setItem("vt:slow", "8") in the console = 8× slower.
+    let SLOW = 1;
+    try { SLOW = Number(localStorage.getItem("vt:slow")) || 1; } catch {}
+
+    const DURATION = 560 * SLOW;  // ms, one sheet's slide
+    const STAGGER = 110 * SLOW;   // ms between layers when several move
+    const EASING = "cubic-bezier(0.32, 0.72, 0, 1)"; // sheet-like: fast out, long settle
+
+    const FROM_KEY = "vt:from";
+
+    /* =============================================
+       Depth
+       URL nesting = layer. "/work" doesn't count.
+    ============================================= */
+    const depthOf = (url) => {
+      const path = new URL(url, location.href).pathname.replace(/\/index\.html$/, "");
+      const segs = path.split("/").filter(Boolean);
+      if (segs[0] === "work") segs.shift();
+      return segs.length;
+    };
+
+    const layer = (d) => `vt-depth-${d}`;
+    const root = document.documentElement;
+    const here = depthOf(location.href);
+
+    // Name this page's snapshot by its depth (old pages need this before
+    // they leave; new pages may rename it in pagereveal).
+    root.style.viewTransitionName = layer(here);
+
+    // Fallback for browsers without navigation.activation: remember where
+    // we're leaving from.
+    addEventListener("pageswap", () => {
+      try { sessionStorage.setItem(FROM_KEY, location.href); } catch {}
+    });
+
+    addEventListener("pagereveal", (e) => {
+      let from = null;
+      try {
+        from = sessionStorage.getItem(FROM_KEY);
+        sessionStorage.removeItem(FROM_KEY);
+      } catch {}
+      from = (window.navigation && navigation.activation?.from?.url) || from;
+
+      const vt = e.viewTransition;
+      if (!vt) return;
+      if (!from || matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        vt.skipTransition();
+        return;
+      }
+
+      /* =============================================
+         Plan
+         Each rule = [pseudo, layer name, z, keyframes, delay].
+         Ghosts = blank sheets for skipped-over layers (new-only).
+      ============================================= */
+      const there = depthOf(from);
+      const rules = [];
+      const ghosts = [];
+
+      if (here >= there) {
+        // Forward (or sideways): sheets slide up, shallowest first.
+        // Sideways reuses the depth number, so the new page gets its own name.
+        const top = here === there ? `${layer(here)}-next` : layer(here);
+        root.style.viewTransitionName = top;
+        rules.push(["old", layer(there), there * 2, "vt-recede", 0]);
+        for (let d = there + 1; d < here; d++) {
+          ghosts.push(d);
+          rules.push(["new", layer(d), d * 2, "vt-slide-in", (d - there - 1) * STAGGER]);
+        }
+        rules.push(["new", top, here * 2 + 1, "vt-slide-in", Math.max(0, here - there - 1) * STAGGER]);
+      } else {
+        // Back: sheets slide down, deepest (current) first.
+        rules.push(["old", layer(there), there * 2, "vt-slide-out", 0]);
+        for (let d = there - 1; d > here; d--) {
+          ghosts.push(d);
+          rules.push(["new", layer(d), d * 2, "vt-slide-out", (there - d) * STAGGER]);
+        }
+        rules.push(["new", layer(here), here * 2, "vt-emerge", 0]);
+      }
+
+      // Ghost sheets: invisible on the live page (page-colored, behind
+      // everything), only seen as snapshots. Removed when the slide ends.
+      const ghostEls = ghosts.map((d) => {
+        const g = document.createElement("div");
+        g.className = "vt-ghost";
+        g.setAttribute("aria-hidden", "true");
+        g.style.viewTransitionName = layer(d);
+        (document.body || root).appendChild(g);
+        return g;
+      });
+
+      // Nav's Back pill fades in/out over the same span as the slide.
+      const css = `
+        ::view-transition-old(site-nav), ::view-transition-new(site-nav) {
+          animation-duration: ${DURATION}ms;
+        }` + rules.map(([side, name, z, anim, delay]) => `
+        ::view-transition-group(${name}) { z-index: ${z}; animation: none; }
+        ::view-transition-${side}(${name}) {
+          animation: ${anim} ${DURATION}ms ${EASING} ${delay}ms both;
+        }`).join("");
+
+      const style = document.createElement("style");
+      style.textContent = css;
+      document.head.appendChild(style);
+
+      vt.finished.finally(() => {
+        style.remove();
+        ghostEls.forEach((g) => g.remove());
+        root.style.viewTransitionName = layer(here);
+      });
+    });
+  })();
+</script>
+
+<style is:global>
+  /* Opt in to cross-document transitions — only when motion is welcome. */
+  @media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+      navigation: auto;
+    }
+  }
+
+  /* Nav = its own layer, always on top, gently crossfades (Back pill). */
+  nav {
+    view-transition-name: site-nav;
+  }
+  ::view-transition-group(site-nav) {
+    z-index: 100;
+  }
+
+  /* Page sheets: no default crossfade/blend — they move as solid sheets.
+     The soft shadow sits on the leading (top) edge while sliding. */
+  ::view-transition-old(*.vt-layer),
+  ::view-transition-new(*.vt-layer) {
+    mix-blend-mode: normal;
+    box-shadow: 0 -10px 40px rgb(0 0 0 / 0.12);
+  }
+  :root,
+  .vt-ghost {
+    view-transition-class: vt-layer;
+  }
+
+  .vt-ghost {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: var(--color-bg);
+  }
+
+  /* =============================================
+     Tuning — keyframes
+  ============================================= */
+  @keyframes vt-slide-in {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0); }
+  }
+  @keyframes vt-slide-out {
+    from { transform: translateY(0); }
+    to   { transform: translateY(100%); }
+  }
+  /* The sheet being covered dims slightly... */
+  @keyframes vt-recede {
+    from { filter: brightness(1); }
+    to   { filter: brightness(0.9); }
+  }
+  /* ...and the sheet being revealed brightens back up. */
+  @keyframes vt-emerge {
+    from { filter: brightness(0.9); }
+    to   { filter: brightness(1); }
+  }
+</style>
