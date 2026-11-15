@@ -43,6 +43,8 @@
  *   .p-media         → single image or video (6x)
  *   .p-media-2col    → two-column media grid
  *   .p-media-3col    → three-column media grid
+ *   .p-narrow        → add to any of the three above to keep it on the text columns (4x)
+ *   .p-no-outline    → add to any of the three above to drop the image stroke (on by default)
  *   .p-not-mine      → "Not my work" pill on an image's top-left (on the img's wrapper div)
  *   .p-media-ph      → DRAFT gray placeholder box (stand-in for an img inside the above)
  *   .p-divider       → horizontal rule between major sections
@@ -180,6 +182,7 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
      Three zones, set as "columns left empty on each side":
        text   → --p-text-inset  (2 → cols 3–6)   default for everything
        media  → --p-media-inset (1 → cols 2–7)   .p-media, -2col, -3col, .p-card-grid
+                                                  (+ .p-narrow → back on the text zone)
        hero   → 0               (cols 1–8)       .p-hero (the hero slot)
 
      Blocks are placed with side margins, not grid-column, on purpose:
@@ -236,6 +239,16 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
   .project-page :is(.p-head, .p-header, .project-content, .project-content section, .p-flow)
     > :is(.p-media, .p-media-2col, .p-media-3col) {
     margin-inline: calc(var(--p-media-inset) * var(--p-step));
+  }
+
+  /* .p-narrow — keep a media block on the TEXT columns instead of the
+     media ones. Everything else about .p-media / -2col / -3col (spacing,
+     captions, radius, grids) is unchanged:
+       <div class="p-media p-narrow">…</div>
+       <div class="p-media-2col p-narrow">…</div>                       */
+  .project-page :is(.p-head, .p-header, .project-content, .project-content section, .p-flow)
+    > :is(.p-media, .p-media-2col, .p-media-3col).p-narrow {
+    margin-inline: calc(var(--p-text-inset) * var(--p-step));
   }
 
   /* Cards carry --gap-grid padding (as on the homepage), so the grid
@@ -349,11 +362,18 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     margin-bottom: var(--space-16);
   }
 
-  .p-media img,
-  .p-media video {
+  /* Every media block outlines its images/videos by default.
+     Add .p-no-outline to the block to turn the stroke off (e.g. art with
+     its own edges, or screenshots that already sit on a frame):
+       <div class="p-media-2col p-no-outline">…</div>                   */
+  :is(.p-media, .p-media-2col, .p-media-3col) :is(img, video) {
     width: 100%;
     border-radius: var(--radius-md);
     outline: 2px solid var(--color-border);
+  }
+
+  .p-no-outline :is(img, video) {
+    outline: none;
   }
 
   /* gap = grid gutter, so in the 6-col media zone each tile spans exactly
@@ -370,14 +390,6 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     grid-template-columns: 1fr 1fr 1fr;
     gap: var(--grid-gutter);
     margin-top: var(--space-6);
-  }
-
-  .p-media-2col img,
-  .p-media-2col video,
-  .p-media-3col img,
-  .p-media-3col video {
-    width: 100%;
-    border-radius: var(--radius-md);
   }
 
   /* "Not my work" pill pinned to the top-left of the image — same look as

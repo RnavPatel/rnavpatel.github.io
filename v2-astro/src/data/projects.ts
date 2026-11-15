@@ -58,6 +58,8 @@ export const projects: Project[] = [
     size: "wide",
   },
 
+    /*
+
     {
     id: "BSP Illustration Case Study",
     title: "BestSummerProgram",
@@ -70,19 +72,19 @@ export const projects: Project[] = [
     mediaType: "video",
     size: "square",
   },
-  /*
-      {
-    id: "placeholde-2",
-    title: "BestSummerProgram",
-    subtitle: "Illustration System Case Study",
+  */
+       {
+    id: "StreamPredicts Overlay",
+    title: "StreamPredicts",
+    subtitle: "Gamified Livestream Interface",
     locked: false,
-    tags: ["Product Design", "UIUX", "Motion Design", "Design Systems"],
-    href: "/work/best-summer-programs/ui-illustrations",
-    image: "/images/BestSummerPrograms/BSP_UI_Illustrations_Hero_v2.png",
+    tags: ["UIUX", "Motion Design"],
+    href: "/work/stream-predicts",
+    image: "/images/Placeholders/StreapPredicts_UI_HeroPlaceholder.png",
     mediaType: "image",
     size: "square",
   },
-  */
+
   {
     id: "StreamPredicts Dashboard",
     title: "StreamPredicts",
@@ -90,32 +92,21 @@ export const projects: Project[] = [
     locked: true,
     tags: ["Product Design", "UIUX", "Visual Identity", "Design Systems"],
     href: "",
-    image: "/images/Placeholders/StreamPredicts_Dashboard_CS_Hero.png",
+    image: "/images/Placeholders/StreamPredicts_Dashboard_CS_Hero3.png",
     status: "in-construction",
     mediaType: "image",
     size: "square",
   },
-      {
-    id: "StreamPredicts Overlay",
-    title: "StreamPredicts",
-    subtitle: "Gamified Livestream Interface",
-    locked: false,
-    tags: ["UIUX", "Motion Design"],
-    href: "/work/stream-predicts",
-    image: "/images/Placeholders/StreamPredicts_Test.mp4",
-    mediaType: "video",
-    size: "square",
-  },
 
-  {
+    {
     id: "podpocalypse",
     title: "Podpocalypse",
     subtitle: "Local Couch-Party Videogame",
     tags: ["UIUX", "Motion Design", "Design Systems", "Game Design"],
     href: "/work/podpocalypse",
-    image: "/images/Placeholders/Podpoc_HeroImage_Testv1.png",
+    image: "/images/Placeholders/Podpoc_HeroImage_Testv3.png",
     mediaType: "image",
-    size: "wide",
+    size: "square",
   },
   {
     id: "nirvana-noir",

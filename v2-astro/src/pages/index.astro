@@ -93,11 +93,18 @@ import { projects } from "../data/projects";
   ============================================= */
   /* PAGE GRID — owns --col-unit so all children share the same column reference */
   .page-grid {
-    --col-unit: calc((100% - 3 * var(--gap-grid)) / 4);
+    /* --home-cols: desktop column count for the homepage grid.
+       Change this ONE value to prototype the layout. It's scoped to
+       .page-grid (not tokens.css) so project pages are unaffected —
+       ProjectCard's square/wide image heights read it via inheritance
+       and fall back to 3 anywhere else. Tablet keeps its own value below. */
+    --home-cols: 3;
+    --col-unit: calc((100% - 3 * var(--gap-grid)) / var(--home-cols));
   }
 
   @media (max-width: 1000px) and (min-width: 601px) {
     .page-grid {
+      --home-cols: 3;   /* pin tablet so desktop prototyping doesn't leak in */
       --col-unit: calc((100% - 2 * var(--gap-grid)) / 3);
     }
   }

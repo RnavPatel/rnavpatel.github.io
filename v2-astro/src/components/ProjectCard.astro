@@ -39,10 +39,14 @@ interface Props {
 }
 
 const { title, subtitle, tags, href, image, mediaType, size, locked, status } = Astro.props;
+
+// Locked cards render as a plain <div> — not a link, so they can't be
+// clicked, focused, or navigate anywhere. Unlocked cards are an <a>.
+const Wrapper = locked ? "div" : "a";
 ---
 
 <!-- Wrapper <a> is the clickable element — covers both image and title below -->
-<a href={href} class={`card-wrapper card--${size}${locked ? ' card--locked' : ''}`}>
+<Wrapper href={locked ? undefined : href} class={`card-wrapper card--${size}${locked ? ' card--locked' : ''}`}>
 
   <!-- ---- Image area: fixed size, clips media and overlays ---- -->
   <div class="card-image-area" data-jump>
@@ -84,7 +88,7 @@ const { title, subtitle, tags, href, image, mediaType, size, locked, status } = 
     {subtitle && <p class="card-subtitle">{subtitle}</p>}
   </div>
 
-</a>
+</Wrapper>
 
 <style>
   /* =============================================
@@ -144,13 +148,13 @@ const { title, subtitle, tags, href, image, mediaType, size, locked, status } = 
   /* Square image area: same explicit height as wide (1 col-unit via cqi),
      so wrapper padding never skews the height the way aspect-ratio would. */
   .card--square .card-image-area {
-    height: calc((100cqi - 3 * var(--gap-grid)) / 4);
+    height: calc((100cqi - 3 * var(--gap-grid)) / var(--home-cols, 3));
   }
 
   /* Wide image area: same height as a square card.
      Desktop (4-column): height = (gallery-width - 3 gaps) / 4 = col-unit */
   .card--wide .card-image-area {
-    height: calc((100cqi - 3 * var(--gap-grid)) / 4);
+    height: calc((100cqi - 3 * var(--gap-grid)) / var(--home-cols, 3));
   }
 
   /* Col2 image area: aspect-ratio based instead of cqi — col2 isn't

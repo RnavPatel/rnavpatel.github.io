@@ -121,7 +121,7 @@
      --page-padding-top: clears the fixed nav — increase if nav height changes  */
   --gap-grid:          5px;   /* gap between project tiles */
   --label-padding:     5px;
-  --page-padding-x:    1rem;   /* side margins on all pages clamp(min, preferred, max) */
+  --page-padding-x:    5rem;   /* side margins on all pages clamp(min, preferred, max) */
   --page-padding-top:  5rem;   /* clears the fixed nav */
 
   /* Visible 4-column grid — measured at IMAGE edges, not card edges.
@@ -165,6 +165,15 @@
     --text-body:    1rem;      /* 16px */
     --text-small:   0.875rem;  /* 14px */
     --text-label:   0.75rem;   /* 12px */
+  }
+}
+
+/* Phone + tablet side margins (≤1000px, same breakpoint as the homepage
+   tablet grid) stay at the live-site 1rem, independent of the desktop
+   --page-padding-x above. */
+@media (max-width: 1000px) {
+  :root {
+    --page-padding-x: 1rem;
   }
 }
 
