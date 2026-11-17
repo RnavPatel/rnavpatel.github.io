@@ -16,39 +16,80 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
 
   <!-- HEADER ------------------------------------------------->
   <header id="overview" class="p-header" slot="header">
-    <p class="text-heading">
-      <span class="tint-bsp">
-        <span class="text-sup">BestSummerProgram</span>
-      </span>
-      <span class="tint-gray">
-         <span class="text-sup">Case Study</span>
-      </span>
-      Allowing families and counselors to <strong>filter and navigate</strong> across our growing databases.
-    </p>
+    <div class="p-beat">
+      <p class="p-beat-eyebrow tint-bsp">BestSummerPrograms</p>
+      <h2 class="p-beat-heading">Allowing families and counselors to <span class="tint-bsp">filter and navigate</span> across our growing databases.
+      </h2>
+    </div>
   </header>
 
+    <div slot="meta">
+    <div class="p-meta-grid">
+    <div>
+      <p class="label">Role</p>
+      <h4>
+        Sole Product Designer <br>
+      </h4>
+    </div>
+
+    <div>
+      <p class="label">Skills</p>
+      <h4>
+        Product Design<br>
+        UIUX Design <br>
+        Front-end Development
+      </h4>
+    </div>
+    <div>
+        <p class="label">Team</p>
+
+        <a href="https://www.ethanhuangdesign.com/" target="_blank">Ethan Huang</a> <br />
+        Saul Lelchuk <br/>
+          Maisea Bailey <br/>
+
+      </div>
+    </div>
+  </div>
+
   <!-- HERO (full width) ----------------------------------->
-  <img slot="hero" src="/images/BestSummerPrograms/Nav_CaseStudy_Hero.png" alt="BSP Placeholder">
+  <!-- <img slot="hero" src="/images/BestSummerPrograms/Nav_CaseStudy_Hero.png" alt="BSP Placeholder"> -->
+    <div class="p-media">
+      <video autoplay loop muted playsinline>
+        <source src="/images/BestSummerPrograms/NavRedesign_Hero.mov" type="video/mp4" />
+      </video>
+      <p class="caption"><strong>Desktop navigation usage (search hover, subject pick, category pick, more filters)</strong></p>
+    </div>
+
+    <div class="p-media">
+      <img src="/images/BestSummerPrograms/Nav/Nav_Mobile_ScreensOverview.png" alt="Diagram">
+    </div>
+
 
   <!-- Problem -->
-  <section id="problem">
-    <p class="text-heading">
-      <span class="tint-gray">
-        <span class="text-sup">Context</span>
-      </span>
-        Our database grew from 50 to 500+ programs, and added a new 175+ competitions database to the platform,
-      <span class="tint-problem">
-        <span class="text-sup">Problem</span>
-        however, our users weren't aware of how to access the new content.
-      </span>
-    </p>
+  <section id="context">
+    <div class="p-beat">
+      <p class="p-beat-eyebrow">Context</p>
+      <h2 class="p-beat-heading">Shifting from high school programs to all precollege opportunities.</h2>
+      <div class="p-beat-body">
+        <p>Our database grew from 50 to 500+ programs, a new 175+ competitions database, and plans to add more verticals like middle school programs.</p>
+      </div>
+    </div>
 
     <div class="p-media p-narrow">
       <div class="p-not-mine">
         <img src="/images/BestSummerPrograms/Nav/Nav_BeforeCallout.png" alt="Previous Design">
       </div>
       <p class="caption">Previous MVP was built just for 50 programs</p>
-
+  </section> 
+  
+  <section id="problem">
+    <div class="p-beat">
+      <p class="p-beat-eyebrow tint-problem">Problem</p>
+      <h2 class="p-beat-heading">The database content outgrew its design, <span class="tint-problem">isolating users from new content. </span></h2>
+      <div class="p-beat-body">
+        <p>Our content aimed to holistically consolidate pre-college opportunities across disciplines, but our current product was signalling solely around programs to our users. </p>
+      </div>
+    </div>
       <div class="p-no-outline">
         <img src="/images/BestSummerPrograms/Nav/Before_Diagram.png" alt="Refined Design">
       </div>
@@ -56,20 +97,15 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
 
   </section>
 
-  <!-- Design Goal -->
-  <section id="design-goal">
-
-    <div class="p-detail">
-      <p class="text-heading">
-      <span class="tint-gray">
-        <span class="text-sup">Insight</span>
-      </span>
-          Our users were unaware of the new content and features,
-        <span class="tint-goal">
-          <span class="text-sup">Design Goal</span>
-          so we needed to create a more intuitive navigation experience.
-        </span>
-      </p>
+  <section id="solution">
+    <div class="p-beat">
+      <p class="p-beat-eyebrow tint-goal">Solution</p>
+      <h2 class="p-beat-heading">A <span class="tint-goal">broader navigation</span> system and <span class="tint-goal">specialized filtering</span> experience.</h2>
+      <div class="p-beat-body">
+        <p>Surfacing a site-wide search bar for direct navigation across databases, and adapting our filtering system based on user-priorities per database.
+        </p>
+      </div>
+    </div>
 
       <div class="p-media p-narrow">
         <div class="p-no-outline">
@@ -78,31 +114,44 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
       </div>
     </div>
 
-    <p class="text-heading">
-        <span class="tint-goal">
-          <span class="text-sup">Solution</span>
-           A redesigned filtering and navigation system.
-        </span>
-      </p>
+    
 
-    <div class="p-media">
-      <video autoplay loop muted playsinline>
-        <source src="/images/BestSummerPrograms/NavRedesign_Hero.mov" type="video/mp4" />
-      </video>
-      <p class="caption"><strong>Desktop navigation usage (search hover, subject pick, category pick, more filters)</strong></p>
-    </div>
+  <section id="design-intent">
 
-    <div class="p-media-2col p-narrow">
-      <div class="p-not-mine">
-        <img src="/images/BestSummerPrograms/Nav/Nav_OverallBefore.png" alt="Previous Design">
-        <p class="caption">Before</p>
-      </div>
-      <div>
-      <img src="/images/BestSummerPrograms/Nav/Nav_OverallAfter.png" alt="Refined Design">
-      <p class="caption">After</p>
+    <div class="p-beat">
+      <p class="p-beat-eyebrow tint-bsp">Design Intent</p>
+      <h2 class="p-beat-heading">To keep users aware of the growing databases.</h2>
+      <div class="p-beat-body">
+        <p>Our information structure needs to connect our growing databases and make them feel accessible to our users.
+        </p>
       </div>
     </div>
   </section>
+
+
+    <div class="p-media-2col">
+      <div class="p-not-mine">
+        <img src="/images/BestSummerPrograms/Nav/Nav_OverallBefore2.png" alt="Previous Design">
+        <p class="caption">Before</p>
+      </div>
+      <div>
+      <img src="/images/BestSummerPrograms/Nav/Nav_OverallAfter2.png" alt="Refined Design">
+      <p class="caption">After</p>
+      </div>
+    </div>
+
+    <div class="p-media-2col">
+      <div class="p-not-mine">
+        <img src="/images/BestSummerPrograms/Nav/Mobile_OverallBefore.png" alt="Previous Design">
+        <p class="caption">Before</p>
+      </div>
+      <div>
+      <img src="/images/BestSummerPrograms/Nav/Mobile_OverallAfter.png" alt="Refined Design">
+      <p class="caption">After</p>
+      </div>
+    </div>
+
+
 
   <!-- UI Layout -->
 
@@ -113,6 +162,7 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
       <img src="/images/BestSummerPrograms/Navigation_UI_Diagram.png" alt="Diagram">
       <p class="caption"><strong>Desktop navigation usage (search hover, subject pick, category pick, more filters)</strong></p>
     </div>
+
   </section>
 
   <!-- Filter Modal -->
@@ -123,13 +173,11 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
       <video autoplay loop muted playsinline>
         <source src="/images/BestSummerPrograms/Filters.mov" type="video/mp4" />
       </video>
-      <p class="caption"><strong>Mobile navigation usage (Menu expand, subject pick, category pick, more filters)</strong></p>
     </div>
   </section>
 
   <!-- Mobile -->
   <section id="mobile">
-
     <div class="p-media">
       <video autoplay loop muted playsinline>
         <source src="/images/BestSummerPrograms/NavRedesign_Mobile.mov" type="video/mp4" />
@@ -141,7 +189,6 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
       <video autoplay loop muted playsinline>
         <source src="/images/BestSummerPrograms/Mobile_Filter.mov" type="video/mp4" />
       </video>
-      <p class="caption"><strong>Filter modal</strong></p>
     </div>
 
       <p class="text-heading">

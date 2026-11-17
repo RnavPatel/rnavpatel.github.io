@@ -3,6 +3,56 @@
 A running checklist for the consolidation pass. Nothing here gets deleted while
 any page still depends on it.
 
+---
+
+## Design tenets (2026-11-16, these override everything below)
+
+**Goal:** replace *both* existing systems (legacy and v2) with one clear system
+that's easy to call and scales as more case studies get built. Neither current
+system is good enough: one has too many variables, and the other isn't useful enough
+in practice. Treat the plan below as background. Where it conflicts with these
+tenets, the tenets win.
+
+1. **Four type sizes: heading, subheading, body, caption.** That's enough for the
+   whole site. A fifth size needs a real, stated reason. (This replaces the v2
+   heading/body/small/label scale. `--text-lg` and the other legacy sizes either
+   map onto these four or go away.)
+2. **Clearly defined spacing and margins.** The current scale (`--space-1…24`
+   with skipped numbers) is confusing, and spacing values are used inconsistently
+   across the site. The mistake was starting with too many spacing amounts. Start
+   from a **small** set with names that make sense on their own, and add a step
+   only when it's needed.
+3. **Two text accent colors: "solution green" and "problem red".** The `.text-sup`
+   and `.tint-*` colors got out of hand. Cut the other tints (context, scope, bsp,
+   gray, and so on). **`.text-sup` will be removed eventually.**
+
+Apply these to any new type, spacing or color decision: audit against them before
+adding a token or class.
+
+### Prototype: `.p-beat` (2026-11-16)
+
+A candidate for the single text block. It would replace `.p-detail`,
+`.text-heading` statements and `.text-sup` eyebrows. It's being tried on the
+**navigation-redesign** page first and doesn't touch the other pages. The CSS
+and usage comment live in `ProjectLayout.astro` ("BEAT").
+
+```html
+<div class="p-beat">
+  <p class="p-beat-eyebrow tint-problem">Problem</p>
+  <h2 class="p-beat-heading">Statement…</h2>
+  <div class="p-beat-body"><p>Body…</p></div>
+</div>
+```
+
+- Stacks eyebrow → heading → body at every screen size (8px, then 24px gaps).
+  The two-column version was tried and dropped.
+- Eyebrow is a pill sharing `.text-sup`'s style. Gray by default; color it with a
+  tint class (`tint-problem`, `tint-goal`…) or `style="--tint: …"`.
+  Heading `--text-heading` semibold, body `--text-body`.
+- Accent color: `.text-problem` / `.text-solution` (typography.css), plain color, no pill.
+- Open questions: should the heading be "subheading" in the new 4-size scale? Once
+  `.text-sup` is gone, should the pill rule move onto `.p-beat-eyebrow` alone?
+
 **Scope note:** the v2 format may stay limited to the **Best Summer Programs (BSP)
 pages** for a while. Older case studies might not get new copy for some time. Plan
 for **both systems (legacy + v2) to coexist**. Cleanup happens in two stages:
@@ -57,7 +107,7 @@ Four sizes. Defined in `src/styles/tokens.css`.
 
 | Token | Desktop / phone | Role |
 |---|---|---|
-| `--text-heading` | 36 / 28px | statement lines, h1 |
+| `--text-heading` | 27 / 22px | statement lines, h1 |
 | `--text-body` | 18 / 16px | paragraphs, intro, About modal, eyebrows (`.text-sup`) |
 | `--text-small` | 15 / 14px | UI: nav, cards, status chips, captions |
 | `--text-label` | 12 / 12px | `.label`, tags, TOC, "Not my work" pill |
@@ -65,8 +115,10 @@ Four sizes. Defined in `src/styles/tokens.css`.
 Weights: 400 / 500 / 600. Line-heights: `--leading-tight` (1.2, headings) and
 `--leading-normal` (1.4, everything else).
 
-Root font size: `1rem` = 12px above 600px wide and 16px at or below. Phone values are
-set in the `@media (max-width: 600px)` block in tokens.css.
+Root font size: the browser default, so `1rem` = 16px everywhere (px = rem × 16).
+The old 75% root (12px desktop) was removed on 2026-11-16 and every rem token was
+rescaled to keep the same pixels. Phone values (type, spacing, page padding) are
+restated in the `@media (max-width: 600px)` block, which sits last in tokens.css.
 
 ---
 
@@ -240,4 +292,7 @@ cd src && for v in $(grep -oE "^\s*--[a-z0-9-]+" styles/tokens.css | tr -d ' ' |
 Add things here while writing case studies (an inline style worth turning into a class,
 a size that feels off, etc.).
 
--
+- `--text-lg` (fluid 15→24px) isn't in the rename list but is used by ProjectCard (2×) and
+  the index `.intro`. Either promote it to a 5th v2 size or fold those uses into the scale.
+- The spacing scale is now irregular in px (desktop 3/6/9/12/18/24/36…, phone 4/8/12/16…)
+  because the 12px root was dropped without changing any pixels. Consider a cleaner scale.

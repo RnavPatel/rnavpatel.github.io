@@ -85,6 +85,8 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <PageTransitions />
     <meta name="description" content={description} />
     <title>{fullTitle}</title>
@@ -351,6 +353,65 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
+  }
+
+  /* =============================================
+     BEAT — PROTOTYPE (2026-11-16)
+     One text block for case studies: eyebrow, heading, body, stacked.
+     Meant to replace .p-detail + .text-heading + .text-sup once it's
+     proven on the navigation case study.
+
+       <div class="p-beat">
+         <p class="p-beat-eyebrow tint-problem">Problem</p>
+         <h2 class="p-beat-heading">Shifting from high school programs…</h2>
+         <div class="p-beat-body">
+           <p>Our database grew from 50 to 500+ programs…</p>
+         </div>
+       </div>
+
+     - Eyebrow: a pill styled like .text-sup (typography.css). Gray by
+       default; set its color with a tint class (tint-problem, tint-goal…)
+       or any color: style="--tint: #0070f3".
+     - .p-beat-body holds one or more <p>. A bare <p class="p-beat-body">
+       works too. No body? Leave it out.
+     - Color a word or run: <span class="text-problem"> / <span class="text-solution">.
+     Same at every screen size. Tweak the two gaps at the top of the rule.
+  ============================================= */
+
+  .p-beat {
+    --beat-eyebrow-gap: 0.5rem;  /*  8px eyebrow → heading */
+    --beat-body-gap:    1.5rem;  /* 24px heading → body */
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--beat-eyebrow-gap);
+    margin-bottom: var(--space-8);
+  }
+
+  .p-beat-eyebrow {
+    align-self: flex-start;   /* pill hugs its text instead of stretching */
+  }
+
+  .p-beat-heading {
+    font-size: var(--text-heading);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-tight);
+    color: var(--color-text-secondary);
+  }
+
+  .p-beat-body {
+    margin-top: calc(var(--beat-body-gap) - var(--beat-eyebrow-gap));
+  }
+
+  .p-beat-body,
+  .p-beat-body p {
+    font-size: var(--text-body);
+    line-height: var(--leading-normal);
+    color: var(--color-text-secondary);
+  }
+
+  .p-beat-body p + p {
+    margin-top: var(--space-4);
   }
 
   /* =============================================

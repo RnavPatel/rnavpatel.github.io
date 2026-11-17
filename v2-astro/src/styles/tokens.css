@@ -28,7 +28,7 @@
   --color-text-muted:     #bcbcbc;
   --color-text-inverse:   #ffffff;
 
-  --color-accent:         #14D277;   /* your green — used on link hovers etc */
+  --color-accent:         #00FCA1;   /* your green — text selection, link hovers, focus rings, favicon */
 
   /* Statement tints — the .tint-* presets in typography.css */
   --color-tint-gray:      var(--color-text-secondary);
@@ -43,31 +43,28 @@
   --color-nav-hover-bg:   rgba(255, 255, 255, 0.3);  /* frosted white pill */
 
   /* --- Spacing scale ---
-     Multiples of 0.25rem (4px base).
-     Use these everywhere instead of raw pixel values.
-     --space-4 = 16px, --space-8 = 48px, --space-10 = 64px  */
-  --space-1:  0.25rem;   /*  4px */
-  --space-2:  0.5rem;    /*  8px */
-  --space-3:  0.75rem;   /* 12px */
-  --space-4:  1rem;      /* 16px */
-  --space-5:  1.5rem;    /* 24px */
-  --space-6:  2rem;      /* 32px */
-  --space-8:  3rem;      /* 48px */
-  --space-10: 4rem;      /* 64px */
-  --space-12: 5rem;      /* 80px */
-  --space-16: 7rem;      /* 112px */
-  --space-24: 10rem;
+     1rem = 16px (browser default). Comments show "desktop / phone" px.
+     Desktop runs smaller than phone; phone values are in the 600px
+     block at the bottom of this file.  */
+  --space-1:  0.1875rem;  /*   3 /  4px */
+  --space-2:  0.375rem;   /*   6 /  8px */
+  --space-3:  0.5625rem;  /*   9 / 12px */
+  --space-4:  0.75rem;    /*  12 / 16px */
+  --space-5:  1.125rem;   /*  18 / 24px */
+  --space-6:  1.5rem;     /*  24 / 32px */
+  --space-8:  2.25rem;    /*  36 / 32px */
+  --space-10: 3rem;       /*  48 / 40px */
+  --space-12: 3.75rem;    /*  60 / 48px */
+  --space-16: 5.25rem;    /*  84 / 64px */
+  --space-24: 7.5rem;     /* 120 / 160px */
 
   /* --- Typography --- */
   /* To change a font size site-wide: edit the value here.
 
-     1rem is NOT 16px here: reset.css sets the root to 75%, so
-       desktop/tablet (> 600px): 1rem = 12px
-       phone          (≤ 600px): 1rem = 16px
+     1rem = 16px everywhere (browser default; px = rem × 16).
      Comments below show "desktop / phone" in px. Phone values are
-     set in the 600px media query at the bottom of this file. Because
-     rem changes size there, a desktop edit does NOT carry over to
-     phone: change both, and keep these comments in sync.
+     set in the 600px media query at the bottom of this file, so a
+     desktop edit does NOT carry over to phone: change both.
 
      THE SCALE — 4 sizes. Use these for anything new:
        --text-heading  statement lines (.text-heading)
@@ -76,10 +73,10 @@
        --text-label    labels, tags, TOC                          */
   --font-sans: "Host Grotesk", sans-serif;
 
-  --text-heading: 2.25rem;  /* 27 / 22px */
-  --text-body:    1.5rem;   /* 18 / 16px */
-  --text-small:   1.25rem;  /* 15 / 14px */
-  --text-label:   1rem;     /* 12 / 12px */
+  --text-heading: 1.6875rem;  /* 27 / 22px */
+  --text-body:    1.125rem;   /* 18 / 16px */
+  --text-small:   0.9375rem;  /* 15 / 14px */
+  --text-label:   0.75rem;    /* 12 / 12px */
 
   /* LEGACY — kept so older case studies don't break while they're
      rewritten. xs/sm/md point at the new scale; lg/xl/2xl are only
@@ -87,9 +84,9 @@
   --text-xs:  var(--text-label);
   --text-sm:  var(--text-small);
   --text-md:  var(--text-body);
-  --text-lg:  clamp(1.25rem, 3vw, 2rem);   /* 15→24 / 20px — h3 sub-headings */
-  --text-xl:  clamp(1.5rem, 4vw, 2.5rem);  /* 18→30 / 24px — h2 section headings */
-  --text-2xl: clamp(2rem, 6vw, 3.5rem);    /* 24→42 / 32px — h1 page title */
+  --text-lg:  clamp(0.9375rem, 3vw, 1.5rem);  /* 15→24 / 20px — h3 sub-headings */
+  --text-xl:  clamp(1.125rem, 4vw, 1.875rem); /* 18→30 / 24px — h2 section headings */
+  --text-2xl: clamp(1.5rem, 6vw, 2.625rem);   /* 24→42 / 32px — h1 page title */
 
   --leading-tight:  1.2;    /* headings */
   --leading-normal: 1.4;
@@ -121,8 +118,8 @@
      --page-padding-top: clears the fixed nav — increase if nav height changes  */
   --gap-grid:          5px;   /* gap between project tiles */
   --label-padding:     5px;
-  --page-padding-x:    5rem;   /* side margins on all pages clamp(min, preferred, max) */
-  --page-padding-top:  5rem;   /* clears the fixed nav */
+  --page-padding-x:    3.75rem;  /* 60px side margins (12px ≤1000, 16px phone) */
+  --page-padding-top:  3.75rem;  /* 60 / 80px — clears the fixed nav */
 
   /* Visible 4-column grid — measured at IMAGE edges, not card edges.
      Homepage cards carry --gap-grid padding and sit --gap-grid apart, so
@@ -157,23 +154,12 @@
   
 }
 
-/* Phone type scale — same breakpoint as the root-size switch in reset.css
-   (1rem = 16px from here down). */
-@media (max-width: 600px) {
-  :root {
-    --text-heading: 1.375rem;  /* 22px. ~26 characters per line at phone width */
-    --text-body:    1rem;      /* 16px */
-    --text-small:   0.875rem;  /* 14px */
-    --text-label:   0.75rem;   /* 12px */
-  }
-}
-
 /* Phone + tablet side margins (≤1000px, same breakpoint as the homepage
-   tablet grid) stay at the live-site 1rem, independent of the desktop
-   --page-padding-x above. */
+   tablet grid) are 12px, independent of the desktop --page-padding-x
+   above. Phone (≤600px) overrides this to 16px below. */
 @media (max-width: 1000px) {
   :root {
-    --page-padding-x: 1rem;
+    --page-padding-x: 0.75rem;  /* 12px */
   }
 }
 
@@ -181,9 +167,42 @@
   :root {
     /* Spacing — upper end of scale compressed for mobile
        lg/xl/2xl text sizes already fluid via clamp() above */
-    --space-8:  2rem;      /* 48px → 32px */
-    --space-10: 2.5rem;    /* 64px → 40px */
-    --space-12: 3rem;      /* 80px → 48px */
-    --space-16: 4rem;      /* 112px → 64px */
+    --space-8:  1.5rem;    /* 36 → 24px */
+    --space-10: 1.875rem;  /* 48 → 30px */
+    --space-12: 2.25rem;   /* 60 → 36px */
+    --space-16: 3rem;      /* 84 → 48px */
+  }
+}
+
+/* Phone (≤600px). Must stay LAST so it wins over the 1000px and 768px
+   blocks above. Phone runs a slightly larger scale than desktop, so
+   every rem token that differs is restated here. */
+@media (max-width: 600px) {
+  :root {
+    /* Type */
+    --text-heading: 1.375rem;  /* 22px. ~26 characters per line at phone width */
+    --text-body:    1rem;      /* 16px */
+    --text-small:   0.875rem;  /* 14px */
+    --text-label:   0.75rem;   /* 12px */
+    --text-lg:  clamp(1.25rem, 3vw, 2rem);   /* 20px */
+    --text-xl:  clamp(1.5rem, 4vw, 2.5rem);  /* 24px */
+    --text-2xl: clamp(2rem, 6vw, 3.5rem);    /* 32px */
+
+    /* Spacing */
+    --space-1:  0.25rem;   /*  4px */
+    --space-2:  0.5rem;    /*  8px */
+    --space-3:  0.75rem;   /* 12px */
+    --space-4:  1rem;      /* 16px */
+    --space-5:  1.5rem;    /* 24px */
+    --space-6:  2rem;      /* 32px */
+    --space-8:  2rem;      /* 32px */
+    --space-10: 2.5rem;    /* 40px */
+    --space-12: 3rem;      /* 48px */
+    --space-16: 4rem;      /* 64px */
+    --space-24: 10rem;     /* 160px */
+
+    /* Layout */
+    --page-padding-x:   1rem;  /* 16px */
+    --page-padding-top: 5rem;  /* 80px */
   }
 }

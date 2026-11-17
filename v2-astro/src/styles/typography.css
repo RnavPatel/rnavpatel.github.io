@@ -88,19 +88,30 @@ p {
   --sup-gap: 0.5em;
   margin-inline: var(--sup-gap);
   display: inline-block;
-  font-size: var(--text-sm);
-  font-weight: bold;
-  padding: 0.25rem 0.5rem;
-  line-height: 1;
   vertical-align: text-top;
   position: relative;
   top: calc(var(--text-heading) * 0.2);
-  border-radius: 4px;
+}
 
-  /* Pill color comes from --tint, set here or inherited from a .tint run.
-     No --tint → text keeps the statement's color, background stays clear. */
+/* Pill look, shared by the inline .text-sup and the .p-beat eyebrow
+   (ProjectLayout.astro). Color comes from --tint, set on the element or
+   inherited from a .tint run. No --tint → text keeps the surrounding
+   color, background stays clear. */
+.text-sup,
+.p-beat-eyebrow {
+  font-size: var(--text-small);
+  font-weight: bold;
+  padding: var(--space-1) var(--space-2);
+  line-height: 1;
+  border-radius: 4px;
   color: var(--tint, currentColor);
   background-color: color-mix(in srgb, var(--tint, transparent) var(--tint-alpha, 25%), transparent);
+}
+
+/* Eyebrow defaults to gray. :where() has zero specificity, so a tint
+   class or style="--tint: …" on the eyebrow always wins. */
+:where(.p-beat-eyebrow) {
+  --tint: var(--color-tint-gray);
 }
 
 /* An eyebrow that opens the statement sits on the text edge, no left gap.
@@ -131,6 +142,12 @@ p {
 .tint-goal    { --tint: var(--color-tint-goal); }
 .tint-bsp     { --tint: var(--color-tint-bsp);}
 .tint-gray     { --tint: var(--color-tint-gray);}
+
+/* --- Problem / solution text (prototype, 2026-11-16) ---
+   The only two accent colors in the new system. Plain color, no pill.
+     <span class="text-problem">…</span>   <span class="text-solution">…</span> */
+.text-problem  { color: var(--color-tint-problem); }
+.text-solution { color: var(--color-tint-goal); }
 
 /* --- Color utilities --- */
 .text-primary   { color: var(--color-text-primary); }
