@@ -2,7 +2,8 @@
 /**
  * ProjectCard.astro  —  src/components/ProjectCard.astro
  * ============================================================
- * A single project tile in the homepage gallery grid.
+ * A single project tile. Always placed inside <CardGallery> (homepage
+ * and project hub pages), which supplies the container its sizes read.
  *
  * CHEAT SHEET — CMD+F these labels:
  *   "Card shape"     → border-radius, width, aspect ratio per size
@@ -28,11 +29,9 @@ interface Props {
   href: string;
   image: string;
   mediaType: "image" | "video";
-  /** "square"/"wide" = homepage gallery tiles (sized off --col-unit).
-   *  "col2" = fills one column of a 2-column CSS grid (e.g. a project
-   *  hub page's case-study grid) — sizes itself off its grid cell
-   *  instead of --col-unit, and stacks full-width on mobile. */
-  size: "square" | "wide" | "col2";
+  /** "square" = 1 gallery column, "wide" = 2 (see --col-unit, tokens.css).
+   *  Both stack full width at 16:9 on phones. */
+  size: "square" | "wide";
   subtitle?: string;
   locked?: boolean;
   status?: Status;
@@ -93,16 +92,14 @@ const Wrapper = locked ? "div" : "a";
 <style>
   /* =============================================
      Card shape
-     Width is driven by --col-unit set on .gallery in index.astro.
+     Width is driven by --col-unit (tokens.css); image height by the
+     <CardGallery> container width (100cqi).
 
-     Desktop/tablet: square and wide cards keep their original
-     dimensions. The image area holds the fixed size; the title
+     Desktop/tablet: the image area holds the fixed size; the title
      sits below it as plain text.
 
-     Mobile (≤ 600px): index.astro collapses both sizes to
-     width:100% / aspect-ratio:16/9 on the wrapper. We reset the
-     wrapper's aspect-ratio (it now contains title text too) and
-     apply 16/9 to .card-image-area instead.
+     Mobile (≤ 600px): both sizes go full width, image at 16:9
+     (see "Mobile" at the bottom of this block).
   ============================================= */
 
   /* Wrapper is the link — flex column: image on top, title below */
@@ -130,12 +127,6 @@ const Wrapper = locked ? "div" : "a";
     width: calc(2 * var(--col-unit) + var(--gap-grid));
   }
 
-  /* Col2: fills one cell of a 2-column CSS grid (not --col-unit based —
-     the grid it sits in already owns the column math). */
-  .card--col2 {
-    width: 100%;
-  }
-
   /* ---- Image area: fixed size, clips media and overlays ---- */
   .card-image-area {
     position: relative;
@@ -145,29 +136,16 @@ const Wrapper = locked ? "div" : "a";
     border-radius: var(--radius-sm);
   }
 
-  /* Square image area: same explicit height as wide (1 col-unit via cqi),
-     so wrapper padding never skews the height the way aspect-ratio would. */
-  .card--square .card-image-area {
-    height: calc((100cqi - 3 * var(--gap-grid)) / var(--home-cols, 3));
+  /* Image height = 1 col-unit, measured off the gallery (100cqi) instead
+     of %, so square and wide match and wrapper padding never skews it.
+     Same formula as --col-unit in tokens.css. */
+  .card-image-area {
+    height: calc((100cqi - 3 * var(--gap-grid)) / var(--gallery-cols));
   }
 
-  /* Wide image area: same height as a square card.
-     Desktop (4-column): height = (gallery-width - 3 gaps) / 4 = col-unit */
-  .card--wide .card-image-area {
-    height: calc((100cqi - 3 * var(--gap-grid)) / var(--home-cols, 3));
-  }
-
-  /* Col2 image area: aspect-ratio based instead of cqi — col2 isn't
-     necessarily inside the homepage's --col-unit/container-query context,
-     so it sizes off its own width instead of the gallery container. */
-  .card--col2 .card-image-area {
-    height: auto;
-    aspect-ratio: 16 / 9;
-  }
-
-  /* Tablet (601–1000px): 3-column grid */
+  /* Tablet (601–1000px): mirrors the tablet --col-unit */
   @media (max-width: 1000px) and (min-width: 601px) {
-    .card--wide .card-image-area {
+    .card-image-area {
       height: calc((100cqi - 2 * var(--gap-grid)) / 3);
     }
   }
@@ -333,19 +311,16 @@ const Wrapper = locked ? "div" : "a";
 
   /* =============================================
      Mobile (≤ 600px)
-     index.astro sets width:100% / aspect-ratio:16/9 on the wrapper.
-     Reset wrapper's aspect-ratio (it has title text below the image)
-     and apply 16/9 to the image area only.
+     Square and wide collapse: every card goes full width with a
+     16:9 image; the title stays below it.
   ============================================= */
   @media (max-width: 600px) {
-    .card-wrapper {
-      aspect-ratio: unset !important;
-      height: auto !important;
+    .card--square,
+    .card--wide {
+      width: 100%;
     }
 
-    .card-image-area,
-    .card--square .card-image-area,
-    .card--wide .card-image-area {
+    .card-image-area {
       width: 100%;
       height: auto;
       aspect-ratio: 16 / 9;

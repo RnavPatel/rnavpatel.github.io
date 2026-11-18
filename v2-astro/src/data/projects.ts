@@ -58,21 +58,6 @@ export const projects: Project[] = [
     size: "wide",
   },
 
-    /*
-
-    {
-    id: "BSP Illustration Case Study",
-    title: "BestSummerProgram",
-    subtitle: "UI Illustration Case Study",
-    locked: false,
-    tags: ["UI Illustration", "Visual Identity"],
-    href: "/work/best-summer-programs/ui-illustrations",
-    image: "/images/BestSummerPrograms/Illustration/UI_Illustrations.mp4",
-    status: "shipped",
-    mediaType: "video",
-    size: "square",
-  },
-  */
        {
     id: "StreamPredicts Overlay",
     title: "StreamPredicts",
@@ -106,7 +91,7 @@ export const projects: Project[] = [
     href: "/work/podpocalypse",
     image: "/images/Placeholders/Podpoc_HeroImage_Testv3.png",
     mediaType: "image",
-    size: "square",
+    size: "square", 
   },
   {
     id: "nirvana-noir",

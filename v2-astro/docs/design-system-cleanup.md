@@ -93,7 +93,8 @@ Reference page: `src/pages/work/best-summer-programs/competitionsv2.astro`
 **Layout (8-col grid, 2026-10-27).** Pages never set widths; `ProjectLayout.astro`
 places every block by zone:
 - Hero: `<img slot="hero" …>` (or `<video slot="hero">`). Full 8 cols. Top-most image only.
-- Media: `.p-media`, `.p-media-2col`, `.p-media-3col`, `.p-card-grid`. Cols 2–7.
+- Media: `.p-media`, `.p-media-2col`, `.p-media-3col`. Cols 2–7.
+- Card galleries: `<CardGallery>` (same component as the homepage). Full 8 cols, homepage edges.
 - Everything else (title, `slot="meta"` row, statements, copy, dividers): cols 3–6.
 - Wrapping blocks in an extra div? Add `class="p-flow"` so its children keep their zones.
 - Not yet on the hero slot: marvel, nirvananoir, podpocalypse, stream-predicts
@@ -171,7 +172,7 @@ delete. **Promote** a pattern to a class when the same inline style shows up 3+ 
 | `.p-section-open` | marvel, nirvananoir, podpocalypse (16×) | no | **legacy-only**. Delete when those pages convert. |
 | `.p-meta-grid` | 5 pages (6×) | BSP hub only | keep; podpocalypse overrides its columns + margin inline |
 | `.p-not-mine` | competitionsv2, ui-illustrations | yes | keep (v2 pattern) |
-| `.p-card-grid` | BSP hub only (1×) | yes | keep |
+| `.p-card-grid` | — | — | **removed** 2026-11-18; hub uses `<CardGallery>` like the homepage |
 | `.p-media-ph` | competitionsv2 (1×, draft) | yes (draft) | keep as draft helper; should hit 0 before publishing |
 | `.p-wip` | **nothing** | — | **dead**. Delete candidate. |
 | `.p-head`, `.p-hero`, `.p-meta-row` | layout internals only | — | keep (structural, not authoring classes). `.p-sidebar*` removed 2026-10-27 |

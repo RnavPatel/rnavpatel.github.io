@@ -8,111 +8,57 @@
  *   Horizontal margins come from BaseLayout.astro → "Page margin grid".
  *   To change page margins: edit --page-padding-x in tokens.css.
  *
- * CHEAT SHEET — CMD+F these labels:
- *   "GALLERY GRID"  → the project tile grid
- *   "Grid columns"  → 4-column definition
- *   "Grid areas"    → the visual map (which card goes where)
- *   "Grid stagger"  → why row 2 is offset right (the empty cell)
- *   "Tablet grid"   → grid at medium screen widths
- *   "Mobile grid"   → single-column layout for phones
+ * GALLERY: layout   → src/components/CardGallery.astro
+ *          columns  → --gallery-cols / --col-unit in tokens.css
  * ============================================================
  *
  * To add a project:          edit src/data/projects.ts
  * To change card appearance: edit src/components/ProjectCard.astro
+ * To change the gallery:     edit src/components/CardGallery.astro
  * To change card size/shape: edit size: "square"|"wide" in projects.ts
  * To change colors/sizes:    edit src/styles/tokens.css
  */
 
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ProjectCard from "../components/ProjectCard.astro";
+import CardGallery from "../components/CardGallery.astro";
 import { projects } from "../data/projects";
 ---
 
 <BaseLayout title="Aarnav Patel" activePage="work" flushTop>
 
-  <!-- .page-grid owns --col-unit so both .intro and .gallery share the same
-       column reference width. To span N cols on any child:
-         1 col → width: calc(1 * var(--col-unit))
-         2 col → width: calc(2 * var(--col-unit) + 1 * var(--gap-grid))
-         3 col → width: calc(3 * var(--col-unit) + 2 * var(--gap-grid))
-         4 col → width: 100%
-  -->
-  <div class="page-grid">
-
   <p class="intro">
     Aarnav is a product designer who makes joyful interactive experiences across entertainment and education platforms.
   </p>
 
-    <!-- =============================================
-         GALLERY
-         Cards flow left-to-right and wrap to new rows.
-         Each row is center-aligned — partial rows
-         automatically sit in the middle.
-         To reorder cards: reorder objects in projects.ts.
-         To add a card: add an object in projects.ts.
-         ============================================= -->
-    <section class="gallery">
-      {projects.map((project) => (
-        <ProjectCard
-          title={project.title}
-          subtitle={project.subtitle}
-          tags={project.tags}
-          href={project.href}
-          image={project.image}
-          mediaType={project.mediaType}
-          size={project.size}
-          locked={project.locked}
-          status={project.status}
-        />
-      ))}
-    </section>
-
-  </div>
-
+  <!-- =============================================
+       GALLERY — layout lives in CardGallery.astro.
+       To reorder cards: reorder objects in projects.ts.
+       To add a card: add an object in projects.ts.
+       ============================================= -->
+  <CardGallery>
+    {projects.map((project) => (
+      <ProjectCard
+        title={project.title}
+        subtitle={project.subtitle}
+        tags={project.tags}
+        href={project.href}
+        image={project.image}
+        mediaType={project.mediaType}
+        size={project.size}
+        locked={project.locked}
+        status={project.status}
+      />
+    ))}
+  </CardGallery>
 
 </BaseLayout>
 
 <style>
-  /* =============================================
-     GALLERY
-     =============================================
-
-     Flexbox row layout — works exactly like Figma
-     auto-layout with "center" horizontal alignment.
-
-     Cards have fixed widths defined by --col-unit.
-     They flow left-to-right, wrap to new rows,
-     and any partial row is centered automatically.
-
-     --col-unit: 1 column = 1/4 of the gallery width
-     (accounting for the 3 gaps between 4 columns)
-
-     Adding a card: edit projects.ts only. No CSS needed.
-     Reordering: change the array order in projects.ts.
-     Changing size: edit size: "square" | "wide" in projects.ts.
-  ============================================= */
-  /* PAGE GRID — owns --col-unit so all children share the same column reference */
-  .page-grid {
-    /* --home-cols: desktop column count for the homepage grid.
-       Change this ONE value to prototype the layout. It's scoped to
-       .page-grid (not tokens.css) so project pages are unaffected —
-       ProjectCard's square/wide image heights read it via inheritance
-       and fall back to 3 anywhere else. Tablet keeps its own value below. */
-    --home-cols: 3;
-    --col-unit: calc((100% - 3 * var(--gap-grid)) / var(--home-cols));
-  }
-
-  @media (max-width: 1000px) and (min-width: 601px) {
-    .page-grid {
-      --home-cols: 3;   /* pin tablet so desktop prototyping doesn't leak in */
-      --col-unit: calc((100% - 2 * var(--gap-grid)) / 3);
-    }
-  }
-
-  /* INTRO — top-left, 1 column wide. Change N to span more columns:
-     2 col → calc(2 * var(--col-unit) + 1 * var(--gap-grid))
-     3 col → calc(3 * var(--col-unit) + 2 * var(--gap-grid))
-     4 col → 100%
+  /* INTRO — top-left, 1 gallery column wide (--col-unit, tokens.css).
+     Change N to span more columns:
+       2 col → calc(2 * var(--col-unit) + 1 * var(--gap-grid))
+       3 col → calc(3 * var(--col-unit) + 2 * var(--gap-grid))
      padding-left = the card's own padding (--gap-grid), so the text's
      left edge lines up with the first image's left edge below. */
   .intro {
@@ -121,64 +67,9 @@ import { projects } from "../data/projects";
     padding-bottom: var(--space-5);
   }
 
-  /* Centered variant:
-  .intro {
-    width: calc(1 * var(--col-unit));
-    margin-inline: auto;   — centers the BOX within .page-grid
-    text-align: center;    — centers the TEXT lines within the box
-    padding-top: var(--space-5);
-    padding-bottom: var(--space-5);
-  } */
-
   @media (max-width: 600px) {
-    .intro { 
+    .intro {
       width: 80%;
     }
-  }
-
-  .gallery {
-
-    /* container-type: inline-size makes .gallery a CSS container.
-       Cards can then use cqi (container inline size) units in their
-       height property — cqi resolves to a real length (like px), unlike
-       %, which only works for width. This is how wide + square cards
-       get identical heights without brittle fixed pixel values. */
-    container-type: inline-size;
-    container-name: gallery;
-
-    display: flex;
-    flex-wrap: wrap;            /* rows wrap when full */
-    justify-content: center;    /* each row is center-aligned */
-    align-items: flex-start;    /* cards align to top, not stretched */
-    gap: var(--gap-grid);
-
-    padding-top: var(--space-6);
-    padding-bottom: var(--space-6);
-    /* background-color: red;  */
-  }
-
-  /* =============================================
-     Mobile  (≤ 600px)
-     All cards go full-width at 16:9.
-     The size="square"|"wide" distinction collapses
-     on mobile — everything stacks as landscape cards.
-     ============================================= */
-  @media (max-width: 600px) {
-    .gallery > :global(.card--square),
-    .gallery > :global(.card--wide) {
-      width: 100%;
-      height: auto;          /* reset explicit height so aspect-ratio takes over */
-      aspect-ratio: 16 / 9;
-    }
-  }
-
-  /* =============================================
-     Footer
-     ============================================= */
-  .footer {
-    padding-top: var(--space-5);
-    padding-bottom: var(--space-5);
-    display: flex;
-    justify-content: flex-end;
   }
 </style>

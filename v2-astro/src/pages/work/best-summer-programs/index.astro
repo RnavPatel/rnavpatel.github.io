@@ -2,18 +2,20 @@
 /**
  * index.astro — src/pages/work/best-summer-programs/index.astro
  *
- * This is the project HUB page: overview + a grid of ProjectCard
- * tiles (size="col2"), each linking out to its own dedicated
+ * This is the project HUB page: overview + a <CardGallery> of
+ * ProjectCard tiles (same gallery as the homepage — set
+ * size="square" or size="wide" per card), each linking out to its own dedicated
  * case-study sub-page in this same folder (navigation-redesign.astro,
  * competitions.astro, compare-bookmarks.astro).
  *
  * TO ADD ANOTHER CASE STUDY:
  *   1. Copy one of the sibling .astro files in this folder
- *   2. Add a matching <ProjectCard size="col2"> below in the ".p-card-grid"
+ *   2. Add a matching <ProjectCard size="square"|"wide"> inside <CardGallery> below
  */
 
 import ProjectLayout from "../../../layouts/ProjectLayout.astro";
 import ProjectCard from "../../../components/ProjectCard.astro";
+import CardGallery from "../../../components/CardGallery.astro";
 ---
 
 <ProjectLayout
@@ -56,37 +58,17 @@ import ProjectCard from "../../../components/ProjectCard.astro";
 
   <!-- HEADER ------------------------------------------------->
 <header id="overview" class="p-header" slot="header">
-
-  <p class="text-heading">
-      <span class="tint-bsp">
-        <strong>BestSummerPrograms </strong> is an open source database 
-      </span>
-      for families and counselors to navigate the precollege landscape.
-  </p>
+  <div class="p-beat">
+      <h2 class="p-beat-heading"><span class="tint-bsp"><strong>BestSummerPrograms</strong> is an open source database</span> for families and counselors to navigate the precollege landscape.
+      </h2>
+    </div>
 
 </header>
 
-<!-- HERO (full width) ----------------------------------->
-<img slot="hero" src="/images/Placeholders/BSP_Hero_V3.png" alt="Best Summer Programs Hero Image" />
-
-<!-- CONTEXT -->
-<section id="context">
-  <p class="text-heading">
-    <span class="tint-gray">
-      <span class="text-sup">Context</span>
-    </span>
-    The platform was growing its summer program database and expanding into high school competitions as a new vertical.
-    <br>
-    <span class="tint-bsp">
-      <span class="text-sup">Scope</span>
-      I owned the scale-up initiative:</span>
-    updating existing visual systems, and building new features to support a larger database and user base across devices.
-  </p>
-</section>
 
 <!-- CASE STUDIES -->
 <section id="case-studies">
-  <hr class="p-divider" />
+  <!-- <hr class="p-divider" /> -->
   <div class="heading">
     <p class="text-heading">
 
@@ -94,13 +76,13 @@ import ProjectCard from "../../../components/ProjectCard.astro";
     </p>
   </div>
 
-  <div class="p-card-grid">
+  <CardGallery>
     <ProjectCard
       title="Navigation Redesign"
       subtitle="Database Browsing System"
       tags={[]}
       href="/work/best-summer-programs/navigation-redesign"
-      image="/images/BestSummerPrograms/Nav_CaseStudy_Hero.png"
+      image="/images/BestSummerPrograms/Nav/NavCaseStudy_hero_Placeholder_v2.png"
       mediaType="image"
       size="square"
       status="shipped"
@@ -110,32 +92,32 @@ import ProjectCard from "../../../components/ProjectCard.astro";
       subtitle="Presenting Variable Data"
       tags={[]}
       href="/work/best-summer-programs/competitionsv2"
-      image="/images/BestSummerPrograms/CompetitionsPageHero.png"
+      image="/images/BestSummerPrograms/Competitions/CompetitionsCaseStudy_hero_Placeholder_v2.png"
       mediaType="image"
-      size="wide"
+      size="square"
       status="shipped"
     />
     <ProjectCard
+      title="UI Illustrations"
+      subtitle="Extended Visual System"
+      tags={[]}
+      href="/work/best-summer-programs/ui-illustrations"
+      image="/images/BestSummerPrograms/Illustration/IllustrationCaseStudy_hero_Placeholder.png"
+      mediaType="image"
+      size="square"
+      status="shipped"
+    />
+
+    <!-- <ProjectCard
       title="Compare and Bookmarks"
       subtitle="User-Item Collections"
       tags={[]}
       href=""
       image="/images/BestSummerPrograms/BookmarksCompareHero.png"
       mediaType="image"
-      size="col2"
+      size="square"
       locked
       status="in-construction"
-    />
-
-    <ProjectCard
-      title="UI Illustrations"
-      subtitle="Extended Visual System"
-      tags={[]}
-      href="/work/best-summer-programs/ui-illustrations"
-      image="/images/BestSummerPrograms/Illustration/BSP_UI_Illustrations_Hero_v2.png"
-      mediaType="image"
-      size="col2"
-      status="shipped"
     />
 
     <ProjectCard
@@ -145,11 +127,11 @@ import ProjectCard from "../../../components/ProjectCard.astro";
       href=""
       image="/images/BestSummerPrograms/LandingPage_Hero.png"
       mediaType="image"
-      size="col2"
+      size="square"
       status="shipped"
       locked
-    />
-  </div>
+    /> -->
+  </CardGallery>
 </section>
 
 </ProjectLayout>

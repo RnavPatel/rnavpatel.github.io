@@ -1,0 +1,49 @@
+---
+/**
+ * CardGallery.astro  —  src/components/CardGallery.astro
+ * ============================================================
+ * The one gallery layout for <ProjectCard> tiles. Used on the
+ * homepage (index.astro) and on project hub pages (e.g.
+ * work/best-summer-programs/index.astro), so size="square" and
+ * size="wide" mean exactly the same thing everywhere.
+ *
+ * Usage:
+ *   <CardGallery>
+ *     <ProjectCard size="wide" … />
+ *     <ProjectCard size="square" … />
+ *   </CardGallery>
+ *
+ * Column math (--gallery-cols, --col-unit) lives in tokens.css.
+ * Card widths/heights live in ProjectCard.astro ("Card shape").
+ * On project pages, ProjectLayout's FLOW puts this on the hero zone
+ * so its edges match the homepage.
+ * ============================================================
+ */
+---
+
+<div class="card-gallery">
+  <slot />
+</div>
+
+<style>
+  /* Flexbox row layout — like Figma auto-layout with "center" alignment.
+     Cards have fixed widths (multiples of --col-unit), flow left-to-right,
+     wrap to new rows, and any partial row is centered automatically.
+
+     container-type: lets cards size their image HEIGHT off 100cqi (the
+     gallery's width) — cqi resolves to a real length, unlike %, which is
+     how wide + square cards get identical heights. */
+  .card-gallery {
+    container-type: inline-size;
+    container-name: gallery;
+
+    display: flex;
+    flex-wrap: wrap;            /* rows wrap when full */
+    justify-content: center;    /* each row is center-aligned */
+    align-items: flex-start;    /* cards align to top, not stretched */
+    gap: var(--gap-grid);
+
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
+  }
+</style>

@@ -129,6 +129,15 @@
   --grid-gutter: calc(3 * var(--gap-grid));                  /* 15px */
   --grid-inset:  calc(var(--page-padding-x) + var(--gap-grid)); /* 17 / 21px */
 
+  /* Card gallery columns (CardGallery.astro + ProjectCard.astro, and the
+     homepage intro). --col-unit is ONE gallery column. Its % is resolved
+     wherever it's used, so on a card it means "of the gallery's width".
+       1 col → var(--col-unit)                          square card
+       2 col → calc(2 * var(--col-unit) + var(--gap-grid))  wide card
+     Tablet keeps its own value in the ≤1000px block below. */
+  --gallery-cols: 3;
+  --col-unit: calc((100% - 3 * var(--gap-grid)) / var(--gallery-cols));
+
   /* --- Motion --- */
   /* --ease-out-expo: snappy, decelerating — best for things sliding into place
      --ease-out-quart: slightly softer version of above
@@ -160,6 +169,11 @@
 @media (max-width: 1000px) {
   :root {
     --page-padding-x: 0.75rem;  /* 12px */
+
+    /* Tablet gallery — pinned to 3 so desktop prototyping doesn't leak in.
+       (Phone stacks cards full width, so these don't matter there.) */
+    --gallery-cols: 3;
+    --col-unit: calc((100% - 2 * var(--gap-grid)) / 3);
   }
 }
 

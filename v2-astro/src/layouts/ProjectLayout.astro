@@ -9,8 +9,8 @@
  *
  *   | 1 | 2 | 3   4   5   6 | 7 | 8 |
  *   |   |   | TEXT (4x)     |   |   |   title, meta, all running text
- *   |   | MEDIA (6x)            |   |   .p-media, -2col, -3col, .p-card-grid
- *   | HERO (8x)                     |   slot="hero" (top-most image only)
+ *   |   | MEDIA (6x)            |   |   .p-media, -2col, -3col
+ *   | HERO (8x)                     |   slot="hero", <CardGallery> (same edges as the homepage gallery)
  *
  *   >1000px   8 cols as above.
  *   601–1000  6 cols (the homepage is 3 here). Text 4x centred, media 6x.
@@ -183,9 +183,9 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
 
      Three zones, set as "columns left empty on each side":
        text   → --p-text-inset  (2 → cols 3–6)   default for everything
-       media  → --p-media-inset (1 → cols 2–7)   .p-media, -2col, -3col, .p-card-grid
+       media  → --p-media-inset (1 → cols 2–7)   .p-media, -2col, -3col
                                                   (+ .p-narrow → back on the text zone)
-       hero   → 0               (cols 1–8)       .p-hero (the hero slot)
+       hero   → 0               (cols 1–8)       .p-hero (the hero slot), <CardGallery>
 
      Blocks are placed with side margins, not grid-column, on purpose:
      the page stays normal block flow, so vertical margins still collapse
@@ -253,11 +253,13 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     margin-inline: calc(var(--p-text-inset) * var(--p-step));
   }
 
-  /* Cards carry --gap-grid padding (as on the homepage), so the grid
-     bleeds out by that much to put the card IMAGES on the media edges. */
+  /* <CardGallery> sits on the HERO zone so it matches the homepage.
+     Cards carry --gap-grid padding (as on the homepage), so the grid
+     bleeds out by that much: grid edge = --page-padding-x, card IMAGES
+     on --grid-inset — exactly the homepage's edges at every breakpoint. */
   .project-page :is(.p-head, .p-header, .project-content, .project-content section, .p-flow)
-    > .p-card-grid {
-    margin-inline: calc(var(--p-media-inset) * var(--p-step) - var(--gap-grid));
+    > .card-gallery {
+    margin-inline: calc(-1 * var(--gap-grid));
   }
 
   .project-page :is(.p-head, .p-header, .project-content, .project-content section, .p-flow)
@@ -494,33 +496,6 @@ const fullTitle = title === "Aarnav Patel" ? title : `${title} — Aarnav Patel`
     color: var(--color-text-muted);
     font-size: var(--text-small);
     text-align: center;
-  }
-
-  /* =============================================
-     CARD GRID — lays out <ProjectCard size="col2"> tiles (e.g. a
-     project hub page's case-study links). 2 columns on desktop,
-     collapses to a single full-width column on mobile — same
-     "cards go full-width" behavior as the homepage gallery, just
-     via grid-template-columns instead of flex-wrap.
-
-     Kept separate from .p-media-2col/.p-media-3col on purpose: those
-     stay 2/3-up on mobile for plain image pairs, this always stacks.
-  ============================================= */
-  /* Side bleed lives in FLOW above. The gap plus each card's --gap-grid
-     padding makes the visible gutter 3 × --gap-grid (= --grid-gutter).
-     container-type: square/wide cards size their image height off 100cqi. */
-  .p-card-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--gap-grid);
-    margin-top: var(--space-6);
-    container-type: inline-size;
-  }
-
-  @media (max-width: 640px) {
-    .p-card-grid {
-      grid-template-columns: 1fr;
-    }
   }
 
   /* =============================================
