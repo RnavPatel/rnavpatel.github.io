@@ -2,137 +2,227 @@
 /**
  * Nav.astro  —  src/components/Nav.astro
  * ============================================================
- * Top navigation: Work/About pills on the right, plus an optional
- * "< Back" pill on the left on case-study sub-pages. Aligns to the same page margins as all
- * other content.
+ * EVERYTHING nav lives in this file: the bar, the "Back to:" link,
+ * Work / About, the About modal it opens, and the nav's page-transition
+ * layer. Both layouts just render <Nav />. No props.
+ *
+ *   | Back to: BSP Home Page                         Work   About |
+ *     ^ first image edge (--grid-inset)         last image edge ^
  *
  * CHEAT SHEET — CMD+F these labels:
- *   "Nav layout"   → how the bar is positioned and spaced
- *   "Nav links"    → the shared .nav-link pill style (Work, About, Back)
- *   "Hover"        → mouse-over state
+ *   "Back link"   → how the parent page + its name are found
+ *   "Nav tokens"  → --nav-height (the one value other files read)
+ *   "Nav layout"  → bar position, background and spacing
+ *   "Nav links"   → the one shared link style (Back, Work, About, ✕)
+ *   "About modal" → the overlay About opens
  * ============================================================
  *
- * To restyle every nav pill at once: edit .nav-link below
- * To change pill colors: edit --color-nav-bg and --color-nav-border in tokens.css
+ * BACK LINK — no per-page wiring.
+ *   The parent is the URL one level up, skipping levels with no page
+ *   ("/work" isn't a page, so /work/marvel → /):
+ *     /work/best-summer-programs/competitionsv2 → /work/best-summer-programs
+ *     /work/best-summer-programs                → /
+ *     /                                         → (no back link)
+ *   The NAME comes from the parent page itself. Each page that can be a
+ *   parent declares, in its own frontmatter:
+ *       export const navTitle = "BSP Home Page";
+ *   That one line is the only place a page's nav name is written.
+ *   A page without it falls back to its URL ("best-summer-programs" →
+ *   "Best Summer Programs").
  */
 
-interface Props {
-  activePage: "work" | "about";
-  /** Set on case-study sub-pages to render a "< [Project]" pill
-   *  at the top-left, opposite the Work/About group. */
-  backHref?: string;
-  backLabel?: string;
-}
+import AboutModal from "./AboutModal.astro";
 
-const { activePage, backHref, backLabel } = Astro.props;
+/* =============================================
+   Back link
+============================================= */
+type PageModule = { navTitle?: string };
+const pages = import.meta.glob<PageModule>("/src/pages/**/*.astro");
+
+// "/src/pages/work/bsp/index.astro" → "/work/bsp"
+const routeOf = (file: string) =>
+  file.replace(/^\/src\/pages/, "").replace(/\.astro$/, "").replace(/\/index$/, "") || "/";
+const routes = new Map(Object.entries(pages).map(([file, load]) => [routeOf(file), load]));
+
+const here = Astro.url.pathname.replace(/\.html$/, "").replace(/\/$/, "") || "/";
+
+let back: { href: string; name: string } | undefined;
+if (here !== "/") {
+  let href = here;
+  do {
+    href = href.slice(0, href.lastIndexOf("/")) || "/";
+  } while (!routes.has(href)); // "/" always exists, so this ends
+
+  const mod = await routes.get(href)!();
+  const fallback = (href.split("/").pop() || "home")
+    .split("-")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+  back = { href, name: mod.navTitle ?? fallback };
+}
 ---
 
-<nav>
+<nav class="site-nav" aria-label="Site">
+  {back && (
+    <a href={back.href} class="nav-link nav-back">
+      <span class="nav-back-text">Back to: {back.name}</span>
+    </a>
+  )}
 
-  <div class="nav-row">
-    <!-- Back pill — top-left, only on case-study sub-pages -->
-    {backHref && (
-      <a href={backHref} class="nav-link nav-back">
-        <span>&lt; {backLabel}</span>
-        {/* < symbol = &lt; */}
-      </a>
-    )}
+  <div class="nav-links">
+    <a href="/" class="nav-link" aria-current={here === "/" ? "page" : undefined}>Work</a>
+    <button type="button" class="nav-link" data-about-open>About</button>
+  </div>
+</nav>
 
-    <!-- Work / About pills -->
-    <div class="nav-links">
-      <a href="/" class="nav-link">
-        <span>Work</span>
-      </a>
-      <button data-modal="about" class="nav-link">
-        <span>About</span>
-      </button>
+<!-- About modal -->
+<div id="about-modal" class="modal-backdrop" aria-hidden="true">
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-label="About Aarnav">
+    <div class="modal-header">
+      <button type="button" class="nav-link modal-close" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <AboutModal />
     </div>
   </div>
+</div>
 
-</nav>
+<script>
+  const modal = document.getElementById("about-modal")!;
+  const panel = modal.querySelector(".modal-panel")!;
+
+  function setOpen(open: boolean) {
+    modal.classList.toggle("is-open", open);
+    modal.setAttribute("aria-hidden", String(!open));
+    document.body.style.overflow = open ? "hidden" : "";
+  }
+
+  document.querySelector("[data-about-open]")?.addEventListener("click", () => setOpen(true));
+  modal.querySelector(".modal-close")!.addEventListener("click", () => setOpen(false));
+  modal.addEventListener("click", (e) => {
+    if (!panel.contains(e.target as Node)) setOpen(false);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setOpen(false);
+  });
+</script>
+
+<style is:global>
+  /* =============================================
+     Nav tokens
+     The nav is an IN-FLOW STICKY HEADER: it takes up its own
+     space at the top of the page (so every page starts below
+     it automatically) and sticks to the top while scrolling.
+     No page adds padding to "clear" it.
+
+     --nav-height is the bar's height, and the only nav value
+     read elsewhere: things that stick or scroll under the bar
+     (ProjectTOC, anchor links, layout min-heights). Change it
+     here and all of them follow.
+  ============================================= */
+  :root {
+    --nav-height: 3rem; /* 48px */
+  }
+
+  /* Anchor links (#section) land below the bar, not under it. */
+  html {
+    scroll-padding-top: var(--nav-height);
+  }
+
+  /* Page transitions (PageTransitions.astro): the nav is its own
+     layer so it stays put on top while the page sheets slide.
+     No crossfade: the new nav (and its Back link) swaps in instantly. */
+  .site-nav {
+    view-transition-name: site-nav;
+  }
+  ::view-transition-group(site-nav) {
+    z-index: 100;
+  }
+  ::view-transition-old(site-nav) {
+    display: none;
+  }
+  ::view-transition-new(site-nav) {
+    animation: none;
+  }
+</style>
 
 <style>
   /* =============================================
      Nav layout
-     Fixed bar across the top: optional Back pill on the
-     left, Work/About group on the right.
-     Padding matches --grid-inset so pills align to the
-     same image edges as the gallery / project grid.
+     Full-width bar, same on every page. Sticky (see
+     "Nav tokens"). Side padding = --grid-inset, so the
+     Back link starts on the first image edge and About
+     ends on the last one (homepage + project grid).
+     Background: the page color, slightly see-through and
+     blurred, so content scrolling under it stays quiet.
   ============================================= */
-  nav {
-    position: fixed;
+  .site-nav {
+    position: sticky;
     top: 0;
-    left: 0;
-    width: 100%;
     z-index: 100;
-    box-sizing: border-box;
-
-    /* Side padding = --grid-inset (tokens.css), the same inset as the image
-       edges, so the PILL BOX (visible via its backdrop blur) lines up with
-       the right edge of the last image/media column. */
-    padding: var(--space-3) var(--grid-inset);
-    pointer-events: none; /* bar itself doesn't capture clicks */
-  }
-
-  /* Single row — Back pill (if any) on the left, Work/About on the right. */
-  .nav-row {
+    height: var(--nav-height);
     display: flex;
     align-items: center;
     gap: var(--grid-gutter);
-    width: 100%;
+    padding-inline: var(--grid-inset);
+    background-color: color-mix(in srgb, var(--color-bg) 85%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 
-  /* Pushes Work/About to the right edge whether or not the Back pill exists. */
   .nav-links {
-    margin-left: auto;
-  }
-
-  /* Long project names shouldn't push Work/About off-screen on mobile. */
-  .nav-back {
-    min-width: 0;
-  }
-  .nav-back span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    display: flex;
+    gap: var(--grid-gutter);
+    margin-left: auto; /* right edge, with or without a Back link */
   }
 
   /* =============================================
      Nav links
-     .nav-link is the one shared pill style for every
-     nav button: Work, About, and the Back pill.
+     One style for every nav control: Back, Work,
+     About, and the modal's ✕.
   ============================================= */
-  /* Gap matches the visible gutter between card images (--grid-gutter). */
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: var(--grid-gutter);
-  }
-
   .nav-link {
     appearance: none;
-    background: none;
+    border: none;
     cursor: pointer;
-    pointer-events: all;   /* re-enable clicks — nav itself has pointer-events:none */
     display: inline-flex;
-    align-items: center;
-    padding: var(--space-2) var(--space-4);
-    /* border-radius: var(--radius-pill); */
-    border-radius: 4px;
-    text-decoration: none;
-    border: none;   /* <button> ships with a default outset border; <a> doesn't */
-
-    font-size: var(--text-sm);
-    font-weight: var(--weight-medium);
-    color: var(--color-text-secondary);
+    align-items: baseline;
+    gap: 0.3em;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
     background-color: transparent;
-    backdrop-filter: blur(12px);          
-    -webkit-backdrop-filter: blur(12px); 
 
-    transition: background-color var(--duration-fast) ease;
+    font: inherit;
+    font-size: var(--text-small);
+    font-weight: var(--weight-medium);
+    line-height: 1;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition:
+      color var(--duration-fast) ease,
+      background-color var(--duration-fast) ease;
   }
 
-  /* Narrow phones — slimmer pills so the Back label fits beside Work/About. */
+  .nav-link:hover,
+  .nav-link[aria-current="page"] {
+    color: var(--color-text-primary);
+  }
+  .nav-link:hover {
+    background-color: var(--color-surface);
+  }
+
+  /* Back: same look as Work/About. Long names truncate instead
+     of pushing Work/About off a phone. */
+  .nav-back {
+    min-width: 0;
+  }
+  .nav-back-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   @media (max-width: 480px) {
     .nav-link {
       padding-inline: var(--space-2);
@@ -140,10 +230,75 @@ const { activePage, backHref, backLabel } = Astro.props;
   }
 
   /* =============================================
-     Hover
+     About modal
+     Centered panel on desktop, bottom sheet on phones.
   ============================================= */
-  .nav-link:hover {
-    background-color: var(--color-surface-raised);
-    text-decoration: none;
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6);
+    background: rgb(0 0 0 / 0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-normal) ease;
+  }
+  .modal-backdrop.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Flex column: header stays put, body scrolls. */
+  .modal-panel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 750px;
+    max-height: 80svh;
+    background: var(--color-bg);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+
+    transform: translateY(12px);
+    transition: transform var(--duration-normal) ease;
+  }
+  .modal-backdrop.is-open .modal-panel {
+    transform: none;
+  }
+
+  .modal-header {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: flex-end;
+    padding: var(--space-4) var(--space-4) 0;
+  }
+
+  .modal-body {
+    flex: 1;
+    min-height: 0; /* lets the flex child scroll */
+    overflow-y: auto;
+    padding: var(--space-6) var(--space-10) var(--space-10);
+  }
+
+  @media (max-width: 640px) {
+    .modal-backdrop {
+      align-items: flex-end;
+      padding: 0;
+    }
+    .modal-panel {
+      max-height: 75svh;
+      border-bottom: none;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      transform: translateY(100%);
+    }
+    .modal-body {
+      padding: var(--space-4) var(--space-6) var(--space-8);
+    }
   }
 </style>

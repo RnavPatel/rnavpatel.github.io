@@ -23,14 +23,13 @@
  * ============================================================
  *
  * Usage:
- *   <BaseLayout title="Work" activePage="work">
+ *   <BaseLayout title="Work">
  *     <section>Normal content — has margins</section>
  *     <section class="full-bleed">This touches the edges</section>
  *   </BaseLayout>
  */
 
 import Nav from "../components/Nav.astro";
-import AboutModal from "../components/AboutModal.astro";
 import PageTransitions from "../components/PageTransitions.astro";
 
 // Global styles — imported once here, applied everywhere
@@ -44,18 +43,12 @@ interface Props {
   description?: string;
   /** Link-preview image, relative to /public. */
   image?: string;
-  activePage: "work" | "about";
-  /** Pull content up so its first line sits level with the nav pills
-   *  (homepage intro). Off on phones, where the nav would overlap it. */
-  flushTop?: boolean;
 }
 
 const {
   title = "Aarnav Patel",
   description = "A product designer who makes joyful interactive experiences across entertainment and education.",
   image = "/images/AarnavHeadshot.png",
-  activePage,
-  flushTop = false,
 } = Astro.props;
 
 const SITE_NAME = "Aarnav Patel";
@@ -109,56 +102,16 @@ const websiteSchema = {
   </head>
 
   <body>
-    <Nav activePage={activePage} />
+    <Nav />
 
-    <main class:list={{ "main--flush-top": flushTop }}>
+    <main>
       <slot />
     </main>
-
-    <!-- About modal -->
-    <div id="about-modal" class="modal-backdrop" aria-hidden="true">
-      <div class="modal-panel" role="dialog" aria-modal="true" aria-label="About Aarnav">
-        <div class="modal-header">
-          <button class="modal-close" aria-label="Close">✕</button>
-        </div>
-        <div class="modal-body">
-          <AboutModal />
-        </div>
-      </div>
-    </div>
 
   </body>
 </html>
 
 <script>
-  const modal   = document.getElementById('about-modal')!;
-  const panel   = modal.querySelector('.modal-panel')!;
-  const trigger = document.querySelector('[data-modal="about"]')!;
-  const close   = modal.querySelector('.modal-close')!;
-
-  function openModal() {
-    modal.setAttribute('aria-hidden', 'false');
-    modal.classList.add('is-open');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeModal() {
-    modal.classList.remove('is-open');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
-
-  trigger?.addEventListener('click', openModal);
-  close.addEventListener('click', closeModal);
-
-  modal.addEventListener('click', (e) => {
-    if (!panel.contains(e.target as Node)) closeModal();
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
-  });
-
   // Mobile autoplay: IntersectionObserver triggers .play() when videos enter viewport.
   // Required because iOS Safari and Android Chrome ignore the autoplay attribute for
   // off-screen videos and silently show a play button instead.
@@ -197,7 +150,7 @@ const websiteSchema = {
   */
   main {
     padding-top: var(--page-padding-top);
-    min-height: 100svh;
+    min-height: calc(100svh - var(--nav-height)); /* nav sits above, in flow */
 
     display: grid;
     grid-template-columns:
@@ -213,13 +166,6 @@ const websiteSchema = {
     overflow-x: clip;
   }
 
-  /* Flush top — matches Nav.astro's top padding + pill padding, so
-     the first line of content lines up with the Work/About text. */
-  @media (min-width: 601px) {
-    main.main--flush-top {
-      padding-top: calc(var(--space-3) + var(--space-2));
-    }
-  }
 
   /* =============================================
      Content column
@@ -247,114 +193,4 @@ const websiteSchema = {
     grid-column: full;
   }
 
-  /* =============================================
-     About modal
-  ============================================= */
-  .modal-backdrop {
-    position: fixed;
-    inset: 0;
-    z-index: 200;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-6);
-    box-sizing: border-box;
-
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 200ms ease;
-  }
-
-  .modal-backdrop.is-open {
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  /* Desktop panel — flex column so header stays fixed and body scrolls */
-  .modal-panel {
-    position: relative;
-    background: var(--color-bg);
-    border: 2px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    width: 100%;
-    max-width: 750px;
-    max-height: 80svh;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-
-    transform: translateY(12px);
-    transition: transform 200ms ease;
-  }
-
-  .modal-backdrop.is-open .modal-panel {
-    transform: translateY(0);
-  }
-
-  /* Header row — never scrolls, holds the close pill */
-  .modal-header {
-    flex-shrink: 0;
-    display: flex;
-    justify-content: flex-end;
-    padding: var(--space-4) var(--space-4) 0;
-  }
-
-  /* Close button styled as a nav pill */
-  .modal-close {
-    display: inline-flex;
-    align-items: center;
-    padding: var(--space-2) var(--space-4);
-    border-radius: var(--radius-pill);
-    border: 2px solid var(--color-nav-border);
-    background-color: var(--color-nav-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    font-size: var(--text-md);
-    font-weight: var(--weight-medium);
-    color: var(--color-text-primary);
-    cursor: pointer;
-    transition: background-color var(--duration-fast) ease;
-    line-height: 1;
-  }
-
-  .modal-close:hover {
-    background-color: var(--color-nav-hover-bg);
-  }
-
-  /* Scrollable content area */
-  .modal-body {
-    flex: 1;
-    overflow-y: auto;
-    padding: var(--space-6) var(--space-10) var(--space-10);
-    min-height: 0; /* required for flex overflow to work */
-  }
-
-  /* Mobile — full-width bottom sheet anchored to the bottom 3/4 of the screen */
-  @media (max-width: 640px) {
-    .modal-backdrop {
-      align-items: flex-end;
-      padding: 0;
-    }
-
-    .modal-panel {
-      width: 100%;
-      max-width: 100%;
-      max-height: 75svh;
-      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-      border-bottom: none;
-
-      transform: translateY(100%);
-    }
-
-    .modal-backdrop.is-open .modal-panel {
-      transform: translateY(0);
-    }
-
-    .modal-body {
-      padding: var(--space-4) var(--space-6) var(--space-8);
-    }
-  }
 </style>

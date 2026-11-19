@@ -119,8 +119,8 @@ All in `src/components/PageTransitions.astro`. Search `Tuning`.
 
 - [ ] **Ghost sheets show the real in-between page?** Right now skipped
       layers are blank page-colored sheets. Option: render a light stand-in
-      (e.g. the hub's title) inside the ghost. The data is available from
-      `backHref` / `backLabel` on case studies.
+      (e.g. the hub's title) inside the ghost. The name is available from
+      the parent page's `export const navTitle` (see Nav.astro).
 - [ ] **Depth override:** if a page ever lives at a URL that doesn't match its
       layer, add an `<html data-vt-depth="N">` override that `depthOf` checks
       first.

@@ -4,8 +4,6 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
 
 <ProjectLayout
   title="Best Summer Programs — Compare and Bookmarks"
-  backHref="/work/best-summer-programs"
-  backLabel="Overview"
   tocItems={[
     { id: "overview", label: "Overview" },
     { id: "problem", label: "Problem" },
@@ -17,15 +15,10 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
   <!-- HEADER ------------------------------------------------->
   <header id="overview" class="p-header" slot="header">
     
-    <p class="text-heading">
-      <span class="tint-bsp">
-        <span class="text-sup">BestSummerProgram</span>
-      </span>
-      <span class="tint-gray">
-         <span class="text-sup">Case Study</span>
-      </span>
-      Always engaging students throughout the product with a <strong>playful illustration system</strong>.
-    </p>
+    <div class="p-beat">
+      <p class="p-beat-eyebrow tint-bsp">BestSummerPrograms</p>
+      <h2 class="p-beat-heading">Always engaging students throughout the product with a <span class="tint-bsp">playful illustration system</span>.</h2>
+    </div>
 
   </header>
 
@@ -34,14 +27,10 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
 
   <!-- Problem -->
   <section id="problem">
-    <p class="text-heading">
-      <span class="tint-gray">
-        <span class="text-sup">Context</span>
-      </span>
-      Our product uses simple visuals to make our info-dense database clear, 
-      <span class="tint-problem"><span class="text-sup">Problem</span>
-      however, this sometimes leaves users to <strong>face empty screens</strong> with no guidance.</span>
-    </p>
+    <div class="p-beat">
+      <p class="p-beat-eyebrow">Context</p>
+      <h2 class="p-beat-heading">Our product uses simple visuals to make our info-dense database clear, <span class="tint-problem">however, this sometimes leaves users to <strong>face empty screens</strong> with no guidance.</span></h2>
+    </div>
 
     <div class="p-media-2col p-no-outline">
       <div class="p-not-mine">
@@ -56,27 +45,19 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
 
   <!-- Design Goal -->
   <section id="design-goal">
-    <div class="p-detail">
-      <p class="text-heading">
-      <span class="tint-gray">
-        <span class="text-sup">Insights</span>
-      </span>
-        Blank screens are read as broken screens,
-        <span class="tint-goal"><span class="text-sup">Design Goal</span>
-        so we needed some way to make our users <strong>always feel welcomed.</strong></span>
-      </p>
+    <div class="p-beat">
+      <p class="p-beat-eyebrow">Insights</p>
+      <h2 class="p-beat-heading">Blank screens are read as broken screens, <span class="tint-goal">so we needed some way to make our users <strong>always feel welcomed.</strong></span></h2>
     </div>
   </section>
 
   <section id="solution">
-    <div class="p-detail">
-      <p class="text-heading">
-        <span class="tint-goal">
-          <span class="text-sup">Solution</span>
-          A playful illustration system</span> to transform dead-end moments into delightful experiences. 
-      
-      </p>
-      <p>Reimagining classic summer scenes as school - project diaromas.</p>
+    <div class="p-beat">
+      <p class="p-beat-eyebrow tint-goal">Solution</p>
+      <h2 class="p-beat-heading"><span class="tint-goal">A playful illustration system</span> to transform dead-end moments into delightful experiences.</h2>
+      <div class="p-beat-body">
+        <p>Reimagining classic summer scenes as school - project diaromas.</p>
+      </div>
     </div>
 
     <div class="p-media">
@@ -106,9 +87,9 @@ import ProjectLayout from "../../../layouts/ProjectLayout.astro";
     <img src="/images/BestSummerPrograms/Illustration_Style_Guide.png" alt="UI Diagram">
   </div>
 
-  <p class="text-heading">
-    More to come...
-  </p>
+  <div class="p-beat">
+    <h2 class="p-beat-heading">More to come...</h2>
+  </div>
   </section>
 
 

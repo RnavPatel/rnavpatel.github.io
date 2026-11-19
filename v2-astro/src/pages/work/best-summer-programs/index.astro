@@ -16,6 +16,9 @@
 import ProjectLayout from "../../../layouts/ProjectLayout.astro";
 import ProjectCard from "../../../components/ProjectCard.astro";
 import CardGallery from "../../../components/CardGallery.astro";
+
+// Name shown in the nav's "Back to:" link on pages under this one (Nav.astro).
+export const navTitle = "BSP Home Page";
 ---
 
 <ProjectLayout
@@ -69,11 +72,8 @@ import CardGallery from "../../../components/CardGallery.astro";
 <!-- CASE STUDIES -->
 <section id="case-studies">
   <!-- <hr class="p-divider" /> -->
-  <div class="heading">
-    <p class="text-heading">
-
-      <strong>Explore the redesign.</strong>
-    </p>
+  <div class="p-beat">
+    <h2 class="p-beat-heading"><strong>Explore the redesign.</strong></h2>
   </div>
 
   <CardGallery>

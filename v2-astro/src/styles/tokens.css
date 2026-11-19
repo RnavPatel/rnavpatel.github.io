@@ -38,10 +38,6 @@
   --color-tint-problem:   #ff0000;
   --color-tint-goal:      rgb(0, 168, 0);   /* design goal / solution */
 
-  --color-nav-bg:         rgba(1, 1, 1, 0.1);;  /* frosted white pill */
-  --color-nav-border:     rgba(0, 0, 0, 0.1);        /* subtle outline */
-  --color-nav-hover-bg:   rgba(255, 255, 255, 0.3);  /* frosted white pill */
-
   /* --- Spacing scale ---
      1rem = 16px (browser default). Comments show "desktop / phone" px.
      Desktop runs smaller than phone; phone values are in the 600px
@@ -67,8 +63,8 @@
      desktop edit does NOT carry over to phone: change both.
 
      THE SCALE — 4 sizes. Use these for anything new:
-       --text-heading  statement lines (.text-heading)
-       --text-body     paragraphs, intro, About, eyebrows (.text-sup)
+       --text-heading  statement lines (.p-beat-heading)
+       --text-body     paragraphs, intro, About
        --text-small    UI — nav, cards, chips, captions
        --text-label    labels, tags, TOC                          */
   --font-sans: "Host Grotesk", sans-serif;
@@ -115,11 +111,12 @@
   /* --- Grid & Layout --- */
   /* --gap-grid: space between tiles on homepage
      --page-padding-x: left/right margin on all pages (auto-scales with viewport)
-     --page-padding-top: clears the fixed nav — increase if nav height changes  */
+     --page-padding-top: space between the nav and the first content on every page.
+       (The nav takes up its own space, so this is only the gap. Nav height: Nav.astro.) */
   --gap-grid:          5px;   /* gap between project tiles */
   --label-padding:     5px;
   --page-padding-x:    3.75rem;  /* 60px side margins (12px ≤1000, 16px phone) */
-  --page-padding-top:  3.75rem;  /* 60 / 80px — clears the fixed nav */
+  --page-padding-top:  var(--space-8);  /* 36 / 32px */
 
   /* Visible 4-column grid — measured at IMAGE edges, not card edges.
      Homepage cards carry --gap-grid padding and sit --gap-grid apart, so
@@ -217,6 +214,5 @@
 
     /* Layout */
     --page-padding-x:   1rem;  /* 16px */
-    --page-padding-top: 5rem;  /* 80px */
   }
 }

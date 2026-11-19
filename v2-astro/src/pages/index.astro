@@ -23,9 +23,12 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import CardGallery from "../components/CardGallery.astro";
 import { projects } from "../data/projects";
+
+// Name shown in the nav's "Back to:" link on pages under this one (Nav.astro).
+export const navTitle = "Home";
 ---
 
-<BaseLayout title="Aarnav Patel" activePage="work" flushTop>
+<BaseLayout title="Aarnav Patel">
 
   <p class="intro">
     Aarnav is a product designer who makes joyful interactive experiences across entertainment and education platforms.

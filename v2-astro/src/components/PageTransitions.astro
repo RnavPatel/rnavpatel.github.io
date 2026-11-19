@@ -142,11 +142,7 @@
         return g;
       });
 
-      // Nav's Back pill fades in/out over the same span as the slide.
-      const css = `
-        ::view-transition-old(site-nav), ::view-transition-new(site-nav) {
-          animation-duration: ${DURATION}ms;
-        }` + rules.map(([side, name, z, anim, delay]) => `
+      const css = rules.map(([side, name, z, anim, delay]) => `
         ::view-transition-group(${name}) { z-index: ${z}; animation: none; }
         ::view-transition-${side}(${name}) {
           animation: ${anim} ${DURATION}ms ${EASING} ${delay}ms both;
@@ -173,13 +169,7 @@
     }
   }
 
-  /* Nav = its own layer, always on top, gently crossfades (Back pill). */
-  nav {
-    view-transition-name: site-nav;
-  }
-  ::view-transition-group(site-nav) {
-    z-index: 100;
-  }
+  /* The nav's own layer (site-nav) and its no-fade rules are in Nav.astro. */
 
   /* Page sheets: no default crossfade/blend — they move as solid sheets.
      The soft shadow sits on the leading (top) edge while sliding. */

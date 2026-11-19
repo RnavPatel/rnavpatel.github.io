@@ -24,16 +24,16 @@ tenets, the tenets win.
    only when it's needed.
 3. **Two text accent colors: "solution green" and "problem red".** The `.text-sup`
    and `.tint-*` colors got out of hand. Cut the other tints (context, scope, bsp,
-   gray, and so on). **`.text-sup` will be removed eventually.**
+   gray, and so on). `.text-sup` was removed 2026-11-18 (eyebrows are `.p-beat-eyebrow` now).
 
 Apply these to any new type, spacing or color decision: audit against them before
 adding a token or class.
 
 ### Prototype: `.p-beat` (2026-11-16)
 
-A candidate for the single text block. It would replace `.p-detail`,
-`.text-heading` statements and `.text-sup` eyebrows. It's being tried on the
-**navigation-redesign** page first and doesn't touch the other pages. The CSS
+The single text block. As of 2026-11-18 it has replaced every `.text-heading`
+statement and `.text-sup` eyebrow (both deleted) on navigation-redesign,
+competitionsv2, ui-illustrations and the BSP hub. `.p-detail` is next. The CSS
 and usage comment live in `ProjectLayout.astro` ("BEAT").
 
 ```html
@@ -46,12 +46,12 @@ and usage comment live in `ProjectLayout.astro` ("BEAT").
 
 - Stacks eyebrow → heading → body at every screen size (8px, then 24px gaps).
   The two-column version was tried and dropped.
-- Eyebrow is a pill sharing `.text-sup`'s style. Gray by default; color it with a
+- Eyebrow is a pill (typography.css "Eyebrow pill"). Gray by default; color it with a
   tint class (`tint-problem`, `tint-goal`…) or `style="--tint: …"`.
   Heading `--text-heading` semibold, body `--text-body`.
 - Accent color: `.text-problem` / `.text-solution` (typography.css), plain color, no pill.
-- Open questions: should the heading be "subheading" in the new 4-size scale? Once
-  `.text-sup` is gone, should the pill rule move onto `.p-beat-eyebrow` alone?
+- Open question: should the heading be "subheading" in the new 4-size scale?
+  (Done: the pill rule now lives on `.p-beat-eyebrow` alone.)
 
 **Scope note:** the v2 format may stay limited to the **Best Summer Programs (BSP)
 pages** for a while. Older case studies might not get new copy for some time. Plan
@@ -77,15 +77,16 @@ Last updated: 2026-10-11
 Reference page: `src/pages/work/best-summer-programs/competitionsv2.astro`
 
 ```html
-<div class="p-detail">
-  <p class="text-heading"><span class="text-sup">Problem</span>…statement…</p>
-  <p>Supporting copy…</p>
+<div class="p-beat">
+  <p class="p-beat-eyebrow tint-problem">Problem</p>
+  <h2 class="p-beat-heading">…statement…</h2>
+  <div class="p-beat-body"><p>Supporting copy…</p></div>
 </div>
 ```
 
-- Statement lines: `class="text-heading"`. **Don't** set `font-size` inline.
-- Eyebrows on statements: `<span class="text-sup">`.
-- Supporting copy: plain `<p>`, which renders at `--text-body`.
+- Statement lines: `.p-beat-heading`. **Don't** set `font-size` inline.
+- Eyebrow: one `.p-beat-eyebrow` per beat.
+- Supporting copy: `<p>` inside `.p-beat-body`.
 - Bold inside copy: `<strong>`, not `<span style="font-weight: bold">`.
 - Inline styles for quick experiments are fine. They get counted in the
   **Inline style log** below, and repeated ones get promoted to classes.
@@ -130,12 +131,10 @@ Each of these still uses legacy `h1`–`h4`, `.p-section-open` and/or old tokens
 **BSP pages (first priority):**
 - [x] best-summer-programs/competitionsv2 (reference page)
 - [ ] best-summer-programs/competitions (old version; delete once v2 replaces it?)
-- [~] best-summer-programs/index (hub page). Uses `.text-heading` + `.text-sup`,
-      but still has inline colors and `<div style="margin-top: 3rem">`.
+- [~] best-summer-programs/index (hub page). Uses `.p-beat`.
 - [ ] best-summer-programs/compare-bookmarks
 - [ ] best-summer-programs/navigation-redesign
-- [~] best-summer-programs/ui-illustrations. Uses `.text-heading` + `.text-sup`,
-      but still has inline red/green statement colors.
+- [~] best-summer-programs/ui-illustrations. Uses `.p-beat`.
 
 **Other case studies (may stay legacy for a long time):**
 - [ ] marvel
@@ -177,7 +176,7 @@ delete. **Promote** a pattern to a class when the same inline style shows up 3+ 
 | `.p-wip` | **nothing** | — | **dead**. Delete candidate. |
 | `.p-head`, `.p-hero`, `.p-meta-row` | layout internals only | — | keep (structural, not authoring classes). `.p-sidebar*` removed 2026-10-27 |
 
-Also used on project pages: `.label` (75×), `.caption` (66×), `.text-heading`, `.text-sup`.
+Also used on project pages: `.label` (75×), `.caption` (66×), `.p-beat` (+ `-eyebrow`, `-heading`, `-body`).
 
 ### Inline style log
 
@@ -212,12 +211,28 @@ for c in $(grep -oE "^\s*\.p-[a-z0-9-]+" src/layouts/ProjectLayout.astro | tr -d
 - Does the v2 format need `.p-media-3col`, or is 2-col + full-width enough?
 - Should `.label` and `.caption` move into typography.css as part of the 4-size scale?
   They're type styles that currently live in the layout file.
-- With `.text-sup` eyebrows, is `.label` above a statement still needed in v2?
+- With `.p-beat-eyebrow`, is `.label` above a statement still needed in v2?
   It's only used in the page header ("Case Study 2").
 
 ---
 
 ## Phase 3: consolidation checklist
+
+### Nav: `src/components/Nav.astro` (done 2026-11-18)
+- [x] One file owns the bar, the "Back to:" link, Work/About, the About modal
+      and the nav's view-transition layer. Both layouts render `<Nav />` (no props).
+- [x] Back link is automatic: parent = URL one level up (skipping non-pages
+      like `/work`); its name = the parent page's `export const navTitle`.
+      Removed `backHref` / `backLabel` / `activePage` from every page and layout.
+- [x] Deleted `--color-nav-bg/-border/-hover-bg`, the duplicated modal markup,
+      script and styles in BaseLayout + ProjectLayout, and the nav rules in
+      PageTransitions. Nav uses only `--text-small`, text colors and `--color-surface`.
+- [x] Nav is an **in-flow sticky header** (`position: sticky`), one full-width bar
+      on every page. It takes up its own space, so pages start below it with no
+      offset math. Removed `flushTop` (homepage intro no longer sits level with
+      the nav). `--page-padding-top` is now just the gap under the nav.
+      `--nav-height` (Nav.astro) is the one nav value read elsewhere (ProjectTOC
+      sticky top, `scroll-padding-top`, `main` min-height).
 
 ### Typography: `src/styles/typography.css`
 - [ ] Replace the `h1`–`h6` size/weight rules with a reset
@@ -228,14 +243,16 @@ for c in $(grep -oE "^\s*\.p-[a-z0-9-]+" src/layouts/ProjectLayout.astro | tr -d
 - [ ] Delete the unused color utilities `.text-primary`, `.text-secondary`, `.text-accent`.
       (Keep `.text-muted`, which AboutModal uses.)
 - [ ] Add `strong, b { font-weight: var(--weight-semibold); }`.
-- [ ] Keep: `p`, `.text-heading`, `.text-sup`, `.text-muted`, `a.link`.
+- [ ] Keep: `p`, `.text-muted`, `a.link`.
+- [x] Deleted `.text-heading` and `.text-sup` (2026-11-18), plus the
+      `trimEyebrowWhitespace` build plugin that only served `.text-sup`.
 
 ### Tokens: `src/styles/tokens.css`
 - [ ] Delete the LEGACY type block (`--text-xs/sm/md/lg/xl/2xl`). First rename
       every usage:
   - `--text-xs` → `--text-label` (ProjectLayout, ProjectTOC, ProjectCard)
-  - `--text-sm` → `--text-small` (global.css, Nav, ProjectCard, StatusChip, ProjectLayout, BaseLayout)
-  - `--text-md` → `--text-body` (AboutModal, BaseLayout)
+  - `--text-sm` → `--text-small` (global.css, ProjectCard, StatusChip, ProjectLayout)
+  - `--text-md` → `--text-body` (AboutModal)
 - [ ] Delete `--weight-light` (300), `--weight-bold` (800), `--weight-extrabold` (1000).
   - Before that: `.label` in ProjectLayout uses `--weight-bold`, so switch it to `--weight-semibold`.
 - [ ] Delete `--leading-loose`. `.about-bio` in AboutModal uses it, so switch to `--leading-normal`.
@@ -261,14 +278,14 @@ cd src && for v in $(grep -oE "^\s*--[a-z0-9-]+" styles/tokens.css | tr -d ' ' |
 - [ ] Act on every pattern in the inline style log that reached 3+ occurrences.
 
 ### Markup cleanup
-- [ ] Header statement in each case study: `<p class="text-heading">` →
-      `<h1 class="text-heading">` (one real h1 per page). Do this after the heading
+- [ ] Header statement in each case study: `<h2 class="p-beat-heading">` →
+      `<h1 class="p-beat-heading">` (one real h1 per page). Do this after the heading
       reset above, so the h1 doesn't pick up legacy heading styles.
 - [ ] Remove any remaining inline `style=` (font-size, font-weight, margin-top, colors).
 - [ ] Colored statement spans (`style="color: red"`, `rgb(0, 168, 0)`): if these
       stay in the design, turn them into tokens + classes (e.g. `--color-problem`,
       `--color-solution`).
-- [ ] competitionsv2: the Solution section's second `<p>` is missing its closing `</p>`.
+- [x] competitionsv2: the Solution section's second `<p>` is missing its closing `</p>`. (Fixed in the p-beat move.)
 - [ ] competitionsv2: `<hr class="p-divider"></hr>`. `<hr>` is a void element, so drop the `</hr>`.
 
 ---

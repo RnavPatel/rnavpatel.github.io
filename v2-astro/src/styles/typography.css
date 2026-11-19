@@ -27,14 +27,6 @@ p {
   color: var(--color-text-secondary);
 }
 
-/* --- Statement lines ---
-   The big type on case-study pages. Works on a <p> or a heading.
-     <p class="text-heading"><span class="text-sup">Problem</span>…</p> */
-.text-heading {
-  font-size: var(--text-heading);
-  line-height: var(--leading-tight);
-}
-
 /* --- Legacy utility text classes ---
    Not used on the new-format pages. Delete with the legacy tokens. */
 
@@ -71,33 +63,9 @@ p {
   text-transform: uppercase;
 }
 
-/* --- Eyebrow ---
-   Inline label raised above a statement line.
-     <p class="text-heading"><span class="text-sup">Context</span>…</p>
-   inline-block: the box (and a .tint pill's background) is line-height +
-   padding tall, not the font's full ~1.3em content area.
-   top nudge: text-top puts the box at the font's ascent, which in Host
-   Grotesk is a full 1em, high enough to hit the descenders of the line
-   above. 0.2 × the statement size drops the top to just above cap height
-   and the bottom to about the baseline (~4px clear above). position:
-   relative, so the line box and line spacing don't change.
-   Gap to the text either side: margin-inline (--sup-gap). Don't type
-   spaces around it; any you do type are stripped at build time
-   (trimEyebrowWhitespace in astro.config.mjs), so the gap is always this. */
-.text-sup {
-  --sup-gap: 0.5em;
-  margin-inline: var(--sup-gap);
-  display: inline-block;
-  vertical-align: text-top;
-  position: relative;
-  top: calc(var(--text-heading) * 0.2);
-}
-
-/* Pill look, shared by the inline .text-sup and the .p-beat eyebrow
-   (ProjectLayout.astro). Color comes from --tint, set on the element or
-   inherited from a .tint run. No --tint → text keeps the surrounding
-   color, background stays clear. */
-.text-sup,
+/* --- Eyebrow pill ---
+   The .p-beat eyebrow (layout in ProjectLayout.astro "BEAT"). Color comes
+   from --tint, set on the element (a tint class or style="--tint: …"). */
 .p-beat-eyebrow {
   font-size: var(--text-small);
   font-weight: bold;
@@ -114,23 +82,12 @@ p {
   --tint: var(--color-tint-gray);
 }
 
-/* An eyebrow that opens the statement sits on the text edge, no left gap.
-   (CSS can't see text nodes: this also matches a first-element eyebrow
-   with plain text before it. Wrap that text, or override inline.) */
-.text-heading > .text-sup:first-child,
-.text-heading > :is(.tint, .tint-context, .tint-scope, .tint-problem, .tint-goal, .tint-bsp, .tint-gray):first-child > .text-sup:first-child {
-  margin-left: 0;
-}
-
 /* --- Tint ---
-   --tint colors whatever it's set on, and any .text-sup inside gets a
-   pill background of that color at --tint-alpha (default 25%).
-   A whole run, eyebrow included:
-     <span class="tint" style="--tint: #0070f3"><span class="text-sup">Insight</span>…</span>
-     <span class="tint-problem"><span class="text-sup">Problem</span>…</span>
-   Just the eyebrow, rest of the line untouched:
-     <span class="text-sup" style="--tint: #0070f3">Insight</span>
-     <span class="text-sup tint-problem">Problem</span>
+   --tint colors whatever it's set on; on a .p-beat-eyebrow it also sets
+   the pill background (at --tint-alpha, default 25%).
+   A run of text:   <span class="tint-problem">…</span>
+   An eyebrow:      <p class="p-beat-eyebrow tint-problem">Problem</p>
+                    <p class="p-beat-eyebrow" style="--tint: #0070f3">Insight</p>
    Preset colors live in tokens.css. */
 :is(.tint, .tint-context, .tint-scope, .tint-problem, .tint-goal, .tint-bsp, .tint-gray) {
   color: var(--tint);
